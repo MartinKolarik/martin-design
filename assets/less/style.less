@@ -1,0 +1,134 @@
+@red	: #e80c1f;
+@gray	: #333;
+
+// typography
+body, h1, h2, h3, h4 {
+	font-family: "Open Sans", sans-serif;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 28px; }
+h3 { font-size: 20px; }
+
+// navigation
+.navbar .navbar-nav > li > a.navbar-brand {
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	&:hover, &:focus {
+		background-color: #fff;
+	}
+
+	img {
+		height: 30px;
+	}
+}
+
+// general
+header {
+	h1, h2 {
+		text-align: center;
+	}
+}
+
+section {
+	margin-top: 40px;
+}
+
+blockquote {
+	border-color: @red;
+	font-size: 14px;
+}
+
+footer {
+	color: #fff;
+	background-color: @gray;
+	padding: 40px 0 20px 0;
+
+	ul {
+		padding-left: 0;
+		list-style: none;
+	}
+
+	li:first-child {
+		text-transform: uppercase;
+		margin-bottom: 10px;
+	}
+}
+
+.item {
+	padding: 5px 0;
+
+	& + & {
+		border-top: 1px solid @gray;
+	}
+}
+
+.r-modal-open {
+	overflow: hidden;
+}
+
+// section specific
+#search-input {
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	padding-left: 0;
+	padding-right: 0;
+
+	height: 50px;
+	font-size: 20px;
+	line-height: 25px;
+}
+
+#features, #sponsors {
+	text-align: center;
+
+	img {
+		width: 100px;
+	}
+}
+
+#copyright {
+	border-top: 1px solid #222;
+	padding-top: 20px;
+	text-align: center;
+}
+
+// search results
+.result {
+	h4 {
+		color: @red;
+		margin-bottom: 0;
+	}
+
+	p {
+		margin-top: 10px;
+	}
+
+	.buttons {
+		text-align: right;
+	}
+}
+
+// version list
+#version-list, #file-list, #link-list {
+	list-style: none;
+	padding-left: 0;
+}
+
+// selection
+::selection {
+	color: #fff;
+	background: @red;
+}
+
+::-moz-selection {
+	color: #fff;
+	background: @red;
+}
+
+// outline (focus)
+*:focus, *:hover {
+	outline-color: @red !important;
+}
