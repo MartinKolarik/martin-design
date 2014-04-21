@@ -57,15 +57,18 @@ $(function() {
 	var $searchInput	= $('#search-input');
 
 	// initialize Bloodhound
-	var bloodhound = new Bloodhound({
+	var bloodhound = new Bloodhound({// TODO-LATER implement our own API-like search on client side (localStorage + https://github.com/pieroxy/lz-string/)
 		'datumTokenizer'	: function(project) {
-			return Bloodhound.tokenizers.whitespace(project.name);
+			return project.name.split(/[\s.-]+/g);
 		},
-		'limit'				: 50,
+		'limit'				: 25,
 		'prefetch'			: {
-			'url'	: '//api.jsdelivr.com/v1/jsdelivr/libraries'
+			'url'	: '//api.jsdelivr.com/v1/jsdelivr/libraries',
+			'ttl'	: 3600000
 		},
-		'queryTokenizer'	: Bloodhound.tokenizers.whitespace
+		'queryTokenizer'	: function(query) {
+			return query.split(/[\s.-]+/g);
+		}
 	});
 
 	bloodhound.initialize();
