@@ -188,7 +188,7 @@
 							{{#collection:i}}
 								<div class="row item">
 									<div class="col-sm-12" style="line-height: 34px">
-										<a href="{{project.homepage}}">{{project.name}}</a>, version {{version}}
+										<a href="{{project.homepage}}">{{project.name}}</a>, version {{project.selectedVersion}}
 										<a class="btn pull-right primary btn-link btn-inverse" on-click="remove:{{i}}">Remove</a>
 									</div>
 								</div>
@@ -215,11 +215,30 @@
 						<div class="result item">
 							<div class="row">
 								<div class="col-md-6">
-									<h4><a href="{{homepage}}" target="_blank">{{name}}</a></h4>
+									<h4>
+										<!-- TODO permalink instead of homepage -->
+										<a href="{{homepage}}" target="_blank">{{name}}</a>
+										<small class="btn-group">
+											(<a class="link" data-toggle="dropdown">{{selectedVersion}}</a>)
+											<ul class="dropdown-menu" role="menu">
+												{{#versions:j}}
+													{{#this !== selectedVersion}}
+														<li><a class="link" on-click="set:'projects.{{i}}.selectedVersion',{{this}}">{{this}}</a></li>
+													{{/}}
+												{{/versions}}
+
+												{{#versions.length > 1}}<li class="divider"></li>{{/versions}}
+
+												<li><a class="link" on-click="reportNew:{{projects[i]}}">Found newer version?</a></li>
+											</ul>
+										</small>
+									</h4>
+									<!-- TODO-LATER should show all projects from this author (custom search implementation required) -->
 									<small>by {{#github}}<a href="{{getAuthorLink(github)}}" target="_blank">{{author}}</a>{{/github}}{{^github}}{{author}}{{/github}}</small>
 								</div>
 								<div class="col-md-6 buttons">
 									{{#github}}<a class="btn btn-link btn-inverse primary" href="{{github}}" target="_blank">GitHub</a>{{/github}}
+									<a class="btn btn-link btn-inverse primary" href="{{homepage}}" target="_blank">Homepage</a>
 									<button class="btn btn-link btn-inverse primary" on-click="use:{{this}}">Use</button>
 									<button class="btn btn-link btn-inverse primary" on-click="add:{{this}}">Add to collection</button>
 									<button class="btn btn-link btn-inverse primary" on-click="download:{{this}}">Download</button>
@@ -237,34 +256,12 @@
 			</div>
 		</script>
 
-		<!-- version list template-->
-		<script type="text/html" id="version-list-template">
-			<ol id="version-list">
-				{{#project}}
-					{{#assets:i}}
-						<li>
-							<input type="radio" class="radio primary" name="{{assets[0].version}}" id="version{{i}}" value="{{version}}">
-							<label for="version{{i}}">{{version}}</label>
-						</li>
-					{{/assets}}
-				{{/project}}
-			</ol>
-
-			{{#showInput === false}}
-				<a href="" class="pull-right" on-click="newVersion">A new version available?</a>
-			{{/showInput}}
-
-			{{#showInput === true}}
-				<input type="text" class="form-control" id="new-version-email" placeholder="Please enter your e-mail address">
-				<a href="" class="pull-right" on-click="submitNew">Submit</a>
-			{{/showInput}}
-
-			{{#showInput === null}}
-				<p class="pull-right">Thank you for reporting a new version!</p>
-			{{/showInput}}
+		<!-- version list template -->
+		<script type="text/html" id="report-new-version-template">
+			<input type="text" class="form-control" id="new-version-email" placeholder="Please enter your e-mail address">
 		</script>
 
-		<!-- file list template-->
+		<!-- file list template -->
 		<script type="text/html" id="file-list-template">
 			<ol id="file-list">
 				{{#files:i}}
@@ -276,7 +273,7 @@
 			</ol>
 		</script>
 
-		<!-- link list template-->
+		<!-- link list template -->
 		<script type="text/html" id="link-list-template">
 			<ul id="link-list">
 				{{#js}}
@@ -298,7 +295,7 @@
 			</ul>
 		</script>
 
-		<!-- modal template-->
+		<!-- modal template -->
 		<script type="text/html" id="modal-template">
 			<div class="modal fade" role="dialog" id="{{id}}">
 				<div class="modal-dialog {{size}}">
@@ -324,7 +321,7 @@
 			</div>
 		</script>
 
-		<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@2.1.0,bootstrap@3.1.1,ractive@0.4.0,typeahead.js@0.10.1(bloodhound.js)"></script>
+		<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@2.1.0,bootstrap@3.1.1,ractive@0.4.0,typeahead.js@0.10.2(bloodhound.js)"></script>
 		<script type="text/javascript" src="assets/js/app.js"></script>
 	</body>
 </html>

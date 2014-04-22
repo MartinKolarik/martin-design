@@ -109,3 +109,6 @@ footer li:first-child {
 *:hover {
   outline-color: #e80c1f !important;
 }
+a.link {
+  cursor: pointer;
+}

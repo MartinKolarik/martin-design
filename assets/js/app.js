@@ -1,6 +1,6 @@
 $(function() {
 	// search input and results
-	var ractive = new Ractive({
+	ractive = new Ractive({
 		'template'	: '#search-template',
 		'el'		: '#search',
 		'data'		: {
@@ -13,37 +13,35 @@ $(function() {
 	// bind event listeners
 	ractive.on({
 		'add'			: function(event, project) {
-			selectVersion(project, function(version) {
-				selectFiles(project, version, function(files) {
-					if(files.length) {
-						ractive.get('collection').push({
-							'project'	: project,
-							'version'	: version,
-							'files'		: files
-						});
-					}
-				});
+			selectFiles(project, function(files) {
+				if(files.length) {
+					ractive.get('collection').push({
+						'project'	: $.extend(true, {}, project),
+						'files'		: files
+					});
+				}
 			});
 		},
 		'download'		: function(event, project) {
-			selectVersion(project, function(version) {
-				download(project, version);
-			});
+			downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
 		},
 		'remove'		: function(event, index) {
 			ractive.get('collection').splice(index, 1);
 		},
+		'reportNew'		: function(event, project) {
+			reportNew(project);
+		},
+		'set'			: function(event, keypath, value) {
+			ractive.set(keypath, value);
+		},
 		'use'			: function(event, project) {
-			selectVersion(project, function(version) {
-				selectFiles(project, version, function(files) {
-					if(files.length) {
-						buildLinks([{
-							'project'	: project,
-							'version'	: version,
-							'files'		: files
-						}]);
-					}
-				});
+			selectFiles(project, function(files) {
+				if(files.length) {
+					buildLinks([{
+						'project'	: project,
+						'files'		: files
+					}]);
+				}
 			});
 		},
 		'useCollection'	: function(event, collection) {
@@ -76,7 +74,11 @@ $(function() {
 	// update results on input
 	$searchInput.focus().on('input', function() {
 		bloodhound.get($searchInput.val(), function(list) {
-			ractive.set('projects', list);
+			// select the last version of the project by default
+			ractive.set('projects', list.map(function(project) {
+				project.selectedVersion = project.lastversion;
+				return project;
+			}));
 		})
 	});
 
@@ -163,9 +165,9 @@ $(function() {
 		// one file
 		if(collection.length === 1 && collection[0].files.length === 1) {
 			if(isCss.test(collection[0].files[0])) {
-				css		= cssTemplate.replace('{{href}}', collection[0].project.name + '/' + collection[0].version + '/' + collection[0].files[0]);
+				css		= cssTemplate.replace('{{href}}', collection[0].project.name + '/' + collection[0].project.selectedVersion + '/' + collection[0].files[0]);
 			} else if(isJs.test(collection[0].files[0])) {
-				js		= jsTemplate.replace('{{src}}', collection[0].project.name + '/' + collection[0].version + '/' + collection[0].files[0]);
+				js		= jsTemplate.replace('{{src}}', collection[0].project.name + '/' + collection[0].project.selectedVersion + '/' + collection[0].files[0]);
 			} else {
 				others.push('//cdn.jsdelivr.net/' + collection[0].files);
 			}
@@ -188,15 +190,15 @@ $(function() {
 				}
 
 				if(cssFiles.length === 1 && cssFiles[0] === collection[i].project.mainfile) {
-					css.push(collection[i].project.name + '@' + collection[i].version);
+					css.push(collection[i].project.name + '@' + collection[i].project.selectedVersion);
 				} else if(cssFiles.length) {
-					css.push(collection[i].project.name + '@' + collection[i].version + '(' + cssFiles.join('+') + ')');
+					css.push(collection[i].project.name + '@' + collection[i].project.selectedVersion + '(' + cssFiles.join('+') + ')');
 				}
 
 				if(jsFiles.length === 1 && jsFiles[0] === collection[i].project.mainfile) {
-					js.push(collection[i].project.name + '@' + collection[i].version);
+					js.push(collection[i].project.name + '@' + collection[i].project.selectedVersion);
 				} else if(jsFiles.length) {
-					js.push(collection[i].project.name + '@' + collection[i].version + '(' + jsFiles.join('+') + ')');
+					js.push(collection[i].project.name + '@' + collection[i].project.selectedVersion + '(' + jsFiles.join('+') + ')');
 				}
 
 				if(otherFiles.length) {
@@ -233,16 +235,6 @@ $(function() {
 	}
 
 	/**
-	 * Download
-	 *
-	 * @param {Object} project
-	 * @param {String} version
-	 */
-	function download(project, version) {
-		downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + version + '/' + project.zip);
-	}
-
-	/**
 	 * Download helper
 	 *
 	 * @param {String} url
@@ -269,15 +261,47 @@ $(function() {
 	}
 
 	/**
+	 * Report new version
+	 *
+	 * @param {Object} project
+	 */
+	function reportNew(project) {
+		new Modal({
+			'data'		: {
+				'id'		: 'modal-report-new-version',
+				'project'	: project,
+				'buttons'	: [
+					{
+						'label'		: 'cancel',
+						'class'		: 'btn-default',
+						'handler'	: 'cancel'
+					},
+					{
+						'label'		: 'select',
+						'class'		: 'primary',
+						'handler'	: 'submit'
+					}
+				],
+				'submit'	: function() {
+					// TODO-LATER send the report
+				}
+			},
+			'partials'	: {
+				'title'	: 'Report a new version of ' + project.name,
+				'body'	: $('#report-new-version-template').html()
+			}
+		});
+	}
+
+	/**
 	 * Select files
 	 *
 	 * @param {Object} project
-	 * @param {String} version
 	 * @param {function} callback
 	 */
-	function selectFiles(project, version, callback) {
+	function selectFiles(project, callback) {
 		var assets = project.assets.filter(function(asset) {
-			return asset.version === version;
+			return asset.version === project.selectedVersion;
 		})[0];
 
 		if(assets) {
@@ -315,59 +339,5 @@ $(function() {
 				}
 			});
 		}
-	}
-
-	/**
-	 * Select version
-	 *
-	 * @param {Object} project
-	 * @param {function} callback
-	 */
-	function selectVersion(project, callback) {
-		var modal = new Modal({
-			'data'		: {
-				'id'		: 'modal-select-version',
-				'showInput'	: false,
-				'project'	: project,
-				'buttons'	: [
-					{
-						'label'		: 'cancel',
-						'class'		: 'btn-default',
-						'handler'	: 'cancel'
-					},
-					{
-						'label'		: 'select',
-						'class'		: 'primary',
-						'handler'	: 'submit'
-					}
-				],
-				'newVersion': function(event) {
-					event.original.preventDefault();
-					this.set('showInput', true);
-					$('#new-version-email').focus();
-				},
-				'submitNew'	: function(event) {
-					event.original.preventDefault();
-					this.set('showInput', null);// TODO send report
-				},
-				'submit'	: function() {
-					if(typeof callback === 'function') {
-						callback($('#' + this.data.id)
-							.find('input:checked')
-							.val()
-						);
-					}
-				}
-			},
-			'partials'	: {
-				'title'	: 'Select your version of ' + project.name,
-				'body'	: $('#version-list-template').html()
-			}
-		});
-
-		modal.on({
-			'newVersion'	: modal.data.newVersion,
-			'submitNew'		: modal.data.submitNew
-		});
 	}
 });
