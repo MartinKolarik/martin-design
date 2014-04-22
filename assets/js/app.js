@@ -1,6 +1,6 @@
 $(function() {
 	// search input and results
-	ractive = new Ractive({
+	var ractive = new Ractive({
 		'template'	: '#search-template',
 		'el'		: '#search',
 		'data'		: {
@@ -33,16 +33,6 @@ $(function() {
 		},
 		'set'			: function(event, keypath, value) {
 			ractive.set(keypath, value);
-		},
-		'use'			: function(event, project) {
-			selectFiles(project, function(files) {
-				if(files.length) {
-					buildLinks([{
-						'project'	: project,
-						'files'		: files
-					}]);
-				}
-			});
 		},
 		'useCollection'	: function(event, collection) {
 			buildLinks(collection);
