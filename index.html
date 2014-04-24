@@ -36,10 +36,19 @@
 				<header class="col-sm-12">
 					<h1>A free super-fast CDN for developers and webmasters</h1>
 				</header>
-			</section>
 
-			<!-- search -->
-			<section id="search"></section>
+				<!-- Ractive -->
+				<div id="my-collection" class="col-md-12"></div>
+
+				<!-- Ractive -->
+				<div id="search" class="col-md-12">
+					<input type="text" id="search-input" class="form-control input-lg" placeholder="Search in more than 1050 open source projects">
+					<p style="text-align: center"><a class="link">Browse all projects</a></p>
+				</div>
+
+				<!-- Ractive -->
+				<div id="search-results" class="col-md-12"></div>
+
 
 			<!-- features -->
 			<section id="features">
@@ -174,153 +183,10 @@
 			</div>
 		</footer>
 
-		<!-- search template-->
-		<script type="text/html" id="search-template">
-			{{#collection.length}}
-				<section id="my-collection">
-					<header>
-						<h2>My collection</h2>
-					</header>
-
-					<div class="row">
-						<div class="col-md-3"></div>
-						<div class="col-md-6">
-							{{#collection:i}}
-								<div class="row item">
-									<div class="col-sm-12" style="line-height: 34px">
-										<a href="{{project.homepage}}">{{project.name}}</a>, version {{project.selectedVersion}}
-										<a class="btn pull-right primary btn-link btn-inverse" on-click="remove:{{i}}">Remove</a>
-									</div>
-								</div>
-							{{/collection}}
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12" style="text-align: center">
-							<button class="btn pull- primary btn-inverse" on-click="useCollection:{{collection}}">Use my collection</button>
-						</div>
-					</div>
-				</section>
-			{{/collection}}
-
-			<div class="row">
-				<div class="col-sm-12">
-					<input type="text" id="search-input" class="form-control input-lg" placeholder="What are you looking for?">
-					<small>Search in more than 1000 open source projects - javascript libraries, jQuery plugins, fonts, CSS frameworks and anything else you might need.</small>
-				</div>
-
-				<div id="search-results" class="col-md-12">
-					{{#projects:i}}
-						<div class="result item">
-							<div class="row">
-								<div class="col-md-6">
-									<h4>
-										<!-- TODO permalink instead of homepage -->
-										<a href="{{homepage}}" target="_blank">{{name}}</a>
-										<small class="btn-group">
-											(<a class="link" data-toggle="dropdown">{{selectedVersion}}</a>)
-											<ul class="dropdown-menu" role="menu">
-												{{#versions:j}}
-													{{#this !== selectedVersion}}
-														<li><a class="link" on-click="set:'projects.{{i}}.selectedVersion',{{this}}">{{this}}</a></li>
-													{{/}}
-												{{/versions}}
-
-												{{#versions.length > 1}}<li class="divider"></li>{{/versions}}
-
-												<li><a class="link" on-click="reportNew:{{projects[i]}}">Found newer version?</a></li>
-											</ul>
-										</small>
-									</h4>
-									<!-- TODO-LATER should show all projects from this author (custom search implementation required) -->
-									<small>by {{#github}}<a href="{{getAuthorLink(github)}}" target="_blank">{{author}}</a>{{/github}}{{^github}}{{author}}{{/github}}</small>
-								</div>
-								<div class="col-md-6 buttons">
-									{{#github}}<a class="btn btn-link btn-inverse primary" href="{{github}}" target="_blank">GitHub</a>{{/github}}
-									<a class="btn btn-link btn-inverse primary" href="{{homepage}}" target="_blank">Homepage</a>
-									<button class="btn btn-link btn-inverse primary" on-click="add:{{this}}">Add to collection</button>
-									<button class="btn btn-link btn-inverse primary" on-click="download:{{this}}">Download</button>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-12">
-									<p>{{description}}</p>
-								</div>
-							</div>
-						</div>
-					{{/projects}}
-				</div>
-			</div>
+		<script type="text/javascript">
+			location.href.indexOf('?dev') === -1
+				? document.write('<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@2.1.0,bootstrap@3.1.1,ractive@0.4.0,typeahead.js@0.10.2(bloodhound.min.js)"><\/script><script type="text/javascript" src="assets/js/build/app.min.js"><\/script>')
+				: document.write('<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@2.1.0,bootstrap@3.1.1,ractive@0.4.0,typeahead.js@0.10.2(bloodhound.min.js),requirejs@2.1.11" data-main="assets/js/src/main.js"><\/script>');
 		</script>
-
-		<!-- version list template -->
-		<script type="text/html" id="report-new-version-template">
-			<input type="text" class="form-control" id="new-version-email" placeholder="Please enter your e-mail address">
-		</script>
-
-		<!-- file list template -->
-		<script type="text/html" id="file-list-template">
-			<ol id="file-list">
-				{{#files:i}}
-					<li>
-						<input type="checkbox" class="checkbox primary" id="file{{i}}" value="{{this}}" checked="{{this === project.mainfile}}">
-						<label for="file{{i}}">{{this}}</label>
-					</li>
-				{{/files}}
-			</ol>
-		</script>
-
-		<!-- link list template -->
-		<script type="text/html" id="link-list-template">
-			<ul id="link-list">
-				{{#js}}
-					<li><strong>JS</strong></li>
-					<li><input type="text" class="form-control output" value='{{js}}' readonly></li>
-				{{/js}}
-
-				{{#css}}
-					<li><strong>CSS</strong></li>
-					<li><input type="text" class="form-control output" value='{{css}}' readonly></li>
-				{{/css}}
-
-				{{#others.length}}
-					<li><strong>Others</strong></li>
-					{{#others}}
-						<li><input type="text" class="form-control output" value='{{this}}' readonly></li>
-					{{/others}}
-				{{/others}}
-			</ul>
-		</script>
-
-		<!-- modal template -->
-		<script type="text/html" id="modal-template">
-			<div class="modal fade" role="dialog" id="{{id}}">
-				<div class="modal-dialog {{size}}">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-							<h4 class="modal-title">{{>title}}</h4>
-						</div>
-						<div class="modal-body">
-							{{>body}}
-						</div>
-
-						<div class="modal-footer">
-							{{>footer}}
-
-							{{#buttons:i}}
-								<button type="button" class="btn {{class}}" on-click="{{handler}}">{{label}}</button>
-							{{/buttons}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</script>
-
-		<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@2.1.0,bootstrap@3.1.1,ractive@0.4.0,typeahead.js@0.10.2(bloodhound.js)"></script>
-		<script type="text/javascript" src="assets/js/app.js"></script>
 	</body>
 </html>

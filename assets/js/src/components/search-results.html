@@ -1,0 +1,104 @@
+{{#projects:i}}
+	<div class="result item">
+		<div class="row">
+			<div class="col-md-6">
+				<h4>
+					<!-- TODO permalink instead of homepage -->
+					<a href="{{homepage}}" target="_blank">{{name}}</a>
+					<small class="btn-group">
+						(<a class="link" data-toggle="dropdown">{{selectedVersion}}</a>)
+						<versionList project="{{this}}"></versionList>
+					</small>
+				</h4>
+				<!-- TODO-LATER should show all projects from this author (custom search implementation required) -->
+				<small>by <a href="">{{author}}</a></small>
+			</div>
+			<div class="col-md-6 buttons">
+				<button class="btn btn-link btn-inverse gray" on-click="add:{{this}}"><i class="fa fa-check fa-2x"></i></button>
+				<button class="btn btn-link btn-inverse gray" on-click="download:{{this}}"><i class="fa fa-download fa-2x"></i></button>
+				<a class="btn btn-link btn-inverse gray" href="{{homepage}}" target="_blank"><i class="fa fa-home fa-2x"></i></a>
+				{{#github}}<a class="btn btn-link btn-inverse gray" href="{{github}}" target="_blank"><i class="fa fa-github fa-2x"></i></a>{{/github}}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<p>{{description}}</p>
+			</div>
+
+			<div class="file-list">
+				{{# {files: listFiles(this)} }}
+					<div class="col-md-12">
+						<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{files.0}}" readonly>
+					</div>
+
+					<div class="show-more-files" data-project-id="{{i}}">
+						{{#files:j}}
+							{{#j > 0}}
+								<div class="col-md-12">
+									<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}" readonly>
+								</div>
+							{{/}}
+						{{/files}}
+					</div>
+
+					<div class="col-md-12">
+						<button class="btn btn-link btn-inverse gray" on-click="toggle">
+							<i class="fa {{ showAll ? 'fa-angle-double-up' : 'fa-angle-double-down' }}"></i>
+						</button>
+					</div>
+				{{/}}
+			</div>
+		</div>
+	</div>
+{{/projects}}
+
+<script type="text/javascript">
+	var downloadHelper		= require('download');
+	var listFiles			= require('list-files');
+	var SelectFilesView		= require('rvc!components/select-files');
+	var versionList			= require('rvc!components/version-list');
+
+	component.exports		= {
+		'components': {
+			'versionList'	: versionList
+		},
+		'data'		: {
+			'app'		: {},
+			'listFiles'	: listFiles,
+			'projects'	: []
+		},
+		'init'		: function() {
+			var _this = this;
+
+			this.on({
+				'add'		: function(event, project) {
+					new SelectFilesView({
+						'data'	: {
+							'app'		: this.get('app'),
+							'project'	: project
+						}
+					});
+				},
+				'download'	: function(event, project) {
+					downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
+				},
+				'toggle'	: function(event) {
+					var $body		= $('body');
+					var $link		= $(event.node);
+					var $moreFiles	= $link.closest('.file-list').find('.show-more-files');
+					var keypath		= 'projects.' + $moreFiles.attr('data-project-id') + '.showAll';
+
+					$moreFiles.slideToggle(200, function() {
+						if($link.offset().top < $body.scrollTop()) {
+							$('body').animate({
+								'scrollTop': $link.closest('.item').offset().top - 10
+							});
+						}
+						_this.set(keypath, !_this.get(keypath));
+					});
+				}
+			})
+		}
+	}
+</script>

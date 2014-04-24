@@ -1,0 +1,43 @@
+<input type="text" id="search-input" class="form-control input-lg" placeholder="Search in more than {{count}} open source projects">
+<p style="text-align: center"><a class="link">Browse all projects</a></p>
+
+<script type="text/javascript">
+	component.exports = {
+		'computed'	: {
+			'count'	: function() {
+				// TODO-LATER
+				return Math.floor(JSON.parse(window.localStorage.getItem('__//api.jsdelivr.com/v1/jsdelivr/libraries__data')).datums.length / 50) * 50
+			}
+		},
+		'complete'	: function() {
+			var app				= this.get('app');
+			var $searchInput	= $('#search-input');
+			var bloodhound		= new Bloodhound({// TODO-LATER implement our own API-like search on client side (localStorage + https://github.com/pieroxy/lz-string/)
+				'datumTokenizer'	: function(project) {
+					return project.name.split(/[\s.-]+/g);
+				},
+				'limit'				: 10,
+				'prefetch'			: {
+					'url'	: '//api.jsdelivr.com/v1/jsdelivr/libraries',
+					'ttl'	: 3600000
+				},
+				'queryTokenizer'	: function(query) {
+					return query.split(/[\s.-]+/g);
+				}
+			});
+
+			bloodhound.initialize();
+
+			// update results on input
+			$searchInput.focus().on('input', function() {
+				bloodhound.get($searchInput.val(), function(list) {
+					// select the last version of the project by default
+					app.views.searchResults.set('projects', list.map(function(project) {
+						project.selectedVersion = project.lastversion;
+						return project;
+					}));
+				})
+			});
+		}
+	};
+</script>

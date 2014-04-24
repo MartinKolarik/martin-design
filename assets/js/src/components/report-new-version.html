@@ -1,0 +1,33 @@
+<modal id="{{id}}" title="{{title}}{{project.name}}" buttons="{{buttons}}" submit="{{submit}}">
+	<input type="text" class="form-control" id="new-version-email" placeholder="Please enter your e-mail address">
+</modal>
+
+<script type="text/javascript">
+	component.exports = {
+		'el'		: 'body',
+		'append'	: true,
+		'components': {
+			'modal'	: require('rvc!components/modal')
+		},
+		'data'		: {
+			'id'		: 'modal-report-new-version',
+			'title'		: 'Report a new version of ',
+			'project'	: {},
+			'buttons'	: [
+				{
+					'label'		: 'cancel',
+					'class'		: 'btn-default',
+					'handler'	: 'cancel'
+				},
+				{
+					'label'		: 'select',
+					'class'		: 'primary',
+					'handler'	: 'submit'
+				}
+			],
+			'submit'	: function() {
+				// TODO-LATER send the report
+			}
+		}
+	};
+</script>

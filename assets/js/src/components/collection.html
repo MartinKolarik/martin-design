@@ -1,0 +1,61 @@
+{{#projects.length}}
+	<header>
+		<h2>My collection</h2>
+	</header>
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			{{#projects:i}}
+				<div class="row item">
+					<div class="col-sm-12" style="line-height: 34px">
+						<a href="{{homepage}}">{{name}}</a>
+						<small class="btn-group">
+							(<a class="link" data-toggle="dropdown">{{selectedVersion}}</a>)
+							<versionList project="{{this}}" class="pull-right"></versionList>
+						</small>
+						<a class="btn pull-right primary btn-link btn-inverse" on-click="remove:{{i}}">Remove</a>
+					</div>
+				</div>
+			{{/projects}}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12" style="text-align: center">
+			<button class="btn primary btn-inverse" on-click="use">Use my collection</button>
+		</div>
+	</div>
+{{/projects}}
+
+<script type="text/javascript">
+	var LinksView		= require('rvc!components/links');
+	var linkBuilder		= require('build-links');
+	var versionList		= require('rvc!components/version-list');
+
+	component.exports	= {
+		'components': {
+			'versionList'	: versionList
+		},
+		'data'	: {
+			'app'		: {},
+			'projects'	: []
+		},
+		'init'	: function() {
+			var _this = this;
+
+			this.on({
+				'remove'	: function(event, index) {
+					_this.get('projects').splice(index, 1);
+				},
+				'use'		: function() {
+					new LinksView({
+						'data'	: {
+							'app'	: _this.get('app'),
+							'links'	: linkBuilder(_this.get('projects'))
+						}
+					});
+				}
+			});
+		}
+	};
+</script>

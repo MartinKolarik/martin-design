@@ -1,0 +1,41 @@
+{{#project}}
+	<ul class="dropdown-menu {{class}}" role="menu">
+		{{#versions:j}}
+			{{#this !== selectedVersion}}
+				<!-- ractive #621 -->
+				<li><a class="link" on-click="set:'{{#i}}projects.{{i}}.selectedVersion{{/i}}{{^i}}projects.0.selectedVersion{{/i}}',{{this}}">{{this}}</a></li>
+			{{/}}
+		{{/versions}}
+
+		{{#versions.length > 1}}<li class="divider"></li>{{/versions}}
+
+		<li><a class="link" on-click="reportNew:{{projects[i]}}">Found newer version?</a></li>
+	</ul>
+{{/project}}
+
+<script type="text/javascript">
+	var ReportNewVersionView	= require('rvc!components/report-new-version');
+
+	component.exports			= {
+		'data'	: {
+			'class'		: '',
+			'project'	: {}
+		},
+		'init'		: function() {
+			var _this = this;
+
+			this.on({
+				'reportNew'	: function(event, project) {
+					new ReportNewVersionView({
+						'data'	: {
+							'project'	: project
+						}
+					});
+				},
+				'set'		: function(event, keypath, value) {
+					_this.set(keypath, value);
+				}
+			})
+		}
+	};
+</script>

@@ -1,0 +1,73 @@
+<modal id="{{id}}" title="Your link{{#count > 1}}s{{/}}" size="{{size}}" links="{{links}}" submit="{{subscribe}}" email="{{email}}">
+	{{#links}}
+		<ul id="link-list">
+			{{#js}}
+				<li><strong>JS</strong></li>
+				<li><input type="text" class="form-control output" value='{{js}}' readonly></li>
+			{{/js}}
+
+			{{#css}}
+				<li><strong>CSS</strong></li>
+				<li><input type="text" class="form-control output" value='{{css}}' readonly></li>
+			{{/css}}
+
+			{{#others.length}}
+				<li><strong>Others</strong></li>
+				{{#others}}
+					<li><input type="text" class="form-control output" value='{{this}}' readonly></li>
+				{{/others}}
+			{{/others}}
+		</ul>
+
+		<div style="margin-top: 20px">
+			{{^subscribed}}
+				<strong>E-mail updates</strong>
+				<input type="text" class="form-control" value="{{email}}" placeholder="Enter your e-mail address if you want to receive updates">
+				<div style="text-align: center; margin-top: 30px">
+					<button class="btn primary btn-inverse" on-click="submit">Keep me updated</button>
+				</div>
+			{{/subscribed}}
+
+			{{#subscribed}}
+				<p style="text-align: center; margin-bottom: 0">We'll send you an e-mail to <a href="mailto:{{email}}">{{email}}</a>  when there is a new version available.</p>
+			{{/subscribed}}
+		</div>
+	{{/links}}
+</modal>
+
+<script type="text/javascript">
+	var modal			= require('rvc!components/modal');
+
+	component.exports	= {
+		'el'		: 'body',
+		'append'	: true,
+		'components': {
+			'modal'	: modal
+		},
+		'computed'	: {
+			'count'	: function() {
+				return !!this.get('links.css').length + !!this.get('links.js').length + this.get('links.others').length;
+			}
+		},
+		'data'		: {
+			'app'		: {},
+			'email'		: '',
+			'id'		: 'modal-links',
+			'links'		: {},
+			'size'		: 'modal-lg',
+			'subscribed': false
+		},
+		'init'		: function() {
+			var _this = this;
+
+			this.set('subscribe', function() {
+				if(/^[^@]+@[^@]+\.[a-z]{2,}$/i.test(_this.get('email'))) {
+					_this.set('subscribed', true);
+					// TODO-LATER
+				}
+
+				return false;
+			});
+		}
+	};
+</script>

@@ -58,6 +58,12 @@ footer li:first-child {
 .r-modal-open {
   overflow: hidden;
 }
+.modal-open {
+  margin-left: -17px;
+}
+#my-collection {
+  margin-top: 40px;
+}
 #search-input {
   border-top: none;
   border-left: none;
@@ -91,11 +97,17 @@ footer li:first-child {
 .result .buttons {
   text-align: right;
 }
+.file-list {
+  list-style: none;
+  padding-left: 0;
+  text-align: center;
+}
 #version-list,
 #file-list,
 #link-list {
   list-style: none;
   padding-left: 0;
+  margin-bottom: 0;
 }
 ::selection {
   color: #fff;
@@ -109,6 +121,20 @@ footer li:first-child {
 *:hover {
   outline-color: #e80c1f !important;
 }
-a.link {
+.link {
   cursor: pointer;
 }
+.show-more-files {
+  width: 100%;
+  display: none;
+}
+.container {
+  overflow: hidden;
+}
+/*.show-more {
+	color: @gray;
+
+	&:hover, &:focus {
+		color: darken(@gray, 5%);
+	}
+}/*/
