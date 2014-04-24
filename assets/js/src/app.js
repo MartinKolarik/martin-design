@@ -41,20 +41,23 @@ define([
 		'data'	: {
 			'app'		: app,
 			'projects'	: []
-		}
+		},
+		'twoway': false
 	});
 	app.views.searchInput	= new SearchInputView({
 		'el'	: '#search',
 		'data'	: {
 			'app'	: app
-		}
+		},
+		'twoway': false
 	});
 	app.views.searchResults	= new SearchResultsView({
 		'el'	: '#search-results',
 		'data'	: {
 			'app'		: app,
 			'projects'	: []
-		}
+		},
+		'twoway': false
 	});
 
 	// focus search form on CTRL + F
