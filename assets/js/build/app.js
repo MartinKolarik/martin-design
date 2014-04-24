@@ -587,6 +587,150 @@
 		}
 		return Ractive.extend(__options__);
 	}(ractive, rvc_components_modal);
+	var rvc_components_select_files = function(Ractive) {
+		var __options__ = {
+			template: [{
+					t: 7,
+					e: 'modal',
+					a: {
+						id: [{
+							t: 2,
+							r: 'id'
+						}],
+						title: [{
+							t: 2,
+							r: 'title'
+						}],
+						project: [{
+							t: 2,
+							r: 'project'
+						}],
+						buttons: [{
+							t: 2,
+							r: 'buttons'
+						}],
+						submit: [{
+							t: 2,
+							r: 'submit'
+						}]
+					},
+					f: [{
+						t: 7,
+						e: 'ol',
+						a: {
+							id: ['file-list']
+						},
+						f: [{
+							t: 4,
+							r: 'files',
+							i: 'i',
+							f: [
+								' ', {
+									t: 7,
+									e: 'li',
+									f: [{
+											t: 7,
+											e: 'input',
+											a: {
+												type: ['checkbox'],
+												'class': ['checkbox primary'],
+												id: [
+													'file', {
+														t: 2,
+														r: 'i'
+													}
+												],
+												value: [{
+													t: 2,
+													r: '.'
+												}],
+												checked: [{
+													t: 2,
+													x: {
+														r: [
+															'.',
+															'project.mainfile'
+														],
+														s: '${0}===${1}'
+													}
+												}]
+											}
+										},
+										' ', {
+											t: 7,
+											e: 'label',
+											a: {
+												'for': [
+													'file', {
+														t: 2,
+														r: 'i'
+													}
+												]
+											},
+											f: [{
+												t: 2,
+												r: '.'
+											}]
+										}
+									]
+								},
+								' '
+							]
+						}]
+					}]
+				},
+				' '
+			]
+		}, component = {};
+		var modal = rvc_components_modal;
+		component.exports = {
+			'el': 'body',
+			'append': true,
+			'components': {
+				'modal': modal
+			},
+			'data': {
+				'callback': null,
+				'id': 'modal-select-files',
+				'title': 'Select files to include',
+				'project': {},
+				'buttons': [{
+					'label': 'cancel',
+					'class': 'btn-default',
+					'handler': 'cancel'
+				}, {
+					'label': 'select',
+					'class': 'primary',
+					'handler': 'submit'
+				}]
+			},
+			'init': function() {
+				var _this = this;
+				var selectedVersion = this.get('project').selectedVersion;
+				this.set('files', this.get('project').assets.filter(function(asset) {
+					return asset.version === selectedVersion;
+				})[0].files);
+				this.set('submit', function() {
+					var files = Array.prototype.slice.call($('#' + _this.get('id')).find('input:checked')).map(function(element) {
+						return element.value;
+					});
+					if (files.length && typeof this.get('callback') === 'function') {
+						this.get('callback')($.extend($.extend(true, {}, _this.get('project')), {
+							'selectedFiles': files
+						}));
+					}
+				});
+			}
+		};
+		if (typeof component.exports === 'object') {
+			for (__prop__ in component.exports) {
+				if (component.exports.hasOwnProperty(__prop__)) {
+					__options__[__prop__] = component.exports[__prop__];
+				}
+			}
+		}
+		return Ractive.extend(__options__);
+	}(ractive, rvc_components_modal);
 	var rvc_components_version_list = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -716,9 +860,11 @@
 			}]
 		}, component = {};
 		var ReportNewVersionView = rvc_components_report_new_version;
+		var SelectFilesView = rvc_components_select_files;
 		component.exports = {
 			'data': {
 				'class': '',
+				'index': null,
 				'project': {}
 			},
 			'init': function() {
@@ -733,6 +879,29 @@
 					},
 					'set': function(event, keypath, value) {
 						_this.set(keypath, value);
+						var project = this.get('project');
+						var assets = project.assets.filter(function(assets) {
+							return assets.version === project.selectedVersion;
+						})[0];
+						var x;
+						// reselect files if some of them are not available in this version
+						for (x in project.selectedFiles) {
+							if (project.selectedFiles.hasOwnProperty(x)) {
+								if (assets.files.indexOf(project.selectedFiles[x]) === -1) {
+									_this.get('app').views.collection.get('projects').splice(_this.get('index'), 1);
+									new SelectFilesView({
+										'data': {
+											'app': this.get('app'),
+											'project': project,
+											'callback': function(project) {
+												_this.get('app').views.collection.get('projects').push(project);
+											}
+										}
+									});
+									break;
+								}
+							}
+						}
 					}
 				});
 			}
@@ -745,7 +914,7 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, rvc_components_report_new_version);
+	}(ractive, rvc_components_report_new_version, rvc_components_select_files);
 	var rvc_components_collection = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -831,6 +1000,10 @@
 																project: [{
 																	t: 2,
 																	r: '.'
+																}],
+																index: [{
+																	t: 2,
+																	r: 'i'
 																}],
 																'class': ['pull-right']
 															}
@@ -976,7 +1149,6 @@
 				var app = this.get('app');
 				var $searchInput = $('#search-input');
 				var bloodhound = new Bloodhound({
-					// TODO-LATER implement our own API-like search on client side (localStorage + https://github.com/pieroxy/lz-string/)
 					'datumTokenizer': function(project) {
 						return project.name.split(/[\s.-]+/g);
 					},
@@ -1042,149 +1214,6 @@
 			return a > b || -1;
 		});
 	};
-	var rvc_components_select_files = function(Ractive) {
-		var __options__ = {
-			template: [{
-					t: 7,
-					e: 'modal',
-					a: {
-						id: [{
-							t: 2,
-							r: 'id'
-						}],
-						title: [{
-							t: 2,
-							r: 'title'
-						}],
-						project: [{
-							t: 2,
-							r: 'project'
-						}],
-						buttons: [{
-							t: 2,
-							r: 'buttons'
-						}],
-						submit: [{
-							t: 2,
-							r: 'submit'
-						}]
-					},
-					f: [{
-						t: 7,
-						e: 'ol',
-						a: {
-							id: ['file-list']
-						},
-						f: [{
-							t: 4,
-							r: 'files',
-							i: 'i',
-							f: [
-								' ', {
-									t: 7,
-									e: 'li',
-									f: [{
-											t: 7,
-											e: 'input',
-											a: {
-												type: ['checkbox'],
-												'class': ['checkbox primary'],
-												id: [
-													'file', {
-														t: 2,
-														r: 'i'
-													}
-												],
-												value: [{
-													t: 2,
-													r: '.'
-												}],
-												checked: [{
-													t: 2,
-													x: {
-														r: [
-															'.',
-															'project.mainfile'
-														],
-														s: '${0}===${1}'
-													}
-												}]
-											}
-										},
-										' ', {
-											t: 7,
-											e: 'label',
-											a: {
-												'for': [
-													'file', {
-														t: 2,
-														r: 'i'
-													}
-												]
-											},
-											f: [{
-												t: 2,
-												r: '.'
-											}]
-										}
-									]
-								},
-								' '
-							]
-						}]
-					}]
-				},
-				' '
-			]
-		}, component = {};
-		var modal = rvc_components_modal;
-		component.exports = {
-			'el': 'body',
-			'append': true,
-			'components': {
-				'modal': modal
-			},
-			'data': {
-				'id': 'modal-select-files',
-				'title': 'Select files to include',
-				'project': {},
-				'buttons': [{
-					'label': 'cancel',
-					'class': 'btn-default',
-					'handler': 'cancel'
-				}, {
-					'label': 'select',
-					'class': 'primary',
-					'handler': 'submit'
-				}]
-			},
-			'init': function() {
-				var _this = this;
-				var selectedVersion = this.get('project').selectedVersion;
-				this.set('files', this.get('project').assets.filter(function(asset) {
-					return asset.version === selectedVersion;
-				})[0].files);
-				this.set('submit', function() {
-					var files = Array.prototype.slice.call($('#' + _this.get('id')).find('input:checked')).map(function(element) {
-						return element.value;
-					});
-					if (files.length) {
-						_this.get('app').views.collection.get('projects').push($.extend(true, {
-							'selectedFiles': files
-						}, _this.get('project')));
-					}
-				});
-			}
-		};
-		if (typeof component.exports === 'object') {
-			for (__prop__ in component.exports) {
-				if (component.exports.hasOwnProperty(__prop__)) {
-					__options__[__prop__] = component.exports[__prop__];
-				}
-			}
-		}
-		return Ractive.extend(__options__);
-	}(ractive, rvc_components_modal);
 	var rvc_components_search_results = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -1574,7 +1603,10 @@
 						new SelectFilesView({
 							'data': {
 								'app': this.get('app'),
-								'project': project
+								'project': project,
+								'callback': function(project) {
+									_this.get('app').views.collection.get('projects').push(project);
+								}
 							}
 						});
 					},

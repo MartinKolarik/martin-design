@@ -12,7 +12,7 @@
 		'complete'	: function() {
 			var app				= this.get('app');
 			var $searchInput	= $('#search-input');
-			var bloodhound		= new Bloodhound({// TODO-LATER implement our own API-like search on client side (localStorage + https://github.com/pieroxy/lz-string/)
+			var bloodhound		= new Bloodhound({
 				'datumTokenizer'	: function(project) {
 					return project.name.split(/[\s.-]+/g);
 				},

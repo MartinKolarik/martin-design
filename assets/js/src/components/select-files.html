@@ -19,6 +19,7 @@
 			'modal'	: modal
 		},
 		'data'		: {
+			'callback'	: null,
 			'id'		: 'modal-select-files',
 			'title'		: 'Select files to include',
 			'project'	: {},
@@ -50,11 +51,10 @@
 						return element.value
 					});
 
-				if(files.length) {
-					_this.get('app').views.collection.get('projects').push($.extend(true, {
-							'selectedFiles'	: files
-						}, _this.get('project')
-					));
+				if(files.length && typeof this.get('callback') === 'function') {
+					this.get('callback')($.extend($.extend(true, {}, _this.get('project')), {
+						'selectedFiles'	: files
+					}));
 				}
 			});
 		}

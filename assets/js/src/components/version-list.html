@@ -15,10 +15,12 @@
 
 <script type="text/javascript">
 	var ReportNewVersionView	= require('rvc!components/report-new-version');
+	var SelectFilesView			= require('rvc!components/select-files');
 
 	component.exports			= {
 		'data'	: {
 			'class'		: '',
+			'index'		: null,
 			'project'	: {}
 		},
 		'init'		: function() {
@@ -34,6 +36,33 @@
 				},
 				'set'		: function(event, keypath, value) {
 					_this.set(keypath, value);
+
+					var project	= this.get('project');
+					var assets	= project.assets.filter(function(assets) {
+						return assets.version === project.selectedVersion;
+					})[0];
+					var x;
+
+					// reselect files if some of them are not available in this version
+					for(x in project.selectedFiles) {
+						if(project.selectedFiles.hasOwnProperty(x)) {
+							if(assets.files.indexOf(project.selectedFiles[x]) === -1) {
+								_this.get('app').views.collection.get('projects').splice(_this.get('index'), 1);
+
+								new SelectFilesView({
+									'data'	: {
+										'app'		: this.get('app'),
+										'project'	: project,
+										'callback'	: function(project) {
+											_this.get('app').views.collection.get('projects').push(project);
+										}
+									}
+								});
+
+								break;
+							}
+						}
+					}
 				}
 			})
 		}

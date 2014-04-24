@@ -76,7 +76,10 @@
 					new SelectFilesView({
 						'data'	: {
 							'app'		: this.get('app'),
-							'project'	: project
+							'project'	: project,
+							'callback'	: function(project) {
+								_this.get('app').views.collection.get('projects').push(project);
+							}
 						}
 					});
 				},
