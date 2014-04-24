@@ -1478,98 +1478,108 @@
 													}]
 												},
 												' ', {
-													t: 7,
-													e: 'div',
-													a: {
-														'class': ['show-more-files'],
-														'data-project-id': [{
-															t: 2,
-															r: 'i'
-														}]
+													t: 4,
+													x: {
+														r: ['files.length'],
+														s: '${0}>1'
 													},
-													f: [{
-														t: 4,
-														r: 'files',
-														i: 'j',
-														f: [
-															' ', {
+													f: [
+														' ', {
+															t: 7,
+															e: 'div',
+															a: {
+																'class': ['show-more-files'],
+																'data-project-id': [{
+																	t: 2,
+																	r: 'i'
+																}]
+															},
+															f: [{
 																t: 4,
-																x: {
-																	r: ['j'],
-																	s: '${0}>0'
-																},
+																r: 'files',
+																i: 'j',
 																f: [
 																	' ', {
-																		t: 7,
-																		e: 'div',
-																		a: {
-																			'class': ['col-md-12']
+																		t: 4,
+																		x: {
+																			r: ['j'],
+																			s: '${0}>0'
 																		},
-																		f: [{
-																			t: 7,
-																			e: 'input',
-																			a: {
-																				type: ['text'],
-																				'class': ['form-control output'],
-																				value: [{
-																						t: 2,
-																						r: 'app.cdnRoot'
-																					},
-																					'/', {
-																						t: 2,
-																						r: 'name'
-																					},
-																					'/', {
-																						t: 2,
-																						r: 'selectedVersion'
-																					},
-																					'/', {
-																						t: 2,
-																						r: '.'
+																		f: [
+																			' ', {
+																				t: 7,
+																				e: 'div',
+																				a: {
+																					'class': ['col-md-12']
+																				},
+																				f: [{
+																					t: 7,
+																					e: 'input',
+																					a: {
+																						type: ['text'],
+																						'class': ['form-control output'],
+																						value: [{
+																								t: 2,
+																								r: 'app.cdnRoot'
+																							},
+																							'/', {
+																								t: 2,
+																								r: 'name'
+																							},
+																							'/', {
+																								t: 2,
+																								r: 'selectedVersion'
+																							},
+																							'/', {
+																								t: 2,
+																								r: '.'
+																							}
+																						],
+																						readonly: null
 																					}
-																				],
-																				readonly: null
-																			}
-																		}]
+																				}]
+																			},
+																			' '
+																		]
 																	},
 																	' '
 																]
-															},
-															' '
-														]
-													}]
-												},
-												' ', {
-													t: 7,
-													e: 'div',
-													a: {
-														'class': ['col-md-12']
-													},
-													f: [{
-														t: 7,
-														e: 'button',
-														a: {
-															'class': ['btn btn-link btn-inverse gray']
+															}]
 														},
-														f: [{
+														' ', {
 															t: 7,
-															e: 'i',
+															e: 'div',
 															a: {
-																'class': [
-																	'fa ', {
-																		t: 2,
-																		x: {
-																			r: ['showAll'],
-																			s: '${0}?"fa-angle-double-up":"fa-angle-double-down"'
-																		}
+																'class': ['col-md-12']
+															},
+															f: [{
+																t: 7,
+																e: 'button',
+																a: {
+																	'class': ['btn btn-link btn-inverse gray']
+																},
+																f: [{
+																	t: 7,
+																	e: 'i',
+																	a: {
+																		'class': [
+																			'fa ', {
+																				t: 2,
+																				x: {
+																					r: ['showAll'],
+																					s: '${0}?"fa-angle-double-up":"fa-angle-double-down"'
+																				}
+																			}
+																		]
 																	}
-																]
-															}
-														}],
-														v: {
-															click: 'toggle'
-														}
-													}]
+																}],
+																v: {
+																	click: 'toggle'
+																}
+															}]
+														},
+														' '
+													]
 												},
 												' '
 											]

@@ -32,21 +32,23 @@
 						<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{files.0}}" readonly>
 					</div>
 
-					<div class="show-more-files" data-project-id="{{i}}">
-						{{#files:j}}
-							{{#j > 0}}
-								<div class="col-md-12">
-									<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}" readonly>
-								</div>
-							{{/}}
-						{{/files}}
-					</div>
+					{{#files.length > 1}}
+						<div class="show-more-files" data-project-id="{{i}}">
+							{{#files:j}}
+								{{#j > 0}}
+									<div class="col-md-12">
+										<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}" readonly>
+									</div>
+								{{/}}
+							{{/files}}
+						</div>
 
-					<div class="col-md-12">
-						<button class="btn btn-link btn-inverse gray" on-click="toggle">
-							<i class="fa {{ showAll ? 'fa-angle-double-up' : 'fa-angle-double-down' }}"></i>
-						</button>
-					</div>
+						<div class="col-md-12">
+							<button class="btn btn-link btn-inverse gray" on-click="toggle">
+								<i class="fa {{ showAll ? 'fa-angle-double-up' : 'fa-angle-double-down' }}"></i>
+							</button>
+						</div>
+					{{/files}}
 				{{/}}
 			</div>
 		</div>
