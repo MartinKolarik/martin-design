@@ -14,10 +14,10 @@
 				<small>by <a href="">{{author}}</a></small>
 			</div>
 			<div class="col-md-6 buttons">
-				<button class="btn btn-link btn-inverse gray" on-click="add:{{this}}"><i class="fa fa-check fa-2x"></i></button>
-				<button class="btn btn-link btn-inverse gray" on-click="download:{{this}}"><i class="fa fa-download fa-2x"></i></button>
-				<a class="btn btn-link btn-inverse gray" href="{{homepage}}" target="_blank"><i class="fa fa-home fa-2x"></i></a>
-				{{#github}}<a class="btn btn-link btn-inverse gray" href="{{github}}" target="_blank"><i class="fa fa-github fa-2x"></i></a>{{/github}}
+				<button class="btn btn-link btn-inverse gray" on-click="add:{{this}}" decorator="tooltip: Add to collection"><i class="fa fa-check fa-2x"></i></button>
+				<button class="btn btn-link btn-inverse gray" on-click="download:{{this}}" decorator="tooltip: Download"><i class="fa fa-download fa-2x"></i></button>
+				<a class="btn btn-link btn-inverse gray" href="{{homepage}}" target="_blank" decorator="tooltip: Homepage"><i class="fa fa-home fa-2x"></i></a>
+				{{#github}}<a class="btn btn-link btn-inverse gray" href="{{github}}" target="_blank" decorator="tooltip: GitHub"><i class="fa fa-github fa-2x"></i></a>{{/github}}
 			</div>
 		</div>
 
@@ -44,7 +44,7 @@
 						</div>
 
 						<div class="col-md-12">
-							<button class="btn btn-link btn-inverse gray" on-click="toggle">
+							<button class="btn btn-link btn-inverse gray" on-click="toggle" decorator="tooltip: {{showAll ? 'Show less files' : 'Show all files'}}">
 								<i class="fa {{ showAll ? 'fa-angle-double-up' : 'fa-angle-double-down' }}"></i>
 							</button>
 						</div>
@@ -59,6 +59,7 @@
 	var downloadHelper		= require('download');
 	var listFiles			= require('list-files');
 	var SelectFilesView		= require('rvc!components/select-files');
+	var tooltipDecorator	= require('decorators/tooltip');
 	var versionList			= require('rvc!components/version-list');
 
 	component.exports		= {
@@ -69,6 +70,9 @@
 			'app'		: {},
 			'listFiles'	: listFiles,
 			'projects'	: []
+		},
+		'decorators': {
+			'tooltip'	: tooltipDecorator
 		},
 		'init'		: function() {
 			var _this = this;
