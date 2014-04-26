@@ -964,18 +964,8 @@
 												'class': ['col-sm-12 collection-item']
 											},
 											f: [{
-													t: 7,
-													e: 'a',
-													a: {
-														href: [{
-															t: 2,
-															r: 'homepage'
-														}]
-													},
-													f: [{
-														t: 2,
-														r: 'name'
-													}]
+													t: 2,
+													r: 'name'
 												},
 												' ', {
 													t: 7,
@@ -1752,7 +1742,7 @@
 																			t: 2,
 																			x: {
 																				r: ['showAll'],
-																				s: '${0}?"Show less files":"Show all files"'
+																				s: '${0}?"Show only main file":"Show all files"'
 																			}
 																		}
 																	]
