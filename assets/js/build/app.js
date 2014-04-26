@@ -135,19 +135,19 @@
 			},
 			'complete': function() {
 				var _this = this;
-				$('#' + this.data.id).modal().on('hidden.bs.modal', function() {
+				$('#' + this.get('id')).modal().on('hidden.bs.modal', function() {
 					$(this).remove();
 					_this.teardown();
 				});
 				this.on({
 					'cancel': function() {
-						if (_this.data.cancel.call(_this) !== false) {
-							$('#' + _this.data.id).modal('hide');
+						if (_this.get('cancel').call(_this) !== false) {
+							$('#' + _this.get('id')).modal('hide');
 						}
 					},
 					'submit': function() {
-						if (_this.data.submit.call(_this) !== false) {
-							$('#' + _this.data.id).modal('hide');
+						if (_this.get('submit').call(_this) !== false) {
+							$('#' + _this.get('id')).modal('hide');
 						}
 					}
 				});
@@ -232,9 +232,14 @@
 														type: ['text'],
 														'class': ['form-control output'],
 														value: [{
-															t: 2,
-															r: 'js'
-														}],
+																t: 2,
+																r: 'app.cdnRoot'
+															},
+															'/', {
+																t: 2,
+																r: 'js'
+															}
+														],
 														readonly: null
 													}
 												}]
@@ -265,9 +270,14 @@
 														type: ['text'],
 														'class': ['form-control output'],
 														value: [{
-															t: 2,
-															r: 'css'
-														}],
+																t: 2,
+																r: 'app.cdnRoot'
+															},
+															'/', {
+																t: 2,
+																r: 'css'
+															}
+														],
 														readonly: null
 													}
 												}]
@@ -302,9 +312,14 @@
 																type: ['text'],
 																'class': ['form-control output'],
 																value: [{
-																	t: 2,
-																	r: '.'
-																}],
+																		t: 2,
+																		r: 'app.cdnRoot'
+																	},
+																	'/', {
+																		t: 2,
+																		r: '.'
+																	}
+																],
 																readonly: null
 															}
 														}]
@@ -321,7 +336,7 @@
 								t: 7,
 								e: 'div',
 								a: {
-									style: ['margin-top: 20px']
+									'class': ['email-updates']
 								},
 								f: [{
 										t: 4,
@@ -349,9 +364,6 @@
 											' ', {
 												t: 7,
 												e: 'div',
-												a: {
-													style: ['text-align: center; margin-top: 30px']
-												},
 												f: [{
 													t: 7,
 													e: 'button',
@@ -374,9 +386,6 @@
 											' ', {
 												t: 7,
 												e: 'p',
-												a: {
-													style: ['text-align: center; margin-bottom: 0']
-												},
 												f: [
 													'We\'ll send you an e-mail to ', {
 														t: 7,
@@ -427,16 +436,13 @@
 				'id': 'modal-links',
 				'links': {},
 				'size': 'modal-lg',
-				'subscribed': false
-			},
-			'init': function() {
-				var _this = this;
-				this.set('subscribe', function() {
-					if (/^[^@]+@[^@]+\.[a-z]{2,}$/i.test(_this.get('email'))) {
-						_this.set('subscribed', true);
+				'subscribed': false,
+				'subscribe': function() {
+					if (/^[^@]+@[^@]+\.[a-z]{2,}$/i.test(this.get('email'))) {
+						this.set('subscribed', true);
 					}
 					return false;
-				});
+				}
 			}
 		};
 		if (typeof component.exports === 'object') {
@@ -449,70 +455,54 @@
 		return Ractive.extend(__options__);
 	}(ractive, rvc_components_modal);
 	var build_links = function(collection) {
-		// TODO complete refactoring
-		var cssTemplate = '<link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/{{href}}">';
-		var jsTemplate = '<script type="text/javascript" src="//cdn.jsdelivr.net/{{src}}"></script>';
-		var css = [];
-		var js = [];
-		var others = [];
 		var isCss = /\.css$/i;
 		var isJs = /\.js$/i;
-		// one file
-		if (collection.length === 1 && collection[0].selectedFiles.length === 1) {
-			if (isCss.test(collection[0].selectedFiles[0])) {
-				css = cssTemplate.replace('{{href}}', collection[0].name + '/' + collection[0].selectedVersion + '/' + collection[0].selectedFiles[0]);
-			} else if (isJs.test(collection[0].selectedFiles[0])) {
-				js = jsTemplate.replace('{{src}}', collection[0].name + '/' + collection[0].selectedVersion + '/' + collection[0].selectedFiles[0]);
-			} else {
-				others.push('//cdn.jsdelivr.net/' + collection[0].selectedFiles);
-			}
-		} else {
-			// each project in collection
-			for (var i = 0, c = collection.length; i < c; i++) {
-				var cssFiles = [];
-				var jsFiles = [];
-				var otherFiles = [];
-				// each file in project
-				for (var j = 0, d = collection[i].selectedFiles.length; j < d; j++) {
-					if (isCss.test(collection[i].selectedFiles[j])) {
-						cssFiles.push(collection[i].selectedFiles[j]);
-					} else if (isJs.test(collection[i].selectedFiles[j])) {
-						jsFiles.push(collection[i].selectedFiles[j]);
-					} else {
-						otherFiles.push('//cdn.jsdelivr.net/' + collection[i].selectedFiles[j]);
-					}
+		var others = [];
+		var cssCount = 0;
+		var jsCount = 0;
+		// count CSS and JS files and process other files
+		for (var i = collection.length - 1; i >= 0; i--) {
+			for (var j = collection[i].selectedFiles.length - 1; j >= 0; j--) {
+				if (isCss.test(collection[i].selectedFiles[j])) {
+					cssCount++;
+				} else if (isJs.test(collection[i].selectedFiles[j])) {
+					jsCount++;
+				} else {
+					// no further processing needed
+					others.push(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
 				}
-				if (cssFiles.length === 1 && cssFiles[0] === collection[i].mainfile) {
-					css.push(collection[i].name + '@' + collection[i].selectedVersion);
-				} else if (cssFiles.length) {
-					css.push(collection[i].name + '@' + collection[i].selectedVersion + '(' + cssFiles.join('+') + ')');
-				}
-				if (jsFiles.length === 1 && jsFiles[0] === collection[i].mainfile) {
-					js.push(collection[i].name + '@' + collection[i].selectedVersion);
-				} else if (jsFiles.length) {
-					js.push(collection[i].name + '@' + collection[i].selectedVersion + '(' + jsFiles.join('+') + ')');
-				}
-				if (otherFiles.length) {
-					others.push.apply(others, otherFiles);
-				}
-			}
-			/*if(css.length === 1) {
-        		css	= cssTemplate.replace('{{href}}', css[0]);
-        	} else */
-			/*if(css.length) {
-        				css	= cssTemplate.replace('{{href}}', 'g/' + css.join(','));
-        			}
-        
-        			/*if(js.length === 1) {
-        				js	= jsTemplate.replace('{{src}}', js[0]);
-        			} else */
-			{
-				js = jsTemplate.replace('{{src}}', 'g/' + js.join(','));
 			}
 		}
+
+		function buildLink(projects, filter, merge) {
+			var chunks = [];
+			// each project
+			for (var i = 0, c = projects.length; i < c; i++) {
+				var projectFiles = [];
+				// each file
+				for (var j = 0, d = projects[i].selectedFiles.length; j < d; j++) {
+					if (filter.test(projects[i].selectedFiles[j])) {
+						// there is ony one file of this type
+						if (!merge) {
+							return projects[i].name + '/' + projects[i].selectedVersion + '/' + projects[i].selectedFiles[j];
+						}
+						projectFiles.push(projects[i].selectedFiles[j]);
+					}
+				}
+				if (projectFiles.length) {
+					var temp = projects[i].name + '@' + projects[i].selectedVersion;
+					// no need to create a list of files if there is only the mainfile
+					if (projectFiles.length !== 1 || projectFiles[0] !== projects[i].mainfile) {
+						temp += '(' + projectFiles.join('+') + ')';
+					}
+					chunks.push(temp);
+				}
+			}
+			return chunks.length ? 'g/' + chunks.join(',') : '';
+		}
 		return {
-			'css': css,
-			'js': js,
+			'css': buildLink(collection, isCss, cssCount > 1),
+			'js': buildLink(collection, isJs, jsCount > 1),
 			'others': others
 		};
 	};
@@ -587,6 +577,30 @@
 		}
 		return Ractive.extend(__options__);
 	}(ractive, rvc_components_modal);
+	var list_files = function(project) {
+		var files = project.assets.filter(function(assets) {
+			return assets.version === project.selectedVersion;
+		})[0].files;
+		// main file, min.* files, everything else
+		return files.sort(function(a, b) {
+			if (a === project.mainfile) {
+				return -1;
+			}
+			if (b === project.mainfile) {
+				return 1;
+			}
+			if (/[._-]min./i.test(a)) {
+				if (/[._-]min./i.test(b)) {
+					return a > b || -1;
+				}
+				return -1;
+			}
+			if (/[._-]min./i.test(b)) {
+				return 1;
+			}
+			return a > b || -1;
+		});
+	};
 	var rvc_components_select_files = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -622,8 +636,14 @@
 						},
 						f: [{
 							t: 4,
-							r: 'files',
 							i: 'i',
+							x: {
+								r: [
+									'listFiles',
+									'project'
+								],
+								s: '${0}(${1})'
+							},
 							f: [
 								' ', {
 									t: 7,
@@ -682,6 +702,7 @@
 				' '
 			]
 		}, component = {};
+		var listFiles = list_files;
 		var modal = rvc_components_modal;
 		component.exports = {
 			'el': 'body',
@@ -692,6 +713,7 @@
 			'data': {
 				'callback': null,
 				'id': 'modal-select-files',
+				'listFiles': listFiles,
 				'title': 'Select files to include',
 				'project': {},
 				'buttons': [{
@@ -702,24 +724,17 @@
 					'label': 'select',
 					'class': 'primary',
 					'handler': 'submit'
-				}]
-			},
-			'init': function() {
-				var _this = this;
-				var selectedVersion = this.get('project').selectedVersion;
-				this.set('files', this.get('project').assets.filter(function(asset) {
-					return asset.version === selectedVersion;
-				})[0].files);
-				this.set('submit', function() {
-					var files = Array.prototype.slice.call($('#' + _this.get('id')).find('input:checked')).map(function(element) {
+				}],
+				'submit': function() {
+					var files = Array.prototype.slice.call($('#' + this.get('id')).find('input:checked')).map(function(element) {
 						return element.value;
 					});
 					if (files.length && typeof this.get('callback') === 'function') {
-						this.get('callback')($.extend($.extend(true, {}, _this.get('project')), {
+						this.get('callback')($.extend($.extend(true, {}, this.get('project')), {
 							'selectedFiles': files
 						}));
 					}
-				});
+				}
 			}
 		};
 		if (typeof component.exports === 'object') {
@@ -730,7 +745,7 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, rvc_components_modal);
+	}(ractive, list_files, rvc_components_modal);
 	var rvc_components_version_list = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -780,24 +795,14 @@
 													v: {
 														click: {
 															n: 'set',
-															d: [
-																'\'', {
-																	t: 4,
-																	r: 'i',
-																	f: [
-																		'projects.', {
-																			t: 2,
-																			r: 'i'
-																		},
-																		'.selectedVersion'
-																	]
-																}, {
-																	t: 4,
-																	r: 'i',
-																	n: true,
-																	f: 'projects.0.selectedVersion'
+															d: [{
+																	t: 2,
+																	x: {
+																		r: ['i'],
+																		s: '"projects."+${0}+".selectedVersion"'
+																	}
 																},
-																'\',', {
+																',', {
 																	t: 2,
 																	r: '.'
 																}
@@ -957,8 +962,7 @@
 											t: 7,
 											e: 'div',
 											a: {
-												'class': ['col-sm-12'],
-												style: ['line-height: 34px']
+												'class': ['col-sm-12 collection-item']
 											},
 											f: [{
 													t: 7,
@@ -1190,29 +1194,18 @@
 		}
 		$iframe.attr('src', url);
 	};
-	var list_files = function(project) {
-		var files = project.assets.filter(function(assets) {
-			return assets.version === project.selectedVersion;
-		})[0].files;
-		// main file, min.* files, everything else
-		return files.sort(function(a, b) {
-			if (a === project.mainfile) {
-				return -1;
-			}
-			if (b === project.mainfile) {
-				return 1;
-			}
-			if (/[._-]min./i.test(a)) {
-				if (/[._-]min./i.test(b)) {
-					return a > b || -1;
-				}
-				return -1;
-			}
-			if (/[._-]min./i.test(b)) {
-				return 1;
-			}
-			return a > b || -1;
+	var decorators_tooltip = function(node, title, placement, trigger, container) {
+		var $node = $(node).tooltip({
+			'title': title,
+			'placement': placement || 'top',
+			'trigger': trigger || 'hover',
+			'container': container || 'body'
 		});
+		return {
+			'teardown': function() {
+				$node.tooltip('destroy');
+			}
+		};
 	};
 	var rvc_components_search_results = function(Ractive) {
 		var __options__ = {
@@ -1336,6 +1329,10 @@
 															r: '.'
 														}]
 													}
+												},
+												o: {
+													n: 'tooltip',
+													a: ' Add to collection'
 												}
 											},
 											' ', {
@@ -1359,6 +1356,10 @@
 															r: '.'
 														}]
 													}
+												},
+												o: {
+													n: 'tooltip',
+													a: ' Download'
 												}
 											},
 											' ', {
@@ -1378,7 +1379,11 @@
 													a: {
 														'class': ['fa fa-home fa-2x']
 													}
-												}]
+												}],
+												o: {
+													n: 'tooltip',
+													a: ' Homepage'
+												}
 											},
 											' ', {
 												t: 4,
@@ -1400,7 +1405,11 @@
 														a: {
 															'class': ['fa fa-github fa-2x']
 														}
-													}]
+													}],
+													o: {
+														n: 'tooltip',
+														a: ' GitHub'
+													}
 												}]
 											}
 										]
@@ -1575,6 +1584,18 @@
 																}],
 																v: {
 																	click: 'toggle'
+																},
+																o: {
+																	n: 'tooltip',
+																	d: [
+																		' ', {
+																			t: 2,
+																			x: {
+																				r: ['showAll'],
+																				s: '${0}?"Show less files":"Show all files"'
+																			}
+																		}
+																	]
 																}
 															}]
 														},
@@ -1596,6 +1617,7 @@
 		var downloadHelper = download;
 		var listFiles = list_files;
 		var SelectFilesView = rvc_components_select_files;
+		var tooltipDecorator = decorators_tooltip;
 		var versionList = rvc_components_version_list;
 		component.exports = {
 			'components': {
@@ -1605,6 +1627,9 @@
 				'app': {},
 				'listFiles': listFiles,
 				'projects': []
+			},
+			'decorators': {
+				'tooltip': tooltipDecorator
 			},
 			'init': function() {
 				var _this = this;
@@ -1648,7 +1673,7 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, download, list_files, rvc_components_select_files, rvc_components_version_list);
+	}(ractive, download, list_files, rvc_components_select_files, decorators_tooltip, rvc_components_version_list);
 	var app = function(CollectionView, LinksView, Modal, ReportNewVersionView, SearchInputView, SearchResultsView, SelectFilesView, versionList) {
 		// we'll need these later
 		var $body = $('body');

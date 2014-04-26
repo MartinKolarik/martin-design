@@ -2,8 +2,7 @@
 	<ul class="dropdown-menu {{class}}" role="menu">
 		{{#versions:j}}
 			{{#this !== selectedVersion}}
-				<!-- ractive #621 -->
-				<li><a class="link" on-click="set:'{{#i}}projects.{{i}}.selectedVersion{{/i}}{{^i}}projects.0.selectedVersion{{/i}}',{{this}}">{{this}}</a></li>
+				<li><a class="link" on-click="set:{{'projects.' + i + '.selectedVersion'}},{{this}}">{{this}}</a></li>
 			{{/}}
 		{{/versions}}
 

@@ -83,7 +83,6 @@ footer {
 	border-right: none;
 	padding-left: 0;
 	padding-right: 0;
-
 	height: 50px;
 	font-size: 20px;
 	line-height: 25px;
@@ -126,10 +125,30 @@ footer {
 }
 
 // version list
-#version-list, #file-list, #link-list {
+#file-list, #link-list {
 	list-style: none;
 	padding-left: 0;
 	margin-bottom: 0;
+}
+
+// collection items
+.collection-item {
+	line-height: 34px;
+}
+
+// email-updates
+.email-updates {
+	margin-top: 20px;
+
+	div {
+		margin-top: 30px;
+		text-align: center;
+	}
+
+	p {
+		margin-bottom: 0;
+		text-align: center;
+	}
 }
 
 // selection
@@ -161,12 +180,3 @@ footer {
 .container {
 	overflow: hidden;
 }
-
-
-/*.show-more {
-	color: @gray;
-
-	&:hover, &:focus {
-		color: darken(@gray, 5%);
-	}
-}/*/

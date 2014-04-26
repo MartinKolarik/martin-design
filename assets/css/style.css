@@ -102,12 +102,25 @@ footer li:first-child {
   padding-left: 0;
   text-align: center;
 }
-#version-list,
 #file-list,
 #link-list {
   list-style: none;
   padding-left: 0;
   margin-bottom: 0;
+}
+.collection-item {
+  line-height: 34px;
+}
+.email-updates {
+  margin-top: 20px;
+}
+.email-updates div {
+  margin-top: 30px;
+  text-align: center;
+}
+.email-updates p {
+  margin-bottom: 0;
+  text-align: center;
 }
 ::selection {
   color: #fff;
@@ -131,10 +144,3 @@ footer li:first-child {
 .container {
   overflow: hidden;
 }
-/*.show-more {
-	color: @gray;
-
-	&:hover, &:focus {
-		color: darken(@gray, 5%);
-	}
-}/*/

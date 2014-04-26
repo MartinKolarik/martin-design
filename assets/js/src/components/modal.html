@@ -35,7 +35,7 @@
 		'complete'	: function() {
 			var _this = this;
 
-			$('#' + this.data.id)
+			$('#' + this.get('id'))
 				.modal()
 				.on('hidden.bs.modal', function() {
 					$(this).remove();
@@ -44,13 +44,13 @@
 
 			this.on({
 				'cancel'	: function() {
-					if(_this.data.cancel.call(_this) !== false) {
-						$('#' + _this.data.id).modal('hide');
+					if(_this.get('cancel').call(_this) !== false) {
+						$('#' + _this.get('id')).modal('hide');
 					}
 				},
 				'submit'	: function() {
-					if(_this.data.submit.call(_this) !== false) {
-						$('#' + _this.data.id).modal('hide');
+					if(_this.get('submit').call(_this) !== false) {
+						$('#' + _this.get('id')).modal('hide');
 					}
 				}
 			});

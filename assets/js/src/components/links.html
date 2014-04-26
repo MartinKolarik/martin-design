@@ -19,17 +19,17 @@
 			{{/others}}
 		</ul>
 
-		<div style="margin-top: 20px">
+		<div class="email-updates">
 			{{^subscribed}}
 				<strong>E-mail updates</strong>
 				<input type="text" class="form-control" value="{{email}}" placeholder="Enter your e-mail address if you want to receive updates">
-				<div style="text-align: center; margin-top: 30px">
+				<div>
 					<button class="btn primary btn-inverse" on-click="submit">Keep me updated</button>
 				</div>
 			{{/subscribed}}
 
 			{{#subscribed}}
-				<p style="text-align: center; margin-bottom: 0">We'll send you an e-mail to <a href="mailto:{{email}}">{{email}}</a>  when there is a new version available.</p>
+				<p>We'll send you an e-mail to <a href="mailto:{{email}}">{{email}}</a>  when there is a new version available.</p>
 			{{/subscribed}}
 		</div>
 	{{/links}}
@@ -55,19 +55,15 @@
 			'id'		: 'modal-links',
 			'links'		: {},
 			'size'		: 'modal-lg',
-			'subscribed': false
-		},
-		'init'		: function() {
-			var _this = this;
-
-			this.set('subscribe', function() {
-				if(/^[^@]+@[^@]+\.[a-z]{2,}$/i.test(_this.get('email'))) {
-					_this.set('subscribed', true);
+			'subscribed': false,
+			'subscribe'	: function() {
+				if(/^[^@]+@[^@]+\.[a-z]{2,}$/i.test(this.get('email'))) {
+					this.set('subscribed', true);
 					// TODO-LATER
 				}
 
 				return false;
-			});
+			}
 		}
 	};
 </script>
