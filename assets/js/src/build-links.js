@@ -1,73 +1,64 @@
 define(function () {
-	return function(collection) {// TODO complete refactoring
-		var cssTemplate = '<link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/{{href}}">';
-		var jsTemplate	= '<script type="text/javascript" src="//cdn.jsdelivr.net/{{src}}"></script>';
-		var css			= [];
-		var js			= [];
-		var others		= [];
+	return function(collection) {
 		var isCss		= /\.css$/i;
 		var isJs		= /\.js$/i;
+		var others		= [];
+		var cssCount	= 0;
+		var jsCount		= 0;
 
-		// one file
-		if(collection.length === 1 && collection[0].selectedFiles.length === 1) {
-			if(isCss.test(collection[0].selectedFiles[0])) {
-				css		= cssTemplate.replace('{{href}}', collection[0].name + '/' + collection[0].selectedVersion + '/' + collection[0].selectedFiles[0]);
-			} else if(isJs.test(collection[0].selectedFiles[0])) {
-				js		= jsTemplate.replace('{{src}}', collection[0].name + '/' + collection[0].selectedVersion + '/' + collection[0].selectedFiles[0]);
-			} else {
-				others.push('//cdn.jsdelivr.net/' + collection[0].selectedFiles);
-			}
-		} else {
-			// each project in collection
-			for(var i = 0, c = collection.length; i < c; i++) {
-				var cssFiles	= [];
-				var jsFiles		= [];
-				var otherFiles	= [];
-
-				// each file in project
-				for(var j = 0, d = collection[i].selectedFiles.length; j < d; j++) {
-					if(isCss.test(collection[i].selectedFiles[j])) {
-						cssFiles.push(collection[i].selectedFiles[j]);
-					} else if(isJs.test(collection[i].selectedFiles[j])) {
-						jsFiles.push(collection[i].selectedFiles[j]);
-					} else {
-						otherFiles.push('//cdn.jsdelivr.net/' + collection[i].selectedFiles[j]);
-					}
+		// count CSS and JS files and process other files
+		for(var i = collection.length - 1; i >= 0; i--) {
+			for(var j = collection[i].selectedFiles.length - 1; j >= 0; j--) {
+				if(isCss.test(collection[i].selectedFiles[j])) {
+					cssCount++;
+				} else if(isJs.test(collection[i].selectedFiles[j])) {
+					jsCount++
+				} else {
+					// no further processing needed
+					others.push(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
 				}
-
-				if(cssFiles.length === 1 && cssFiles[0] === collection[i].mainfile) {
-					css.push(collection[i].name + '@' + collection[i].selectedVersion);
-				} else if(cssFiles.length) {
-					css.push(collection[i].name + '@' + collection[i].selectedVersion + '(' + cssFiles.join('+') + ')');
-				}
-
-				if(jsFiles.length === 1 && jsFiles[0] === collection[i].mainfile) {
-					js.push(collection[i].name + '@' + collection[i].selectedVersion);
-				} else if(jsFiles.length) {
-					js.push(collection[i].name + '@' + collection[i].selectedVersion + '(' + jsFiles.join('+') + ')');
-				}
-
-				if(otherFiles.length) {
-					others.push.apply(others, otherFiles);
-				}
-			}
-
-			/*if(css.length === 1) {
-				css	= cssTemplate.replace('{{href}}', css[0]);
-			} else *//*if(css.length) {
-				css	= cssTemplate.replace('{{href}}', 'g/' + css.join(','));
-			}
-
-			/*if(js.length === 1) {
-				js	= jsTemplate.replace('{{src}}', js[0]);
-			} else */{
-				js	= jsTemplate.replace('{{src}}', 'g/' + js.join(','));
 			}
 		}
 
+		function buildLink(projects, filter, merge) {
+			var chunks = [];
+
+			// each project
+			for(var i = 0, c = projects.length; i < c; i++) {
+				var projectFiles = [];
+
+				// each file
+				for(var j = 0, d = projects[i].selectedFiles.length; j < d; j++) {
+					if(filter.test(projects[i].selectedFiles[j])) {
+						// there is ony one file of this type
+						if(!merge) {
+							return projects[i].name + '/' + projects[i].selectedVersion + '/' + projects[i].selectedFiles[j];
+						}
+
+						projectFiles.push(projects[i].selectedFiles[j]);
+					}
+				}
+
+				if(projectFiles.length) {
+					var temp = projects[i].name + '@' + projects[i].selectedVersion;
+
+					// no need to create a list of files if there is only the mainfile
+					if(projectFiles.length !== 1 || projectFiles[0] !== projects[i].mainfile) {
+						temp += '(' + projectFiles.join('+') + ')';
+					}
+
+					chunks.push(temp);
+				}
+			}
+
+			return chunks.length
+				? 'g/' + chunks.join(',')
+				: '';
+		}
+
 		return {
-			'css'	: css,
-			'js'	: js,
+			'css'	: buildLink(collection, isCss, cssCount > 1),
+			'js'	: buildLink(collection, isJs, jsCount > 1),
 			'others': others
 		}
 	}

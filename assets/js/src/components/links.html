@@ -3,18 +3,18 @@
 		<ul id="link-list">
 			{{#js}}
 				<li><strong>JS</strong></li>
-				<li><input type="text" class="form-control output" value='{{js}}' readonly></li>
+				<li><input type="text" class="form-control output" value='{{app.cdnRoot}}/{{js}}' readonly></li>
 			{{/js}}
 
 			{{#css}}
 				<li><strong>CSS</strong></li>
-				<li><input type="text" class="form-control output" value='{{css}}' readonly></li>
+				<li><input type="text" class="form-control output" value='{{app.cdnRoot}}/{{css}}' readonly></li>
 			{{/css}}
 
 			{{#others.length}}
 				<li><strong>Others</strong></li>
 				{{#others}}
-					<li><input type="text" class="form-control output" value='{{this}}' readonly></li>
+					<li><input type="text" class="form-control output" value='{{app.cdnRoot}}/{{this}}' readonly></li>
 				{{/others}}
 			{{/others}}
 		</ul>
