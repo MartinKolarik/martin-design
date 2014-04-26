@@ -1,5 +1,5 @@
 <input type="text" id="search-input" class="form-control input-lg" placeholder="Search in more than {{count}} open source projects" value="{{query}}">
-<p style="text-align: center"><a class="link">Browse all projects</a></p>
+<p style="text-align: center"><a href='#!{"query":"*"}'>Browse all projects</a></p>
 
 <script type="text/javascript">
 	component.exports = {
@@ -32,7 +32,7 @@
 
 			// update results on input
 			this.observe('query', function(newValue) {
-				bloodhound.get(newValue, function(list) {
+				bloodhound.get(newValue.toString(), function(list) {
 					// select the last version of the project by default
 					app.views.searchResults.set('projects', list.map(function(project) {
 						project.selectedVersion = project.lastversion;
