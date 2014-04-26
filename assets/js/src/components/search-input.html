@@ -1,8 +1,11 @@
-<input type="text" id="search-input" class="form-control input-lg" placeholder="Search in more than {{count}} open source projects">
+<input type="text" id="search-input" class="form-control input-lg" placeholder="Search in more than {{count}} open source projects" value="{{query}}">
 <p style="text-align: center"><a class="link">Browse all projects</a></p>
 
 <script type="text/javascript">
 	component.exports = {
+		'data'		: {
+			'query'	: ''
+		},
 		'computed'	: {
 			'count'	: function() {
 				// TODO-LATER
@@ -11,7 +14,6 @@
 		},
 		'complete'	: function() {
 			var app				= this.get('app');
-			var $searchInput	= $('#search-input');
 			var bloodhound		= new Bloodhound({
 				'datumTokenizer'	: function(project) {
 					return project.name.split(/[\s.-]+/g);
@@ -29,15 +31,21 @@
 			bloodhound.initialize();
 
 			// update results on input
-			$searchInput.focus().on('input', function() {
-				bloodhound.get($searchInput.val(), function(list) {
+			this.observe('query', function(newValue) {
+				bloodhound.get(newValue, function(list) {
 					// select the last version of the project by default
 					app.views.searchResults.set('projects', list.map(function(project) {
 						project.selectedVersion = project.lastversion;
 						return project;
 					}));
 				})
-			});
+			}, { 'init': false });
+
+			// auto focus on load
+			$('#search-input').focus();
+
+			// restore query from hash
+			$(window).triggerHandler('searchReady');
 		}
 	};
 </script>

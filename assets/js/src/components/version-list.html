@@ -40,10 +40,9 @@
 					var assets	= project.assets.filter(function(assets) {
 						return assets.version === project.selectedVersion;
 					})[0];
-					var x;
 
 					// reselect files if some of them are not available in this version
-					for(x in project.selectedFiles) {
+					for(var x in project.selectedFiles) {
 						if(project.selectedFiles.hasOwnProperty(x)) {
 							if(assets.files.indexOf(project.selectedFiles[x]) === -1) {
 								_this.get('app').views.collection.get('projects').splice(_this.get('index'), 1);

@@ -888,9 +888,8 @@
 						var assets = project.assets.filter(function(assets) {
 							return assets.version === project.selectedVersion;
 						})[0];
-						var x;
 						// reselect files if some of them are not available in this version
-						for (x in project.selectedFiles) {
+						for (var x in project.selectedFiles) {
 							if (project.selectedFiles.hasOwnProperty(x)) {
 								if (assets.files.indexOf(project.selectedFiles[x]) === -1) {
 									_this.get('app').views.collection.get('projects').splice(_this.get('index'), 1);
@@ -1121,7 +1120,11 @@
 								r: 'count'
 							},
 							' open source projects'
-						]
+						],
+						value: [{
+							t: 2,
+							r: 'query'
+						}]
 					}
 				},
 				' ', {
@@ -1143,6 +1146,9 @@
 			]
 		}, component = {};
 		component.exports = {
+			'data': {
+				'query': ''
+			},
 			'computed': {
 				'count': function() {
 					// TODO-LATER
@@ -1151,7 +1157,6 @@
 			},
 			'complete': function() {
 				var app = this.get('app');
-				var $searchInput = $('#search-input');
 				var bloodhound = new Bloodhound({
 					'datumTokenizer': function(project) {
 						return project.name.split(/[\s.-]+/g);
@@ -1167,15 +1172,21 @@
 				});
 				bloodhound.initialize();
 				// update results on input
-				$searchInput.focus().on('input', function() {
-					bloodhound.get($searchInput.val(), function(list) {
+				this.observe('query', function(newValue) {
+					bloodhound.get(newValue, function(list) {
 						// select the last version of the project by default
 						app.views.searchResults.set('projects', list.map(function(project) {
 							project.selectedVersion = project.lastversion;
 							return project;
 						}));
 					});
+				}, {
+					'init': false
 				});
+				// auto focus on load
+				$('#search-input').focus();
+				// restore query from hash
+				$(window).triggerHandler('searchReady');
 			}
 		};
 		if (typeof component.exports === 'object') {
@@ -1239,11 +1250,13 @@
 														t: 7,
 														e: 'a',
 														a: {
-															href: [{
-																t: 2,
-																r: 'homepage'
-															}],
-															target: ['_blank']
+															href: [
+																'#!{"query":"', {
+																	t: 2,
+																	r: 'name'
+																},
+																'"}'
+															]
 														},
 														f: [{
 															t: 2,
@@ -1674,11 +1687,36 @@
 		}
 		return Ractive.extend(__options__);
 	}(ractive, download, list_files, rvc_components_select_files, decorators_tooltip, rvc_components_version_list);
-	var app = function(CollectionView, LinksView, Modal, ReportNewVersionView, SearchInputView, SearchResultsView, SelectFilesView, versionList) {
-		// we'll need these later
-		var $body = $('body');
-		var $document = $(document);
-		var $searchInput = $('#search-input');
+	var serialize = function(query, collection) {
+		var result = {
+			'query': query,
+			'collection': []
+		};
+		for (var i = 0, c = collection.length; i < c; i++) {
+			result.collection.push({
+				'name': collection[i].name,
+				'selectedVersion': collection[i].selectedVersion,
+				'selectedFiles': collection[i].selectedFiles
+			});
+		}
+		// don't include empty values
+		if (result.query || result.collection.length) {
+			result.query = result.query || undefined;
+			if (!result.collection.length) {
+				result.collection = undefined;
+			}
+			return JSON.stringify(result);
+		}
+		return '';
+	};
+	var unserialize = function(string) {
+		try {
+			return JSON.parse(string);
+		} catch (e) {
+			return false;
+		}
+	};
+	var app = function(CollectionView, LinksView, Modal, ReportNewVersionView, SearchInputView, SearchResultsView, SelectFilesView, versionList, serialize, unserialize) {
 		var app = {
 			'cdnRoot': '//cdn.jsdelivr.net',
 			'components': {
@@ -1705,8 +1743,7 @@
 			'el': '#search',
 			'data': {
 				'app': app
-			},
-			'twoway': false
+			}
 		});
 		app.views.searchResults = new SearchResultsView({
 			'el': '#search-results',
@@ -1716,16 +1753,38 @@
 			},
 			'twoway': false
 		});
-		// focus search form on CTRL + F
-		$document.keydown(function(e) {
-			return e.ctrlKey && e.which === 70 ? !$searchInput.focus() : true;
+		// restore collection and query from hash
+		$(window).on('hashchange searchReady', function() {
+			// only if there is a difference between hash and the current data
+			if (location.hash.substr(2) !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
+				var data = unserialize(location.hash.substr(2));
+				if (data) {
+					app.views.searchInput.set('query', data.query || '');
+					app.views.collection.set('projects', data.collection || []);
+				}
+			}
+		});
+		// update permalink on change
+		function observer() {
+			var serialized = serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'));
+			if (serialized) {
+				location.hash = '!' + serialized;
+			} else {
+				location.hash = '';
+			}
+		}
+		app.views.searchInput.observe('query', observer, {
+			'init': false
+		});
+		app.views.collection.observe('projects', observer, {
+			'init': false
 		});
 		// auto-select input content
-		$body.on('click', '.output', function() {
+		$('body').on('click', '.output', function() {
 			this.select();
 		});
 		// we don't have require.js in production
 		window.app = app;
 		return app;
-	}(rvc_components_collection, rvc_components_links, rvc_components_modal, rvc_components_report_new_version, rvc_components_search_input, rvc_components_search_results, rvc_components_select_files, rvc_components_version_list);
+	}(rvc_components_collection, rvc_components_links, rvc_components_modal, rvc_components_report_new_version, rvc_components_search_input, rvc_components_search_results, rvc_components_select_files, rvc_components_version_list, serialize, unserialize);
 })(window);
