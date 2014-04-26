@@ -91,6 +91,11 @@ define([
 		this.select();
 	});
 
+	// configure ZeroClipboard
+	ZeroClipboard.config({
+		'moviePath'	: '//cdn.jsdelivr.net/zeroclipboard/1.3.3/ZeroClipboard.swf'
+	});
+
 	// we don't have require.js in production
 	window.app = app;
 

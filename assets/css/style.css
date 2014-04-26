@@ -144,3 +144,6 @@ footer li:first-child {
 .container {
   overflow: hidden;
 }
+button.zeroclipboard-is-hover {
+  border: 1px solid #333333;
+}

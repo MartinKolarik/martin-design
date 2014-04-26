@@ -1137,7 +1137,7 @@
 						t: 7,
 						e: 'a',
 						a: {
-							'class': ['link']
+							href: ['#!{"query":"*"}']
 						},
 						f: ['Browse all projects']
 					}]
@@ -1173,7 +1173,7 @@
 				bloodhound.initialize();
 				// update results on input
 				this.observe('query', function(newValue) {
-					bloodhound.get(newValue, function(list) {
+					bloodhound.get(newValue.toString(), function(list) {
 						// select the last version of the project by default
 						app.views.searchResults.set('projects', list.map(function(project) {
 							project.selectedVersion = project.lastversion;
@@ -1218,6 +1218,71 @@
 			}
 		};
 	};
+	var decorators_helpers = {
+		'create': function(fn) {
+			return function(node) {
+				var ractive = this;
+				fn.apply(ractive, arguments);
+				return {
+					teardown: function() {},
+					update: function() {
+						fn.apply(ractive, [node].concat(Array.prototype.slice.call(arguments, 0, arguments.length)));
+					}
+				};
+			};
+		},
+		'combine': function(wrapped) {
+			return function(node, toCall) {
+				var decorators = [];
+				var ractive = this;
+				wrapped.forEach(function(d) {
+					var name = Object.keys(d)[0];
+					if (typeof toCall[name] !== 'undefined') {
+						var fn = d[name];
+						var callArgs = toCall[name];
+						var args = callArgs ? [node].concat(callArgs) : [node];
+						var result = fn.apply(ractive, args);
+						result._name = name;
+						decorators.push(result);
+					}
+				});
+				return {
+					teardown: function() {
+						decorators.forEach(function(d) {
+							d.teardown();
+						});
+					},
+					update: function(toUpdate) {
+						decorators.forEach(function(d) {
+							var values = toUpdate[d._name];
+							if (!Array.isArray(values)) {
+								values = [values];
+							}
+							d.update.apply(ractive, values);
+						});
+					}
+				};
+			};
+		}
+	};
+	var decorators_zero_clipboard = function(helpers) {
+		return helpers.create(function(node) {
+			var $bridge = $('#global-zeroclipboard-html-bridge');
+			var clip = new ZeroClipboard(node);
+			clip.on('mouseover', function() {
+				$bridge.tooltip('destroy').tooltip({
+					'title': 'Copy to clipboard',
+					'placement': 'top'
+				}).tooltip('show');
+			});
+			clip.on('complete', function() {
+				$bridge.tooltip('destroy').tooltip({
+					'title': 'Copied!',
+					'placement': 'top'
+				}).tooltip('show');
+			});
+		});
+	}(decorators_helpers);
 	var rvc_components_search_results = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -1470,7 +1535,8 @@
 													t: 7,
 													e: 'div',
 													a: {
-														'class': ['col-md-12']
+														'class': ['col-md-11'],
+														style: ['padding-right: 0']
 													},
 													f: [{
 														t: 7,
@@ -1497,6 +1563,46 @@
 															],
 															readonly: null
 														}
+													}]
+												},
+												' ', {
+													t: 7,
+													e: 'div',
+													a: {
+														'class': ['col-md-1'],
+														style: ['padding-right: 0']
+													},
+													f: [{
+														t: 7,
+														e: 'button',
+														a: {
+															'class': ['btn btn-link btn-inverse gray'],
+															'data-clipboard-text': [{
+																	t: 2,
+																	r: 'app.cdnRoot'
+																},
+																'/', {
+																	t: 2,
+																	r: 'name'
+																},
+																'/', {
+																	t: 2,
+																	r: 'selectedVersion'
+																},
+																'/', {
+																	t: 2,
+																	r: 'files.0'
+																}
+															]
+														},
+														f: [{
+															t: 7,
+															e: 'i',
+															a: {
+																'class': ['fa fa-chain']
+															}
+														}],
+														o: 'zeroClipboard'
 													}]
 												},
 												' ', {
@@ -1532,7 +1638,8 @@
 																				t: 7,
 																				e: 'div',
 																				a: {
-																					'class': ['col-md-12']
+																					'class': ['col-md-11'],
+																					style: ['padding-right: 0']
 																				},
 																				f: [{
 																					t: 7,
@@ -1559,6 +1666,46 @@
 																						],
 																						readonly: null
 																					}
+																				}]
+																			},
+																			' ', {
+																				t: 7,
+																				e: 'div',
+																				a: {
+																					'class': ['col-md-1'],
+																					style: ['padding-right: 0']
+																				},
+																				f: [{
+																					t: 7,
+																					e: 'button',
+																					a: {
+																						'class': ['btn btn-link btn-inverse gray'],
+																						'data-clipboard-text': [{
+																								t: 2,
+																								r: 'app.cdnRoot'
+																							},
+																							'/', {
+																								t: 2,
+																								r: 'name'
+																							},
+																							'/', {
+																								t: 2,
+																								r: 'selectedVersion'
+																							},
+																							'/', {
+																								t: 2,
+																								r: '.'
+																							}
+																						]
+																					},
+																					f: [{
+																						t: 7,
+																						e: 'i',
+																						a: {
+																							'class': ['fa fa-chain']
+																						}
+																					}],
+																					o: 'zeroClipboard'
 																				}]
 																			},
 																			' '
@@ -1632,6 +1779,7 @@
 		var SelectFilesView = rvc_components_select_files;
 		var tooltipDecorator = decorators_tooltip;
 		var versionList = rvc_components_version_list;
+		var zeroClipboardDecorator = decorators_zero_clipboard;
 		component.exports = {
 			'components': {
 				'versionList': versionList
@@ -1642,7 +1790,8 @@
 				'projects': []
 			},
 			'decorators': {
-				'tooltip': tooltipDecorator
+				'tooltip': tooltipDecorator,
+				'zeroClipboard': zeroClipboardDecorator
 			},
 			'init': function() {
 				var _this = this;
@@ -1686,7 +1835,7 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, download, list_files, rvc_components_select_files, decorators_tooltip, rvc_components_version_list);
+	}(ractive, download, list_files, rvc_components_select_files, decorators_tooltip, rvc_components_version_list, decorators_zero_clipboard);
 	var serialize = function(query, collection) {
 		var result = {
 			'query': query,
@@ -1782,6 +1931,10 @@
 		// auto-select input content
 		$('body').on('click', '.output', function() {
 			this.select();
+		});
+		// configure ZeroClipboard
+		ZeroClipboard.config({
+			'moviePath': '//cdn.jsdelivr.net/zeroclipboard/1.3.3/ZeroClipboard.swf'
 		});
 		// we don't have require.js in production
 		window.app = app;

@@ -27,16 +27,26 @@
 
 			<div class="file-list">
 				{{# {files: listFiles(this)} }}
-					<div class="col-md-12">
+					<div class="col-md-11" style="padding-right: 0">
 						<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{files.0}}" readonly>
 					</div>
+				<div class="col-md-1" style="padding-right: 0">
+					<button class="btn btn-link btn-inverse gray" decorator="zeroClipboard" data-clipboard-text="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{files.0}}">
+						<i class="fa fa-chain"></i>
+					</button>
+				</div>
 
 					{{#files.length > 1}}
 						<div class="show-more-files" data-project-id="{{i}}">
 							{{#files:j}}
 								{{#j > 0}}
-									<div class="col-md-12">
+									<div class="col-md-11" style="padding-right: 0">
 										<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}" readonly>
+									</div>
+									<div class="col-md-1" style="padding-right: 0">
+										<button class="btn btn-link btn-inverse gray" decorator="zeroClipboard" data-clipboard-text="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}">
+											<i class="fa fa-chain"></i>
+										</button>
 									</div>
 								{{/}}
 							{{/files}}
@@ -55,11 +65,12 @@
 {{/projects}}
 
 <script type="text/javascript">
-	var downloadHelper		= require('download');
-	var listFiles			= require('list-files');
-	var SelectFilesView		= require('rvc!components/select-files');
-	var tooltipDecorator	= require('decorators/tooltip');
-	var versionList			= require('rvc!components/version-list');
+	var downloadHelper			= require('download');
+	var listFiles				= require('list-files');
+	var SelectFilesView			= require('rvc!components/select-files');
+	var tooltipDecorator		= require('decorators/tooltip');
+	var versionList				= require('rvc!components/version-list');
+	var zeroClipboardDecorator	= require('decorators/zero-clipboard');
 
 	component.exports		= {
 		'components': {
@@ -71,7 +82,8 @@
 			'projects'	: []
 		},
 		'decorators': {
-			'tooltip'	: tooltipDecorator
+			'tooltip'		: tooltipDecorator,
+			'zeroClipboard'	: zeroClipboardDecorator
 		},
 		'init'		: function() {
 			var _this = this;
