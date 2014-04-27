@@ -1525,7 +1525,7 @@
 													t: 7,
 													e: 'div',
 													a: {
-														'class': ['col-md-11'],
+														'class': ['col-xs-11'],
 														style: ['padding-right: 0']
 													},
 													f: [{
@@ -1559,7 +1559,7 @@
 													t: 7,
 													e: 'div',
 													a: {
-														'class': ['col-md-1'],
+														'class': ['col-xs-1'],
 														style: ['padding-right: 0']
 													},
 													f: [{
@@ -1628,7 +1628,7 @@
 																				t: 7,
 																				e: 'div',
 																				a: {
-																					'class': ['col-md-11'],
+																					'class': ['col-xs-11'],
 																					style: ['padding-right: 0']
 																				},
 																				f: [{
@@ -1662,7 +1662,7 @@
 																				t: 7,
 																				e: 'div',
 																				a: {
-																					'class': ['col-md-1'],
+																					'class': ['col-xs-1'],
 																					style: ['padding-right: 0']
 																				},
 																				f: [{
@@ -1709,7 +1709,7 @@
 															t: 7,
 															e: 'div',
 															a: {
-																'class': ['col-md-12']
+																'class': ['col-xs-12']
 															},
 															f: [{
 																t: 7,
