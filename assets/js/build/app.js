@@ -1,5 +1,68 @@
 (function(global) {
 	var ractive = global.Ractive;
+	var build_links = function(collection, group) {
+		var isCss = /\.css$/i;
+		var isJs = /\.js$/i;
+		var css = [];
+		var js = [];
+		var others = [];
+		var cssCount = 0;
+		var jsCount = 0;
+		// count CSS and JS files and process other files
+		for (var i = collection.length - 1; i >= 0; i--) {
+			for (var j = collection[i].selectedFiles.length - 1; j >= 0; j--) {
+				if (isCss.test(collection[i].selectedFiles[j])) {
+					cssCount++;
+					css.unshift(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
+				} else if (isJs.test(collection[i].selectedFiles[j])) {
+					jsCount++;
+					js.unshift(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
+				} else {
+					// no further processing needed
+					others.unshift(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
+				}
+			}
+		}
+		if (!group) {
+			return {
+				'css': css,
+				'js': js,
+				'others': others
+			};
+		}
+
+		function buildLink(projects, filter, merge) {
+			var chunks = [];
+			// each project
+			for (var i = 0, c = projects.length; i < c; i++) {
+				var projectFiles = [];
+				// each file
+				for (var j = 0, d = projects[i].selectedFiles.length; j < d; j++) {
+					if (filter.test(projects[i].selectedFiles[j])) {
+						// there is ony one file of this type
+						if (!merge) {
+							return [projects[i].name + '/' + projects[i].selectedVersion + '/' + projects[i].selectedFiles[j]];
+						}
+						projectFiles.push(projects[i].selectedFiles[j]);
+					}
+				}
+				if (projectFiles.length) {
+					var temp = projects[i].name + '@' + projects[i].selectedVersion;
+					// no need to create a list of files if there is only the mainfile
+					if (projectFiles.length !== 1 || projectFiles[0] !== projects[i].mainfile) {
+						temp += '(' + projectFiles.join('+') + ')';
+					}
+					chunks.push(temp);
+				}
+			}
+			return chunks.length ? ['g/' + chunks.join(',')] : [];
+		}
+		return {
+			'css': buildLink(collection, isCss, cssCount > 1),
+			'js': buildLink(collection, isJs, jsCount > 1),
+			'others': others
+		};
+	};
 	var rvc_components_modal = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -172,23 +235,17 @@
 							t: 2,
 							r: 'id'
 						}],
-						title: [
-							'Your link', {
-								t: 4,
-								x: {
-									r: ['count'],
-									s: '${0}>1'
-								},
-								f: ['s']
-							}
-						],
+						title: [{
+							t: 2,
+							r: 'title'
+						}],
 						size: [{
 							t: 2,
 							r: 'size'
 						}],
-						links: [{
+						collection: [{
 							t: 2,
-							r: 'links'
+							r: 'collection'
 						}],
 						submit: [{
 							t: 2,
@@ -205,13 +262,60 @@
 						f: [
 							' ', {
 								t: 7,
+								e: 'div',
+								a: {
+									'class': ['row'],
+									style: ['padding: 0 5px']
+								},
+								f: [{
+										t: 7,
+										e: 'div',
+										a: {
+											'class': ['col-xs-2 col-xs-offset-9'],
+											style: ['text-align: right']
+										},
+										f: ['Group links']
+									},
+									' ', {
+										t: 7,
+										e: 'div',
+										a: {
+											'class': ['col-sm-1']
+										},
+										f: [{
+												t: 7,
+												e: 'input',
+												a: {
+													type: ['checkbox'],
+													'class': ['switch-inline'],
+													id: ['group-links'],
+													checked: [{
+														t: 2,
+														r: 'groupLinks'
+													}],
+													value: ['1']
+												}
+											},
+											' ', {
+												t: 7,
+												e: 'label',
+												a: {
+													'for': ['group-links']
+												}
+											}
+										]
+									}
+								]
+							},
+							' ', {
+								t: 7,
 								e: 'ul',
 								a: {
 									id: ['link-list']
 								},
 								f: [{
 										t: 4,
-										r: 'js',
+										r: 'js.length',
 										f: [
 											' ', {
 												t: 7,
@@ -223,33 +327,40 @@
 												}]
 											},
 											' ', {
-												t: 7,
-												e: 'li',
-												f: [{
-													t: 7,
-													e: 'input',
-													a: {
-														type: ['text'],
-														'class': ['form-control output'],
-														value: [{
-																t: 2,
-																r: 'app.cdnRoot'
-															},
-															'/', {
-																t: 2,
-																r: 'js'
+												t: 4,
+												r: 'js',
+												f: [
+													' ', {
+														t: 7,
+														e: 'li',
+														f: [{
+															t: 7,
+															e: 'input',
+															a: {
+																type: ['text'],
+																'class': ['form-control output'],
+																value: [{
+																		t: 2,
+																		r: 'app.cdnRoot'
+																	},
+																	'/', {
+																		t: 2,
+																		r: '.'
+																	}
+																],
+																readonly: null
 															}
-														],
-														readonly: null
-													}
-												}]
+														}]
+													},
+													' '
+												]
 											},
 											' '
 										]
 									},
 									' ', {
 										t: 4,
-										r: 'css',
+										r: 'css.length',
 										f: [
 											' ', {
 												t: 7,
@@ -261,26 +372,33 @@
 												}]
 											},
 											' ', {
-												t: 7,
-												e: 'li',
-												f: [{
-													t: 7,
-													e: 'input',
-													a: {
-														type: ['text'],
-														'class': ['form-control output'],
-														value: [{
-																t: 2,
-																r: 'app.cdnRoot'
-															},
-															'/', {
-																t: 2,
-																r: 'css'
+												t: 4,
+												r: 'css',
+												f: [
+													' ', {
+														t: 7,
+														e: 'li',
+														f: [{
+															t: 7,
+															e: 'input',
+															a: {
+																type: ['text'],
+																'class': ['form-control output'],
+																value: [{
+																		t: 2,
+																		r: 'app.cdnRoot'
+																	},
+																	'/', {
+																		t: 2,
+																		r: '.'
+																	}
+																],
+																readonly: null
 															}
-														],
-														readonly: null
-													}
-												}]
+														}]
+													},
+													' '
+												]
 											},
 											' '
 										]
@@ -418,6 +536,7 @@
 				' '
 			]
 		}, component = {};
+		var linkBuilder = build_links;
 		var modal = rvc_components_modal;
 		component.exports = {
 			'el': 'body',
@@ -426,15 +545,20 @@
 				'modal': modal
 			},
 			'computed': {
-				'count': function() {
-					return !!this.get('links.css').length + !! this.get('links.js').length + this.get('links.others').length;
+				'links': function() {
+					return linkBuilder(this.get('collection'), this.get('groupLinks'));
+				},
+				'title': function() {
+					return 'Your link' + (this.get('links.css').length + this.get('links.js').length + this.get('links.others').length > 1 ? 's' : '');
 				}
 			},
 			'data': {
 				'app': {},
+				'collection': {},
 				'email': '',
+				'groupLinks': true,
 				'id': 'modal-links',
-				'links': {},
+				'linkBuilder': linkBuilder,
 				'size': 'modal-lg',
 				'subscribed': false,
 				'subscribe': function() {
@@ -453,59 +577,7 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, rvc_components_modal);
-	var build_links = function(collection) {
-		var isCss = /\.css$/i;
-		var isJs = /\.js$/i;
-		var others = [];
-		var cssCount = 0;
-		var jsCount = 0;
-		// count CSS and JS files and process other files
-		for (var i = collection.length - 1; i >= 0; i--) {
-			for (var j = collection[i].selectedFiles.length - 1; j >= 0; j--) {
-				if (isCss.test(collection[i].selectedFiles[j])) {
-					cssCount++;
-				} else if (isJs.test(collection[i].selectedFiles[j])) {
-					jsCount++;
-				} else {
-					// no further processing needed
-					others.push(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
-				}
-			}
-		}
-
-		function buildLink(projects, filter, merge) {
-			var chunks = [];
-			// each project
-			for (var i = 0, c = projects.length; i < c; i++) {
-				var projectFiles = [];
-				// each file
-				for (var j = 0, d = projects[i].selectedFiles.length; j < d; j++) {
-					if (filter.test(projects[i].selectedFiles[j])) {
-						// there is ony one file of this type
-						if (!merge) {
-							return projects[i].name + '/' + projects[i].selectedVersion + '/' + projects[i].selectedFiles[j];
-						}
-						projectFiles.push(projects[i].selectedFiles[j]);
-					}
-				}
-				if (projectFiles.length) {
-					var temp = projects[i].name + '@' + projects[i].selectedVersion;
-					// no need to create a list of files if there is only the mainfile
-					if (projectFiles.length !== 1 || projectFiles[0] !== projects[i].mainfile) {
-						temp += '(' + projectFiles.join('+') + ')';
-					}
-					chunks.push(temp);
-				}
-			}
-			return chunks.length ? 'g/' + chunks.join(',') : '';
-		}
-		return {
-			'css': buildLink(collection, isCss, cssCount > 1),
-			'js': buildLink(collection, isJs, jsCount > 1),
-			'others': others
-		};
-	};
+	}(ractive, build_links, rvc_components_modal);
 	var rvc_components_report_new_version = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -1059,7 +1131,6 @@
 			}]
 		}, component = {};
 		var LinksView = rvc_components_links;
-		var linkBuilder = build_links;
 		var versionList = rvc_components_version_list;
 		component.exports = {
 			'components': {
@@ -1079,7 +1150,7 @@
 						new LinksView({
 							'data': {
 								'app': _this.get('app'),
-								'links': linkBuilder(_this.get('projects'))
+								'collection': _this.get('projects')
 							}
 						});
 					}
@@ -1094,7 +1165,7 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, rvc_components_links, build_links, rvc_components_version_list);
+	}(ractive, rvc_components_links, rvc_components_version_list);
 	var rvc_components_search_input = function(Ractive) {
 		var __options__ = {
 			template: [{
@@ -1427,7 +1498,7 @@
 												},
 												o: {
 													n: 'tooltip',
-													a: ' Download'
+													a: ' Download ZIP'
 												}
 											},
 											' ', {

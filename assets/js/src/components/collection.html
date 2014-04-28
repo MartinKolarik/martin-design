@@ -29,7 +29,6 @@
 
 <script type="text/javascript">
 	var LinksView		= require('rvc!components/links');
-	var linkBuilder		= require('build-links');
 	var versionList		= require('rvc!components/version-list');
 
 	component.exports	= {
@@ -50,8 +49,8 @@
 				'use'		: function() {
 					new LinksView({
 						'data'	: {
-							'app'	: _this.get('app'),
-							'links'	: linkBuilder(_this.get('projects'))
+							'app'			: _this.get('app'),
+							'collection'	: _this.get('projects')
 						}
 					});
 				}

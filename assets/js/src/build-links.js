@@ -1,7 +1,9 @@
 define(function () {
-	return function(collection) {
+	return function(collection, group) {
 		var isCss		= /\.css$/i;
 		var isJs		= /\.js$/i;
+		var css			= [];
+		var js			= [];
 		var others		= [];
 		var cssCount	= 0;
 		var jsCount		= 0;
@@ -11,12 +13,22 @@ define(function () {
 			for(var j = collection[i].selectedFiles.length - 1; j >= 0; j--) {
 				if(isCss.test(collection[i].selectedFiles[j])) {
 					cssCount++;
+					css.unshift(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
 				} else if(isJs.test(collection[i].selectedFiles[j])) {
-					jsCount++
+					jsCount++;
+					js.unshift(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
 				} else {
 					// no further processing needed
-					others.push(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
+					others.unshift(collection[i].name + '/' + collection[i].selectedVersion + '/' + collection[i].selectedFiles[j]);
 				}
+			}
+		}
+
+		if(!group) {
+			return {
+				'css'	: css,
+				'js'	: js,
+				'others': others
 			}
 		}
 
@@ -32,7 +44,7 @@ define(function () {
 					if(filter.test(projects[i].selectedFiles[j])) {
 						// there is ony one file of this type
 						if(!merge) {
-							return projects[i].name + '/' + projects[i].selectedVersion + '/' + projects[i].selectedFiles[j];
+							return [ projects[i].name + '/' + projects[i].selectedVersion + '/' + projects[i].selectedFiles[j] ];
 						}
 
 						projectFiles.push(projects[i].selectedFiles[j]);
@@ -40,7 +52,7 @@ define(function () {
 				}
 
 				if(projectFiles.length) {
-					var temp = projects[i].name + '@' + projects[i].selectedVersion;
+					var temp = projects[i].name + '@' + projects[i].selectedVersion;console.log(projectFiles[0], projects[i].mainfile);
 
 					// no need to create a list of files if there is only the mainfile
 					if(projectFiles.length !== 1 || projectFiles[0] !== projects[i].mainfile) {
@@ -52,8 +64,8 @@ define(function () {
 			}
 
 			return chunks.length
-				? 'g/' + chunks.join(',')
-				: '';
+				? [ 'g/' + chunks.join(',') ]
+				: [];
 		}
 
 		return {
