@@ -147,3 +147,6 @@ footer li:first-child {
 button.zeroclipboard-is-hover {
   border: 1px solid #333333;
 }
+.output {
+  cursor: text !important;
+}
