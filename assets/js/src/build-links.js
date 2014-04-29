@@ -52,7 +52,7 @@ define(function () {
 				}
 
 				if(projectFiles.length) {
-					var temp = projects[i].name + '@' + projects[i].selectedVersion;console.log(projectFiles[0], projects[i].mainfile);
+					var temp = projects[i].name + '@' + projects[i].selectedVersion;
 
 					// no need to create a list of files if there is only the mainfile
 					if(projectFiles.length !== 1 || projectFiles[0] !== projects[i].mainfile) {

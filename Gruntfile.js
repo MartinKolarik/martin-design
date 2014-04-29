@@ -54,6 +54,13 @@ module.exports = function(grunt) {
 					'assets/js/build/app.min.js': 'assets/js/build/app.js'
 				}
 			}
+		},
+		cssmin: {
+			combine: {
+				files: {
+					'assets/css/build/bundle.min.css': [ 'assets/css/modern-ui.css', 'assets/css/custom.css' ]
+				}
+			}
 		}
 	});
 
@@ -61,12 +68,14 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-jsbeautifier');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 	grunt.registerTask('build', [
 		'requirejs',
 		'concat:closure',
 		'jsbeautifier',
-		'uglify'
+		'uglify',
+		'cssmin'
 	]);
 	grunt.registerTask('default', 'build');
 };

@@ -1430,7 +1430,13 @@
 														t: 7,
 														e: 'a',
 														a: {
-															href: []
+															href: [
+																'#!{"query":"author: ', {
+																	t: 2,
+																	r: 'author'
+																},
+																'"}'
+															]
 														},
 														f: [{
 															t: 2,
