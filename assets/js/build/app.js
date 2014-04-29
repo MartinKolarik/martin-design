@@ -311,7 +311,8 @@
 								t: 7,
 								e: 'ul',
 								a: {
-									id: ['link-list']
+									id: ['link-list'],
+									'class': ['list-style-none']
 								},
 								f: [{
 										t: 4,
@@ -704,7 +705,8 @@
 						t: 7,
 						e: 'ol',
 						a: {
-							id: ['file-list']
+							id: ['file-list'],
+							'class': ['list-style-none']
 						},
 						f: [{
 							t: 4,
@@ -1192,7 +1194,7 @@
 					t: 7,
 					e: 'p',
 					a: {
-						style: ['text-align: center']
+						'class': ['show-more']
 					},
 					f: [{
 						t: 7,
@@ -1683,7 +1685,7 @@
 															t: 7,
 															e: 'div',
 															a: {
-																'class': ['show-more-files'],
+																'class': ['more-files'],
 																'data-project-id': [{
 																	t: 2,
 																	r: 'i'
@@ -1880,7 +1882,7 @@
 					'toggle': function(event) {
 						var $body = $('body');
 						var $link = $(event.node);
-						var $moreFiles = $link.closest('.file-list').find('.show-more-files');
+						var $moreFiles = $link.closest('.file-list').find('.more-files');
 						var keypath = 'projects.' + $moreFiles.attr('data-project-id') + '.showAll';
 						$moreFiles.slideToggle(200, function() {
 							if ($link.offset().top < $body.scrollTop()) {

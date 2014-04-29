@@ -67,7 +67,7 @@ define([
 
 			if(data) {
 				app.views.searchInput.set('query', data.query || '');
-				app.views.collection.set('projects', data.collection || []);// TODO fetch the current file list
+				app.views.collection.set('projects', data.collection || []);// TODO fetch the file list from API
 			}
 		}
 	});

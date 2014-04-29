@@ -390,7 +390,7 @@ a.label:focus {
   border-radius: 0;
   color: #e80c1f;
   background-color: #ffffff;
-  border-color: #f2f2f2;
+  border-bottom-color: #eeeeee;
 }
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover,
@@ -408,12 +408,13 @@ a.label:focus {
 .navbar .navbar-nav > .active a:focus,
 .navbar .navbar-nav > li > a:focus,
 .navbar .navbar-nav > .open > a:focus {
-  color: #e80c1f;
-  background-color: #f2f2f2;
+  color: #ffffff;
+  background-color: #e80c1f;
 }
 .navbar .navbar-nav > .active a,
 .navbar .navbar-nav > .open > a {
-  background-color: #f2f2f2;
+  color: #ffffff;
+  background-color: #e80c1f;
 }
 .navbar .navbar-nav .dropdown {
   border-top: none;

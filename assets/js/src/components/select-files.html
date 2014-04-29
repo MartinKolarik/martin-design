@@ -1,5 +1,5 @@
 <modal id="{{id}}" title="{{title}}" project="{{project}}" buttons="{{buttons}}" submit="{{submit}}">
-	<ol id="file-list">
+	<ol id="file-list" class="list-style-none">
 		{{# listFiles(project):i }}
 			<li>
 				<input type="checkbox" class="checkbox primary" id="file{{i}}" value="{{this}}" checked="{{this === project.mainfile}}">
