@@ -63,7 +63,12 @@ define([
 	$(window).on('hashchange searchReady', function() {
 		// might be encoded on iOS (#11)
 		var hash = decodeURIComponent(location.hash).substr(2);
-		
+
+		// redirect from the old format
+		if(hash[0] !== '{') {
+			hash = JSON.stringify({ 'query': hash });
+		}
+
 		// only if there is a difference between hash and the current data
 		if(hash !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
 			var data = unserialize(hash);
