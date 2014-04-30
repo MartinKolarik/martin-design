@@ -1,14 +1,16 @@
-<modal id="{{id}}" title="{{title}}" size="{{size}}" collection="{{collection}}" submit="{{subscribe}}" email="{{email}}">
+<modal id="{{id}}" title="{{title}}" size="{{size}}" collection="{{collection}}" submit="{{subscribe}}" email="{{email}}" showSwitch="{{showSwitch}}">
 	{{#links}}
-		<div class="row" style="padding: 0 5px">
-			<div class="col-xs-2 col-xs-offset-9" style="text-align: right">
-				Group links
+		{{#showSwitch}}
+			<div class="row" style="padding: 0 5px">
+				<div class="col-xs-2 col-xs-offset-9" style="text-align: right">
+					Group links
+				</div>
+				<div class="col-sm-1">
+					<input type="checkbox" class="switch-inline" id="group-links" checked="{{groupLinks}}" value="1">
+					<label for="group-links"></label>
+				</div>
 			</div>
-			<div class="col-sm-1">
-				<input type="checkbox" class="switch-inline" id="group-links" checked="{{groupLinks}}" value="1">
-				<label for="group-links"></label>
-			</div>
-		</div>
+		{{/showSwitch}}
 		<ul id="link-list" class="list-style-none">
 			{{#js.length}}
 				<li><strong>JS</strong></li>
@@ -59,10 +61,14 @@
 			'modal'	: modal
 		},
 		'computed'	: {
-			'links'	: function() {
+			'showSwitch'	: function() {
+				var links = linkBuilder(this.get('collection'), false);
+				return links.css.length > 1 || links.js.length > 1;
+			},
+			'links'			: function() {
 				return linkBuilder(this.get('collection'), this.get('groupLinks'))
 			},
-			'title'	: function() {
+			'title'			: function() {
 				return 'Your link' + ((this.get('links.css').length + this.get('links.js').length + this.get('links.others').length) > 1 ? 's' : '');
 			}
 		},
