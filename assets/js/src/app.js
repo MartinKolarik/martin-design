@@ -61,9 +61,12 @@ define([
 
 	// restore collection and query from hash
 	$(window).on('hashchange searchReady', function() {
+		// might be encoded on iOS (#11)
+		var hash = decodeURIComponent(location.hash).substr(2);
+		
 		// only if there is a difference between hash and the current data
-		if(location.hash.substr(2) !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
-			var data = unserialize(location.hash.substr(2));
+		if(hash !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
+			var data = unserialize(hash);
 
 			if(data) {
 				app.views.searchInput.set('query', data.query || '');

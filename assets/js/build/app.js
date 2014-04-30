@@ -254,6 +254,10 @@
 						email: [{
 							t: 2,
 							r: 'email'
+						}],
+						showSwitch: [{
+							t: 2,
+							r: 'showSwitch'
 						}]
 					},
 					f: [{
@@ -261,50 +265,57 @@
 						r: 'links',
 						f: [
 							' ', {
-								t: 7,
-								e: 'div',
-								a: {
-									'class': ['row'],
-									style: ['padding: 0 5px']
-								},
-								f: [{
-										t: 7,
-										e: 'div',
-										a: {
-											'class': ['col-xs-2 col-xs-offset-9'],
-											style: ['text-align: right']
-										},
-										f: ['Group links']
-									},
+								t: 4,
+								r: 'showSwitch',
+								f: [
 									' ', {
 										t: 7,
 										e: 'div',
 										a: {
-											'class': ['col-sm-1']
+											'class': ['row'],
+											style: ['padding: 0 5px']
 										},
 										f: [{
 												t: 7,
-												e: 'input',
+												e: 'div',
 												a: {
-													type: ['checkbox'],
-													'class': ['switch-inline'],
-													id: ['group-links'],
-													checked: [{
-														t: 2,
-														r: 'groupLinks'
-													}],
-													value: ['1']
-												}
+													'class': ['col-xs-2 col-xs-offset-9'],
+													style: ['text-align: right']
+												},
+												f: ['Group links']
 											},
 											' ', {
 												t: 7,
-												e: 'label',
+												e: 'div',
 												a: {
-													'for': ['group-links']
-												}
+													'class': ['col-sm-1']
+												},
+												f: [{
+														t: 7,
+														e: 'input',
+														a: {
+															type: ['checkbox'],
+															'class': ['switch-inline'],
+															id: ['group-links'],
+															checked: [{
+																t: 2,
+																r: 'groupLinks'
+															}],
+															value: ['1']
+														}
+													},
+													' ', {
+														t: 7,
+														e: 'label',
+														a: {
+															'for': ['group-links']
+														}
+													}
+												]
 											}
 										]
-									}
+									},
+									' '
 								]
 							},
 							' ', {
@@ -546,6 +557,10 @@
 				'modal': modal
 			},
 			'computed': {
+				'showSwitch': function() {
+					var links = linkBuilder(this.get('collection'), false);
+					return links.css.length > 1 || links.js.length > 1;
+				},
 				'links': function() {
 					return linkBuilder(this.get('collection'), this.get('groupLinks'));
 				},
@@ -1112,7 +1127,7 @@
 							t: 7,
 							e: 'div',
 							a: {
-								'class': ['col-md-12'],
+								'class': ['col-xs-12'],
 								style: ['text-align: center']
 							},
 							f: [{
@@ -1332,6 +1347,7 @@
 		return helpers.create(function(node) {
 			var $bridge = $('#global-zeroclipboard-html-bridge');
 			var clip = new ZeroClipboard(node);
+			var ractive = this;
 			clip.on('mouseover', function() {
 				$bridge.tooltip('destroy').tooltip({
 					'title': 'Copy to clipboard',
@@ -1343,6 +1359,9 @@
 					'title': 'Copied!',
 					'placement': 'top'
 				}).tooltip('show');
+			});
+			clip.on('noflash', function() {
+				ractive.set('flash', false);
 			});
 		});
 	}(decorators_helpers);
@@ -1533,31 +1552,33 @@
 												}
 											},
 											' ', {
-												t: 4,
-												r: 'github',
+												t: 7,
+												e: 'a',
+												a: {
+													'class': ['btn btn-link btn-inverse gray'],
+													style: [{
+														t: 4,
+														r: 'github',
+														n: true,
+														f: ['visibility: hidden']
+													}],
+													href: [{
+														t: 2,
+														r: 'github'
+													}],
+													target: ['_blank']
+												},
 												f: [{
 													t: 7,
-													e: 'a',
+													e: 'i',
 													a: {
-														'class': ['btn btn-link btn-inverse gray'],
-														href: [{
-															t: 2,
-															r: 'github'
-														}],
-														target: ['_blank']
-													},
-													f: [{
-														t: 7,
-														e: 'i',
-														a: {
-															'class': ['fa fa-github fa-2x']
-														}
-													}],
-													o: {
-														n: 'tooltip',
-														a: ' GitHub'
+														'class': ['fa fa-github fa-2x']
 													}
-												}]
+												}],
+												o: {
+													n: 'tooltip',
+													a: ' GitHub'
+												}
 											}
 										]
 									}
@@ -1573,7 +1594,7 @@
 										t: 7,
 										e: 'div',
 										a: {
-											'class': ['col-md-12']
+											'class': ['col-xs-12']
 										},
 										f: [{
 											t: 7,
@@ -1604,7 +1625,18 @@
 													t: 7,
 													e: 'div',
 													a: {
-														'class': ['col-xs-11'],
+														'class': [
+															'col-xs-', {
+																t: 4,
+																r: 'flash',
+																f: ['11']
+															}, {
+																t: 4,
+																r: 'flash',
+																n: true,
+																f: ['12']
+															}
+														],
 														style: ['padding-right: 0']
 													},
 													f: [{
@@ -1635,44 +1667,51 @@
 													}]
 												},
 												' ', {
-													t: 7,
-													e: 'div',
-													a: {
-														'class': ['col-xs-1'],
-														style: ['padding-right: 0']
-													},
-													f: [{
-														t: 7,
-														e: 'button',
-														a: {
-															'class': ['btn btn-link btn-inverse gray'],
-															'data-clipboard-text': [{
-																	t: 2,
-																	r: 'app.cdnRoot'
-																},
-																'/', {
-																	t: 2,
-																	r: 'name'
-																},
-																'/', {
-																	t: 2,
-																	r: 'selectedVersion'
-																},
-																'/', {
-																	t: 2,
-																	r: 'files.0'
-																}
-															]
-														},
-														f: [{
+													t: 4,
+													r: 'flash',
+													f: [
+														' ', {
 															t: 7,
-															e: 'i',
+															e: 'div',
 															a: {
-																'class': ['fa fa-chain']
-															}
-														}],
-														o: 'zeroClipboard'
-													}]
+																'class': ['col-xs-1'],
+																style: ['padding-right: 0']
+															},
+															f: [{
+																t: 7,
+																e: 'button',
+																a: {
+																	'class': ['btn btn-link btn-inverse gray'],
+																	'data-clipboard-text': [{
+																			t: 2,
+																			r: 'app.cdnRoot'
+																		},
+																		'/', {
+																			t: 2,
+																			r: 'name'
+																		},
+																		'/', {
+																			t: 2,
+																			r: 'selectedVersion'
+																		},
+																		'/', {
+																			t: 2,
+																			r: 'files.0'
+																		}
+																	]
+																},
+																f: [{
+																	t: 7,
+																	e: 'i',
+																	a: {
+																		'class': ['fa fa-chain']
+																	}
+																}],
+																o: 'zeroClipboard'
+															}]
+														},
+														' '
+													]
 												},
 												' ', {
 													t: 4,
@@ -1707,7 +1746,18 @@
 																				t: 7,
 																				e: 'div',
 																				a: {
-																					'class': ['col-xs-11'],
+																					'class': [
+																						'col-xs-', {
+																							t: 4,
+																							r: 'flash',
+																							f: ['11']
+																						}, {
+																							t: 4,
+																							r: 'flash',
+																							n: true,
+																							f: ['12']
+																						}
+																					],
 																					style: ['padding-right: 0']
 																				},
 																				f: [{
@@ -1738,44 +1788,51 @@
 																				}]
 																			},
 																			' ', {
-																				t: 7,
-																				e: 'div',
-																				a: {
-																					'class': ['col-xs-1'],
-																					style: ['padding-right: 0']
-																				},
-																				f: [{
-																					t: 7,
-																					e: 'button',
-																					a: {
-																						'class': ['btn btn-link btn-inverse gray'],
-																						'data-clipboard-text': [{
-																								t: 2,
-																								r: 'app.cdnRoot'
-																							},
-																							'/', {
-																								t: 2,
-																								r: 'name'
-																							},
-																							'/', {
-																								t: 2,
-																								r: 'selectedVersion'
-																							},
-																							'/', {
-																								t: 2,
-																								r: '.'
-																							}
-																						]
-																					},
-																					f: [{
+																				t: 4,
+																				r: 'flash',
+																				f: [
+																					' ', {
 																						t: 7,
-																						e: 'i',
+																						e: 'div',
 																						a: {
-																							'class': ['fa fa-chain']
-																						}
-																					}],
-																					o: 'zeroClipboard'
-																				}]
+																							'class': ['col-xs-1'],
+																							style: ['padding-right: 0']
+																						},
+																						f: [{
+																							t: 7,
+																							e: 'button',
+																							a: {
+																								'class': ['btn btn-link btn-inverse gray'],
+																								'data-clipboard-text': [{
+																										t: 2,
+																										r: 'app.cdnRoot'
+																									},
+																									'/', {
+																										t: 2,
+																										r: 'name'
+																									},
+																									'/', {
+																										t: 2,
+																										r: 'selectedVersion'
+																									},
+																									'/', {
+																										t: 2,
+																										r: '.'
+																									}
+																								]
+																							},
+																							f: [{
+																								t: 7,
+																								e: 'i',
+																								a: {
+																									'class': ['fa fa-chain']
+																								}
+																							}],
+																							o: 'zeroClipboard'
+																						}]
+																					},
+																					' '
+																				]
 																			},
 																			' '
 																		]
@@ -1855,6 +1912,7 @@
 			},
 			'data': {
 				'app': {},
+				'flash': true,
 				'listFiles': listFiles,
 				'projects': []
 			},
@@ -1973,9 +2031,11 @@
 		});
 		// restore collection and query from hash
 		$(window).on('hashchange searchReady', function() {
+			// might be encoded on iOS (#11)
+			var hash = decodeURIComponent(location.hash).substr(2);
 			// only if there is a difference between hash and the current data
-			if (location.hash.substr(2) !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
-				var data = unserialize(location.hash.substr(2));
+			if (hash !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
+				var data = unserialize(hash);
 				if (data) {
 					app.views.searchInput.set('query', data.query || '');
 					app.views.collection.set('projects', data.collection || []);
