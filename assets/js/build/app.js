@@ -1250,8 +1250,6 @@
 				this.observe('query', function(newValue) {
 					bloodhound.get(newValue.toString(), function(list) {
 						// select the last version of the project by default
-						app.views.searchResults.set('projects', []);
-						// ractive #659
 						app.views.searchResults.set('projects', $.extend(true, [], list.map(function(project) {
 							project.selectedVersion = project.lastversion;
 							return project;
@@ -1731,7 +1729,16 @@
 																'data-project-id': [{
 																	t: 2,
 																	r: 'i'
-																}]
+																}],
+																style: [
+																	'display: ', {
+																		t: 2,
+																		x: {
+																			r: ['showAll'],
+																			s: '${0}?"block":"none"'
+																		}
+																	}
+																]
 															},
 															f: [{
 																t: 4,
@@ -1952,6 +1959,11 @@
 							}
 							_this.set(keypath, !_this.get(keypath));
 						});
+					}
+				});
+				this.observe('projects', function(n) {
+					if (n.length === 1 && typeof n[0].showAll === 'undefined') {
+						_this.set('projects.0.showAll', true);
 					}
 				});
 			}
