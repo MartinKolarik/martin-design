@@ -359,8 +359,7 @@
 																		t: 2,
 																		r: '.'
 																	}
-																],
-																readonly: null
+																]
 															}
 														}]
 													},
@@ -404,8 +403,7 @@
 																		t: 2,
 																		r: '.'
 																	}
-																],
-																readonly: null
+																]
 															}
 														}]
 													},
@@ -449,8 +447,7 @@
 																		t: 2,
 																		r: '.'
 																	}
-																],
-																readonly: null
+																]
 															}
 														}]
 													},
@@ -1253,10 +1250,12 @@
 				this.observe('query', function(newValue) {
 					bloodhound.get(newValue.toString(), function(list) {
 						// select the last version of the project by default
-						app.views.searchResults.set('projects', list.map(function(project) {
+						app.views.searchResults.set('projects', []);
+						// ractive #659
+						app.views.searchResults.set('projects', $.extend(true, [], list.map(function(project) {
 							project.selectedVersion = project.lastversion;
 							return project;
-						}));
+						})));
 					});
 				}, {
 					'init': false
@@ -1346,6 +1345,7 @@
 	var decorators_zero_clipboard = function(helpers) {
 		return helpers.create(function(node) {
 			var $bridge = $('#global-zeroclipboard-html-bridge');
+			var $node = $(node);
 			var clip = new ZeroClipboard(node);
 			var ractive = this;
 			clip.on('mouseover', function() {
@@ -1353,6 +1353,10 @@
 					'title': 'Copy to clipboard',
 					'placement': 'top'
 				}).tooltip('show');
+			});
+			clip.on('mouseout', function() {
+				$bridge.tooltip('destroy');
+				$node.removeClass('zeroclipboard-is-hover');
 			});
 			clip.on('complete', function() {
 				$bridge.tooltip('destroy').tooltip({
@@ -1661,8 +1665,7 @@
 																	t: 2,
 																	r: 'files.0'
 																}
-															],
-															readonly: null
+															]
 														}
 													}]
 												},
@@ -1782,8 +1785,7 @@
 																								t: 2,
 																								r: '.'
 																							}
-																						],
-																						readonly: null
+																						]
 																					}
 																				}]
 																			},
@@ -1993,6 +1995,7 @@
 		}
 	};
 	var app = function(CollectionView, LinksView, Modal, ReportNewVersionView, SearchInputView, SearchResultsView, SelectFilesView, versionList, serialize, unserialize) {
+		var $body = $('body');
 		var app = {
 			'cdnRoot': '//cdn.jsdelivr.net',
 			'components': {
@@ -2033,6 +2036,12 @@
 		$(window).on('hashchange searchReady', function() {
 			// might be encoded on iOS (#11)
 			var hash = decodeURIComponent(location.hash).substr(2);
+			// redirect from the old format
+			if (hash[0] !== '{') {
+				hash = JSON.stringify({
+					'query': hash
+				});
+			}
 			// only if there is a difference between hash and the current data
 			if (hash !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
 				var data = unserialize(hash);
@@ -2057,13 +2066,13 @@
 		app.views.collection.observe('projects', observer, {
 			'init': false
 		});
-		// auto-select input content
-		$('body').on('click', '.output', function() {
-			this.select();
-		});
 		// configure ZeroClipboard
 		ZeroClipboard.config({
 			'moviePath': '//cdn.jsdelivr.net/zeroclipboard/1.3.3/ZeroClipboard.swf'
+		});
+		// auto-select input content
+		$body.on('click', '.output', function() {
+			this.select();
 		});
 		// we don't have require.js in production
 		window.app = app;

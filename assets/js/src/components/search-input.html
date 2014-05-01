@@ -34,10 +34,11 @@
 			this.observe('query', function(newValue) {
 				bloodhound.get(newValue.toString(), function(list) {
 					// select the last version of the project by default
-					app.views.searchResults.set('projects', list.map(function(project) {
+					app.views.searchResults.set('projects', []);// ractive #659
+					app.views.searchResults.set('projects', $.extend(true, [], list.map(function(project) {
 						project.selectedVersion = project.lastversion;
 						return project;
-					}));
+					})));
 				})
 			}, { 'init': false });
 

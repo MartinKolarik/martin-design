@@ -21,6 +21,7 @@ define([
 	serialize,
 	unserialize
 ) {
+	var $body				= $('body');
 	var app					= {
 		'cdnRoot'		: '//cdn.jsdelivr.net',
 		'components'	: {
@@ -94,14 +95,14 @@ define([
 	app.views.searchInput.observe('query', observer, { 'init': false });
 	app.views.collection.observe('projects', observer, { 'init': false });
 
-	// auto-select input content
-	$('body').on('click', '.output', function() {
-		this.select();
-	});
-
 	// configure ZeroClipboard
 	ZeroClipboard.config({
 		'moviePath'	: '//cdn.jsdelivr.net/zeroclipboard/1.3.3/ZeroClipboard.swf'
+	});
+
+	// auto-select input content
+	$body.on('click', '.output', function() {
+		this.select();
 	});
 
 	// we don't have require.js in production

@@ -70,7 +70,7 @@ section {
   display: none;
 }
 .output {
-  cursor: text !important;
+  background-color: #eee;
 }
 .show-more {
   text-align: center;
