@@ -361,6 +361,9 @@ input.form-control {
   top: 1px;
   margin-right: 0;
 }
+.jumbotron {
+  border-radius: 0;
+}
 .label {
   border-radius: 0;
   font-weight: normal;

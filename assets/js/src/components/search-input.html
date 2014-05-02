@@ -13,32 +13,19 @@
 			}
 		},
 		'complete'	: function() {
-			var app				= this.get('app');
-			var bloodhound		= new Bloodhound({
-				'datumTokenizer'	: function(project) {
-					return project.name.split(/[\s.-]+/g);
-				},
-				'limit'				: 10,
-				'prefetch'			: {
-					'url'	: '//api.jsdelivr.com/v1/jsdelivr/libraries',
-					'ttl'	: 3600000
-				},
-				'queryTokenizer'	: function(query) {
-					return query.split(/[\s.-]+/g);
-				}
-			});
-
-			bloodhound.initialize();
+			var app		= this.get('app');
+			var algolia	= new AlgoliaSearch('DBMBXHNL8O', 'ff534b434664d2fb939eace2877ec4dc');
+			var index	= algolia.initIndex('jsdelivr');
 
 			// update results on input
 			this.observe('query', function(newValue) {
-				bloodhound.get(newValue.toString(), function(list) {
+				index.search(newValue.toString(), function(success, list) {
 					// select the last version of the project by default
-					app.views.searchResults.set('projects', $.extend(true, [], list.map(function(project) {
+					app.views.searchResults.set('projects', $.extend(true, [], list.hits.map(function(project) {
 						project.selectedVersion = project.lastversion;
 						return project;
 					})));
-				})
+				}, { 'hitsPerPage': 10 })
 			}, { 'init': false });
 
 			// auto focus on load
