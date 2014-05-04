@@ -4,28 +4,65 @@
 <script type="text/javascript">
 	component.exports = {
 		'data'		: {
+			'count'	: 1050,
 			'query'	: ''
 		},
-		'computed'	: {
-			'count'	: function() {
-				// TODO-LATER
-				return Math.floor(JSON.parse(window.localStorage.getItem('__//api.jsdelivr.com/v1/jsdelivr/libraries__data')).datums.length / 50) * 50
-			}
-		},
 		'complete'	: function() {
-			var app		= this.get('app');
-			var algolia	= new AlgoliaSearch('DBMBXHNL8O', 'ff534b434664d2fb939eace2877ec4dc');
-			var index	= algolia.initIndex('jsdelivr');
+			var _this		= this;
+			var app			= this.get('app');
+			var algolia		= new AlgoliaSearch('DBMBXHNL8O', 'ff534b434664d2fb939eace2877ec4dc');
+			var index		= algolia.initIndex('jsdelivr');
+			var propsRegExp	= /\s*(?:[a-z]+)\s*:\s*(?:.(?![a-z]*\s*:))*/gi;
+			var queryRegExp	= /^((?:(?:[^\s:]+(?![a-z]*\s*:))\s*)*)/i;
+
+			// count projects
+			if(window.localStorage) {
+				var now		= Date.now();
+				var count	= localStorage.getItem('count');
+				var expires	= localStorage.getItem('expires');
+
+				if(now < expires) {
+					this.set('count', count);
+				} else {
+					index.search('', function(success, response) {
+						count = Math.floor(response.nbHits / 50) * 50;
+
+						localStorage.setItem('count', count);
+						localStorage.setItem('expires', now + 604800000);
+						_this.set('count', count)
+					}, { 'analytics': false });
+				}
+			} else {
+				index.search('', function(success, response) {
+					_this.set('count', Math.floor(response.nbHits / 50) * 50)
+				}, { 'analytics': false });
+			}
 
 			// update results on input
 			this.observe('query', function(newValue) {
-				index.search(newValue.toString(), function(success, list) {
-					// select the last version of the project by default
-					app.views.searchResults.set('projects', $.extend(true, [], list.hits.map(function(project) {
-						project.selectedVersion = project.lastversion;
-						return project;
-					})));
-				}, { 'hitsPerPage': 10 })
+				newValue	= newValue.toString();
+				var query	= newValue.match(queryRegExp)[0].trim();
+				var substr	= newValue.substr(query.length);
+				var props	= {};
+				var match;
+
+				while((match = propsRegExp.exec(substr)) !== null) {
+					var temp				= match[0].split(':');
+					props[temp[0].trim()]	= temp[1].trim();
+				}
+
+				if(!newValue) {
+					app.views.searchResults.set('projects', []);
+				} else {
+					index.search(query, function(success, response) {
+						// select the last version of the project by default
+						for(var i = 0, c = response.hits.length; i < c; i++) {
+							response.hits[i].selectedVersion = response.hits[i].lastversion;
+						}
+
+						app.views.searchResults.set('projects', response.hits);
+					}, { 'hitsPerPage': 10 })
+				}
 			}, { 'init': false });
 
 			// auto focus on load

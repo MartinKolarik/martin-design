@@ -1,5 +1,5 @@
 {{#projects:i}}
-	<div class="result item">
+	<div class="result list-item">
 		<div class="row">
 			<div class="col-md-6">
 				<h4>
@@ -38,25 +38,27 @@
 					{{/flash}}
 
 					{{#files.length > 1}}
-						<div class="more-files" data-project-id="{{i}}" style="display: {{showAll ? 'block' : 'none'}}">
-							{{#files:j}}
-								{{#j > 0}}
-									<div class="col-xs-{{#flash}}11{{/flash}}{{^flash}}12{{/flash}}" style="padding-right: 0">
-										<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}">
-									</div>
-									{{#flash}}
-										<div class="col-xs-1" style="padding-right: 0">
-											<button class="btn btn-link btn-inverse gray" decorator="zeroClipboard" data-clipboard-text="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}">
-												<i class="fa fa-chain"></i>
-											</button>
+						{{#insert}}
+							<div class="more-files" style="display: {{showAll ? 'block' : 'none'}}">
+								{{#files:j}}
+									{{#j > 0}}
+										<div class="col-xs-{{#flash}}11{{/flash}}{{^flash}}12{{/flash}}" style="padding-right: 0">
+											<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}">
 										</div>
-									{{/flash}}
-								{{/}}
-							{{/files}}
-						</div>
+										{{#flash}}
+											<div class="col-xs-1" style="padding-right: 0">
+												<button class="btn btn-link btn-inverse gray" decorator="zeroClipboard" data-clipboard-text="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}">
+													<i class="fa fa-chain"></i>
+												</button>
+											</div>
+										{{/flash}}
+									{{/}}
+								{{/files}}
+							</div>
+						{{/insert}}
 
 						<div class="col-xs-12">
-							<button class="btn btn-link btn-inverse gray" on-click="toggle" decorator="tooltip: {{showAll ? 'Show only main file' : 'Show all files'}}">
+							<button class="btn btn-link btn-inverse gray" on-click="toggle:{{i}}" decorator="tooltip: {{showAll ? 'Show only main file' : 'Show all files'}}">
 								<i class="fa {{ showAll ? 'fa-angle-double-up' : 'fa-angle-double-down' }}"></i>
 							</button>
 						</div>
@@ -107,16 +109,18 @@
 				'download'	: function(event, project) {
 					downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
 				},
-				'toggle'	: function(event) {
+				'toggle'	: function(event, i) {
+					this.set('projects.' + i + '.insert', true);
+
 					var $body		= $('body');
 					var $link		= $(event.node);
 					var $moreFiles	= $link.closest('.file-list').find('.more-files');
-					var keypath		= 'projects.' + $moreFiles.attr('data-project-id') + '.showAll';
+					var keypath		= 'projects.' + i + '.showAll';
 
 					$moreFiles.slideToggle(200, function() {
 						if($link.offset().top < $body.scrollTop()) {
 							$('body').animate({
-								'scrollTop': $link.closest('.item').offset().top - 10
+								'scrollTop': $link.closest('.list-item').offset().top - 10
 							});
 						}
 						_this.set(keypath, !_this.get(keypath));

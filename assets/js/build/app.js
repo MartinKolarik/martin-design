@@ -1041,7 +1041,7 @@
 										t: 7,
 										e: 'div',
 										a: {
-											'class': ['row item']
+											'class': ['row list-item']
 										},
 										f: [{
 											t: 7,
@@ -1222,29 +1222,64 @@
 		}, component = {};
 		component.exports = {
 			'data': {
+				'count': 1050,
 				'query': ''
 			},
-			'computed': {
-				'count': function() {
-					// TODO-LATER
-					return Math.floor(JSON.parse(window.localStorage.getItem('__//api.jsdelivr.com/v1/jsdelivr/libraries__data')).datums.length / 50) * 50;
-				}
-			},
 			'complete': function() {
+				var _this = this;
 				var app = this.get('app');
 				var algolia = new AlgoliaSearch('DBMBXHNL8O', 'ff534b434664d2fb939eace2877ec4dc');
 				var index = algolia.initIndex('jsdelivr');
+				var propsRegExp = /\s*(?:[a-z]+)\s*:\s*(?:.(?![a-z]*\s*:))*/gi;
+				var queryRegExp = /^((?:(?:[^\s:]+(?![a-z]*\s*:))\s*)*)/i;
+				// count projects
+				if (window.localStorage) {
+					var now = Date.now();
+					var count = localStorage.getItem('count');
+					var expires = localStorage.getItem('expires');
+					if (now < expires) {
+						this.set('count', count);
+					} else {
+						index.search('', function(success, response) {
+							count = Math.floor(response.nbHits / 50) * 50;
+							localStorage.setItem('count', count);
+							localStorage.setItem('expires', now + 604800000);
+							_this.set('count', count);
+						}, {
+							'analytics': false
+						});
+					}
+				} else {
+					index.search('', function(success, response) {
+						_this.set('count', Math.floor(response.nbHits / 50) * 50);
+					}, {
+						'analytics': false
+					});
+				}
 				// update results on input
 				this.observe('query', function(newValue) {
-					index.search(newValue.toString(), function(success, list) {
-						// select the last version of the project by default
-						app.views.searchResults.set('projects', $.extend(true, [], list.hits.map(function(project) {
-							project.selectedVersion = project.lastversion;
-							return project;
-						})));
-					}, {
-						'hitsPerPage': 10
-					});
+					newValue = newValue.toString();
+					var query = newValue.match(queryRegExp)[0].trim();
+					var substr = newValue.substr(query.length);
+					var props = {};
+					var match;
+					while ((match = propsRegExp.exec(substr)) !== null) {
+						var temp = match[0].split(':');
+						props[temp[0].trim()] = temp[1].trim();
+					}
+					if (!newValue) {
+						app.views.searchResults.set('projects', []);
+					} else {
+						index.search(query, function(success, response) {
+							// select the last version of the project by default
+							for (var i = 0, c = response.hits.length; i < c; i++) {
+								response.hits[i].selectedVersion = response.hits[i].lastversion;
+							}
+							app.views.searchResults.set('projects', response.hits);
+						}, {
+							'hitsPerPage': 10
+						});
+					}
 				}, {
 					'init': false
 				});
@@ -1368,7 +1403,7 @@
 						t: 7,
 						e: 'div',
 						a: {
-							'class': ['result item']
+							'class': ['result list-item']
 						},
 						f: [{
 								t: 7,
@@ -1712,97 +1747,61 @@
 													},
 													f: [
 														' ', {
-															t: 7,
-															e: 'div',
-															a: {
-																'class': ['more-files'],
-																'data-project-id': [{
-																	t: 2,
-																	r: 'i'
-																}],
-																style: [
-																	'display: ', {
-																		t: 2,
-																		x: {
-																			r: ['showAll'],
-																			s: '${0}?"block":"none"'
-																		}
-																	}
-																]
-															},
-															f: [{
-																t: 4,
-																r: 'files',
-																i: 'j',
-																f: [
-																	' ', {
+															t: 4,
+															r: 'insert',
+															f: [
+																' ', {
+																	t: 7,
+																	e: 'div',
+																	a: {
+																		'class': ['more-files'],
+																		style: [
+																			'display: ', {
+																				t: 2,
+																				x: {
+																					r: ['showAll'],
+																					s: '${0}?"block":"none"'
+																				}
+																			}
+																		]
+																	},
+																	f: [{
 																		t: 4,
-																		x: {
-																			r: ['j'],
-																			s: '${0}>0'
-																		},
+																		r: 'files',
+																		i: 'j',
 																		f: [
 																			' ', {
-																				t: 7,
-																				e: 'div',
-																				a: {
-																					'class': [
-																						'col-xs-', {
-																							t: 4,
-																							r: 'flash',
-																							f: ['11']
-																						}, {
-																							t: 4,
-																							r: 'flash',
-																							n: true,
-																							f: ['12']
-																						}
-																					],
-																					style: ['padding-right: 0']
-																				},
-																				f: [{
-																					t: 7,
-																					e: 'input',
-																					a: {
-																						type: ['text'],
-																						'class': ['form-control output'],
-																						value: [{
-																								t: 2,
-																								r: 'app.cdnRoot'
-																							},
-																							'/', {
-																								t: 2,
-																								r: 'name'
-																							},
-																							'/', {
-																								t: 2,
-																								r: 'selectedVersion'
-																							},
-																							'/', {
-																								t: 2,
-																								r: '.'
-																							}
-																						]
-																					}
-																				}]
-																			},
-																			' ', {
 																				t: 4,
-																				r: 'flash',
+																				x: {
+																					r: ['j'],
+																					s: '${0}>0'
+																				},
 																				f: [
 																					' ', {
 																						t: 7,
 																						e: 'div',
 																						a: {
-																							'class': ['col-xs-1'],
+																							'class': [
+																								'col-xs-', {
+																									t: 4,
+																									r: 'flash',
+																									f: ['11']
+																								}, {
+																									t: 4,
+																									r: 'flash',
+																									n: true,
+																									f: ['12']
+																								}
+																							],
 																							style: ['padding-right: 0']
 																						},
 																						f: [{
 																							t: 7,
-																							e: 'button',
+																							e: 'input',
 																							a: {
-																								'class': ['btn btn-link btn-inverse gray'],
-																								'data-clipboard-text': [{
+																								type: ['text'],
+																								'class': ['form-control output'],
+																								value: [{
 																										t: 2,
 																										r: 'app.cdnRoot'
 																									},
@@ -1819,26 +1818,65 @@
 																										r: '.'
 																									}
 																								]
-																							},
-																							f: [{
-																								t: 7,
-																								e: 'i',
-																								a: {
-																									'class': ['fa fa-chain']
-																								}
-																							}],
-																							o: 'zeroClipboard'
+																							}
 																						}]
+																					},
+																					' ', {
+																						t: 4,
+																						r: 'flash',
+																						f: [
+																							' ', {
+																								t: 7,
+																								e: 'div',
+																								a: {
+																									'class': ['col-xs-1'],
+																									style: ['padding-right: 0']
+																								},
+																								f: [{
+																									t: 7,
+																									e: 'button',
+																									a: {
+																										'class': ['btn btn-link btn-inverse gray'],
+																										'data-clipboard-text': [{
+																												t: 2,
+																												r: 'app.cdnRoot'
+																											},
+																											'/', {
+																												t: 2,
+																												r: 'name'
+																											},
+																											'/', {
+																												t: 2,
+																												r: 'selectedVersion'
+																											},
+																											'/', {
+																												t: 2,
+																												r: '.'
+																											}
+																										]
+																									},
+																									f: [{
+																										t: 7,
+																										e: 'i',
+																										a: {
+																											'class': ['fa fa-chain']
+																										}
+																									}],
+																									o: 'zeroClipboard'
+																								}]
+																							},
+																							' '
+																						]
 																					},
 																					' '
 																				]
 																			},
 																			' '
 																		]
-																	},
-																	' '
-																]
-															}]
+																	}]
+																},
+																' '
+															]
 														},
 														' ', {
 															t: 7,
@@ -1868,7 +1906,13 @@
 																	}
 																}],
 																v: {
-																	click: 'toggle'
+																	click: {
+																		n: 'toggle',
+																		d: [{
+																			t: 2,
+																			r: 'i'
+																		}]
+																	}
 																},
 																o: {
 																	n: 'tooltip',
@@ -1936,15 +1980,16 @@
 					'download': function(event, project) {
 						downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
 					},
-					'toggle': function(event) {
+					'toggle': function(event, i) {
+						this.set('projects.' + i + '.insert', true);
 						var $body = $('body');
 						var $link = $(event.node);
 						var $moreFiles = $link.closest('.file-list').find('.more-files');
-						var keypath = 'projects.' + $moreFiles.attr('data-project-id') + '.showAll';
+						var keypath = 'projects.' + i + '.showAll';
 						$moreFiles.slideToggle(200, function() {
 							if ($link.offset().top < $body.scrollTop()) {
 								$('body').animate({
-									'scrollTop': $link.closest('.item').offset().top - 10
+									'scrollTop': $link.closest('.list-item').offset().top - 10
 								});
 							}
 							_this.set(keypath, !_this.get(keypath));
@@ -1998,6 +2043,8 @@
 	};
 	var app = function(CollectionView, LinksView, Modal, ReportNewVersionView, SearchInputView, SearchResultsView, SelectFilesView, versionList, serialize, unserialize) {
 		var $body = $('body');
+		var $carousel = $('#carousel');
+		var $window = $(window);
 		var app = {
 			'cdnRoot': '//cdn.jsdelivr.net',
 			'components': {
@@ -2035,11 +2082,11 @@
 			'twoway': false
 		});
 		// restore collection and query from hash
-		$(window).on('hashchange searchReady', function() {
+		$window.on('hashchange searchReady', function() {
 			// might be encoded on iOS (#11)
 			var hash = decodeURIComponent(location.hash).substr(2);
 			// redirect from the old format
-			if (hash[0] !== '{') {
+			if (hash && hash[0] !== '{') {
 				hash = JSON.stringify({
 					'query': hash
 				});
@@ -2060,6 +2107,10 @@
 				location.hash = '!' + serialized;
 			} else {
 				location.hash = '';
+				// get rid of the '#' if we don't need it
+				if (window.history && window.history.replaceState) {
+					history.replaceState({}, document.title, location.pathname + location.search);
+				}
 			}
 		}
 		app.views.searchInput.observe('query', observer, {
@@ -2072,6 +2123,14 @@
 		ZeroClipboard.config({
 			'moviePath': '//cdn.jsdelivr.net/zeroclipboard/1.3.3/ZeroClipboard.swf'
 		});
+		// carousel
+		$window.on('resize now.carousel', function() {
+			$carousel.removeClass('slide').carousel(0).css({
+				'minHeight': false
+			}).css({
+				'minHeight': $carousel.outerHeight()
+			}).addClass('slide');
+		}).triggerHandler('now.carousel');
 		// auto-select input content
 		$body.on('click', '.output', function() {
 			this.select();

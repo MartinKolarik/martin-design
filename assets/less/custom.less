@@ -10,8 +10,12 @@ body { font-family: @fonts; }
 
 h1 { font-size: 32px; }
 h2 { font-size: 26px; }
-h3 { font-size: 20px; }
-h4 { font-size: 18px; }
+h3 { font-size: 20px; text-transform: uppercase; }
+h4 { font-size: 14px; text-transform: uppercase; }
+
+h1, h2, h3 {
+	font-weight: 300;
+}
 
 // ***************
 // navigation
@@ -43,8 +47,7 @@ h4 { font-size: 18px; }
 // general
 // ***************
 blockquote {
-	border-color: @red;
-	font-size: 14px;
+	border-left: none;
 }
 
 header {
@@ -53,12 +56,34 @@ header {
 	}
 }
 
-section {
-	margin-top: 40px;
+body > section:not(:empty) {
+	border-bottom: 1px solid #eee;
+
+	> .container {
+		padding: 20px 0 20px 0;
+	}
 }
 
 .btn.zeroclipboard-is-hover {
 	border: 1px solid @gray;
+}
+
+.carousel {
+	text-align: center;
+	padding-bottom: 20px;
+
+	.carousel-indicators {
+		bottom: 0;
+
+		li {
+			background-color: #ccc;
+			border: none;
+
+			&.active {
+				background-color: @red;
+			}
+		}
+	}
 }
 
 .container {
@@ -74,17 +99,17 @@ section {
 	}
 }
 
-.item {
+// links without HREF attribute
+.link {
+	cursor: pointer;
+}
+
+.list-item {
 	padding: 5px 0;
 
 	& + & {
 		border-top: 1px solid @gray;
 	}
-}
-
-// links without HREF attribute
-.link {
-	cursor: pointer;
 }
 
 .list-style-none {
@@ -103,6 +128,7 @@ section {
 
 .show-more {
 	text-align: center;
+	margin-bottom: 0;
 }
 
 *:focus, *:hover {
@@ -145,6 +171,7 @@ section {
 	h4 {
 		color: @red;
 		margin-bottom: 0;
+		text-transform: none;
 	}
 
 	p {
@@ -171,6 +198,13 @@ footer {
 		text-transform: uppercase;
 		margin-bottom: 10px;
 	}
+}
+
+#credits {
+	background-color: #ccc;
+
+	h4 { margin-bottom: 0; }
+	p { font-size: 17.5px; }
 }
 
 #copyright {

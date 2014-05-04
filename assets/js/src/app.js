@@ -22,6 +22,8 @@ define([
 	unserialize
 ) {
 	var $body				= $('body');
+	var $carousel			= $('#carousel');
+	var $window				= $(window);
 	var app					= {
 		'cdnRoot'		: '//cdn.jsdelivr.net',
 		'components'	: {
@@ -61,12 +63,12 @@ define([
 	});
 
 	// restore collection and query from hash
-	$(window).on('hashchange searchReady', function() {
+	$window.on('hashchange searchReady', function() {
 		// might be encoded on iOS (#11)
 		var hash = decodeURIComponent(location.hash).substr(2);
 
 		// redirect from the old format
-		if(hash[0] !== '{') {
+		if(hash && hash[0] !== '{') {
 			hash = JSON.stringify({ 'query': hash });
 		}
 
@@ -89,6 +91,11 @@ define([
 			location.hash = '!' + serialized;
 		} else {
 			location.hash = '';
+
+			// get rid of the '#' if we don't need it
+			if(window.history && window.history.replaceState) {
+				history.replaceState({}, document.title, location.pathname + location.search);
+			}
 		}
 	}
 
@@ -99,6 +106,18 @@ define([
 	ZeroClipboard.config({
 		'moviePath'	: '//cdn.jsdelivr.net/zeroclipboard/1.3.3/ZeroClipboard.swf'
 	});
+
+	// carousel
+	$window
+		.on('resize now.carousel', function() {
+			$carousel
+				.removeClass('slide')
+				.carousel(0)
+				.css({ 'minHeight': false })
+				.css({ 'minHeight': $carousel.outerHeight() })
+				.addClass('slide');
+		})
+		.triggerHandler('now.carousel');
 
 	// auto-select input content
 	$body.on('click', '.output', function() {
