@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+	var reqRactive = [ 'rvc', 'amd-loader', 'ractive' ];
+
 	grunt.initConfig({
 		'intro': grunt.file.read('assets/js/requirejs-ractive/wrapper/intro.js'),
 		'outro': grunt.file.read('assets/js/requirejs-ractive/wrapper/outro.js'),
@@ -9,16 +11,21 @@ module.exports = function(grunt) {
 					'baseUrl': 'assets/js/src',
 					'name': 'app',
 					'out': 'assets/js/build/app.js',
-					'stubModules': [ 'rvc', 'amd-loader', 'ractive' ],
-					optimize: 'none',
+					'stubModules': reqRactive,
+					'optimize': 'none',
 					'onModuleBundleComplete': function (data) {
 						var fs			= module.require('fs');
 						var amdclean	= module.require('amdclean');
 						var outputFile	= data.path;
 
 						fs.writeFileSync(outputFile, amdclean.clean({
-							'removeModules': [ 'rvc', 'amd_loader', 'ractive' ],
-							'filePath': outputFile
+							'removeModules': reqRactive,
+							'filePath': outputFile,
+							'prefixTransform': function(name) {
+								return reqRactive.indexOf(name) === -1
+									? 'amd_' + name
+									: name;
+							}
 						}));
 					}
 				}
