@@ -1,7 +1,8 @@
 define(function() {
-	return function(query, collection) {
+	return function(query, page, collection) {
 		var result = {
 			'query'		: query,
+			'page'		: page,
 			'collection': []
 		};
 
@@ -15,7 +16,8 @@ define(function() {
 
 		// don't include empty values
 		if(result.query || result.collection.length) {
-			result.query = result.query || undefined;
+			result.query	= result.query || undefined;
+			result.page		= result.page || undefined;
 
 			if(!result.collection.length) {
 				result.collection = undefined;

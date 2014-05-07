@@ -69,6 +69,13 @@
 	</div>
 {{/projects}}
 
+{{#nbPages > 1}}
+	<ul class="pager">
+		<li class="previous {{^page}}disabled{{/}}"><a class="link" on-click="loadPage:{{page - 1}}"><i class="fa fa-angle-left"></i> Previous Page</a></li>
+		<li class="next {{^page < nbPages}}disabled{{/}}"><a class="link" on-click="loadPage:{{page + 1}}">Next Page <i class="fa fa-angle-right"></i></a></li>
+	</ul>
+{{/}}
+
 <script type="text/javascript">
 	var downloadHelper			= require('download');
 	var listFiles				= require('list-files');
@@ -83,8 +90,10 @@
 		},
 		'data'		: {
 			'app'		: {},
+			'nbPages'	: 0,
 			'flash'		: true,
 			'listFiles'	: listFiles,
+			'page'		: 0,
 			'projects'	: []
 		},
 		'decorators': {
@@ -109,6 +118,12 @@
 				'download'	: function(event, project) {
 					downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
 				},
+				'loadPage'	: function(event, i) {
+					if(i >= 0 && i < this.get('nbPages')) {
+						app.views.searchInput.set('page', i);
+						$('body, html').scrollTop(0);
+					}
+				},
 				'toggle'	: function(event, i) {
 					this.set('projects.' + i + '.insert', true);
 
@@ -119,7 +134,7 @@
 
 					$moreFiles.slideToggle(200, function() {
 						if($link.offset().top < $body.scrollTop()) {
-							$('body').animate({
+							$('body, html').animate({
 								'scrollTop': $link.closest('.list-item').offset().top - 10
 							});
 						}

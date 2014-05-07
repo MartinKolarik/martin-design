@@ -2,18 +2,18 @@
 <p class="show-more"><a href='#!{"query":"*"}'>Browse all projects</a></p>
 
 <script type="text/javascript">
-	component.exports = {
+	var algolia			= require('algolia');
+	var search			= require('search');
+	component.exports	= {
 		'data'		: {
 			'count'	: 1050,
+			'loaded': false,
+			'page'	: 0,
 			'query'	: ''
 		},
 		'complete'	: function() {
-			var _this		= this;
-			var app			= this.get('app');
-			var algolia		= new AlgoliaSearch('DBMBXHNL8O', 'ff534b434664d2fb939eace2877ec4dc');
-			var index		= algolia.initIndex('jsdelivr');
-			var propsRegExp	= /\s*(?:[a-z]+)\s*:\s*(?:.(?![a-z]*\s*:))*/gi;
-			var queryRegExp	= /^((?:(?:[^\s:]+(?![a-z]*\s*:))\s*)*)/i;
+			var _this	= this;
+			var app		= this.get('app');
 
 			// count projects
 			if(window.localStorage) {
@@ -24,7 +24,7 @@
 				if(now < expires) {
 					this.set('count', count);
 				} else {
-					index.search('', function(success, response) {
+					algolia.search('', function(success, response) {
 						count = Math.floor(response.nbHits / 50) * 50;
 
 						localStorage.setItem('count', count);
@@ -33,35 +33,23 @@
 					}, { 'analytics': false });
 				}
 			} else {
-				index.search('', function(success, response) {
+				algolia.search('', function(success, response) {
 					_this.set('count', Math.floor(response.nbHits / 50) * 50)
 				}, { 'analytics': false });
 			}
 
 			// update results on input
-			this.observe('query', function(newValue) {
-				newValue	= newValue.toString();
-				var query	= newValue.match(queryRegExp)[0].trim();
-				var substr	= newValue.substr(query.length);
-				var props	= {};
-				var match;
-
-				while((match = propsRegExp.exec(substr)) !== null) {
-					var temp				= match[0].split(':');
-					props[temp[0].trim()]	= temp[1].trim();
-				}
-
-				if(!newValue) {
-					app.views.searchResults.set('projects', []);
-				} else {
-					index.search(query, function(success, response) {
-						// select the last version of the project by default
-						for(var i = 0, c = response.hits.length; i < c; i++) {
-							response.hits[i].selectedVersion = response.hits[i].lastversion;
-						}
-
-						app.views.searchResults.set('projects', response.hits);
-					}, { 'hitsPerPage': 10 })
+			this.observe('page query loaded', function(newValue, oldValue, keypath) {
+				if(this.get('loaded')) {
+					if(keypath === 'query' && this.get('page')) {
+						this.set('page', 0)
+					} else {
+						search(this.get('query').toString(), this.get('page'), function(response) {
+							app.views.searchResults.set('projects', response.hits || []);
+							app.views.searchResults.set('nbPages', response.nbPages || 0);
+							app.views.searchResults.set('page', response.page || 0);
+						});
+					}
 				}
 			}, { 'init': false });
 

@@ -1,6 +1,7 @@
 (function(global) {
 	var ractive = global.Ractive;
-	var build_links = function(collection, group) {
+	var amd_amd_loader = {};
+	var amd_build_links = function(collection, group) {
 		var isCss = /\.css$/i;
 		var isJs = /\.js$/i;
 		var css = [];
@@ -63,7 +64,7 @@
 			'others': others
 		};
 	};
-	var rvc_components_modal = function(Ractive) {
+	var amd_rvc_components_modal = function(Ractive) {
 		var __options__ = {
 			template: [{
 					t: 7,
@@ -225,7 +226,7 @@
 		}
 		return Ractive.extend(__options__);
 	}(ractive);
-	var rvc_components_links = function(Ractive) {
+	var amd_rvc_components_links = function(Ractive) {
 		var __options__ = {
 			template: [{
 					t: 7,
@@ -545,8 +546,8 @@
 				' '
 			]
 		}, component = {};
-		var linkBuilder = build_links;
-		var modal = rvc_components_modal;
+		var linkBuilder = amd_build_links;
+		var modal = amd_rvc_components_modal;
 		component.exports = {
 			'el': 'body',
 			'append': true,
@@ -590,8 +591,8 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, build_links, rvc_components_modal);
-	var rvc_components_report_new_version = function(Ractive) {
+	}(ractive, amd_build_links, amd_rvc_components_modal);
+	var amd_rvc_components_report_new_version = function(Ractive) {
 		var __options__ = {
 			template: [{
 					t: 7,
@@ -635,7 +636,7 @@
 			'el': 'body',
 			'append': true,
 			'components': {
-				'modal': rvc_components_modal
+				'modal': amd_rvc_components_modal
 			},
 			'data': {
 				'id': 'modal-report-new-version',
@@ -661,8 +662,8 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, rvc_components_modal);
-	var list_files = function(project) {
+	}(ractive, amd_rvc_components_modal);
+	var amd_list_files = function(project) {
 		var files = project.assets.filter(function(assets) {
 			return assets.version === project.selectedVersion;
 		})[0].files;
@@ -686,7 +687,7 @@
 			return a > b || -1;
 		});
 	};
-	var rvc_components_select_files = function(Ractive) {
+	var amd_rvc_components_select_files = function(Ractive) {
 		var __options__ = {
 			template: [{
 					t: 7,
@@ -788,8 +789,8 @@
 				' '
 			]
 		}, component = {};
-		var listFiles = list_files;
-		var modal = rvc_components_modal;
+		var listFiles = amd_list_files;
+		var modal = amd_rvc_components_modal;
 		component.exports = {
 			'el': 'body',
 			'append': true,
@@ -831,8 +832,8 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, list_files, rvc_components_modal);
-	var rvc_components_version_list = function(Ractive) {
+	}(ractive, amd_list_files, amd_rvc_components_modal);
+	var amd_rvc_components_version_list = function(Ractive) {
 		var __options__ = {
 			template: [{
 				t: 4,
@@ -950,8 +951,8 @@
 				]
 			}]
 		}, component = {};
-		var ReportNewVersionView = rvc_components_report_new_version;
-		var SelectFilesView = rvc_components_select_files;
+		var ReportNewVersionView = amd_rvc_components_report_new_version;
+		var SelectFilesView = amd_rvc_components_select_files;
 		component.exports = {
 			'data': {
 				'class': '',
@@ -1004,8 +1005,8 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, rvc_components_report_new_version, rvc_components_select_files);
-	var rvc_components_collection = function(Ractive) {
+	}(ractive, amd_rvc_components_report_new_version, amd_rvc_components_select_files);
+	var amd_rvc_components_collection = function(Ractive) {
 		var __options__ = {
 			template: [{
 				t: 4,
@@ -1144,8 +1145,8 @@
 				]
 			}]
 		}, component = {};
-		var LinksView = rvc_components_links;
-		var versionList = rvc_components_version_list;
+		var LinksView = amd_rvc_components_links;
+		var versionList = amd_rvc_components_version_list;
 		component.exports = {
 			'components': {
 				'versionList': versionList
@@ -1179,8 +1180,38 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, rvc_components_links, rvc_components_version_list);
-	var rvc_components_search_input = function(Ractive) {
+	}(ractive, amd_rvc_components_links, amd_rvc_components_version_list);
+	var amd_algolia = new AlgoliaSearch('DBMBXHNL8O', 'ff534b434664d2fb939eace2877ec4dc').initIndex('jsdelivr');
+	var amd_search = function(algolia) {
+		var attrsRegExp = /\s*(?:[a-z]+)\s*:\s*(?:.(?![a-z]*\s*:))*/gi;
+		var queryRegExp = /^((?:(?:[^\s:]+(?![a-z]*\s*:))\s*)*)/i;
+		return function(queryString, page, callback) {
+			if (!queryString) {
+				callback(false);
+			} else {
+				var query = queryString.match(queryRegExp)[0].trim();
+				var substr = queryString.substr(query.length);
+				var attrs = {};
+				var match;
+				// parse attributes
+				while ((match = attrsRegExp.exec(substr)) !== null) {
+					var temp = match[0].split(':');
+					attrs[temp[0].trim()] = temp[1].trim();
+				}
+				algolia.search(query, function(success, response) {
+					// select the last version of the project by default
+					for (var i = 0, c = response.hits.length; i < c; i++) {
+						response.hits[i].selectedVersion = response.hits[i].lastversion;
+					}
+					callback(response);
+				}, {
+					'hitsPerPage': 10,
+					'page': page
+				});
+			}
+		};
+	}(amd_algolia);
+	var amd_rvc_components_search_input = function(Ractive) {
 		var __options__ = {
 			template: [{
 					t: 7,
@@ -1220,18 +1251,18 @@
 				' '
 			]
 		}, component = {};
+		var algolia = amd_algolia;
+		var search = amd_search;
 		component.exports = {
 			'data': {
 				'count': 1050,
+				'loaded': false,
+				'page': 0,
 				'query': ''
 			},
 			'complete': function() {
 				var _this = this;
 				var app = this.get('app');
-				var algolia = new AlgoliaSearch('DBMBXHNL8O', 'ff534b434664d2fb939eace2877ec4dc');
-				var index = algolia.initIndex('jsdelivr');
-				var propsRegExp = /\s*(?:[a-z]+)\s*:\s*(?:.(?![a-z]*\s*:))*/gi;
-				var queryRegExp = /^((?:(?:[^\s:]+(?![a-z]*\s*:))\s*)*)/i;
 				// count projects
 				if (window.localStorage) {
 					var now = Date.now();
@@ -1240,7 +1271,7 @@
 					if (now < expires) {
 						this.set('count', count);
 					} else {
-						index.search('', function(success, response) {
+						algolia.search('', function(success, response) {
 							count = Math.floor(response.nbHits / 50) * 50;
 							localStorage.setItem('count', count);
 							localStorage.setItem('expires', now + 604800000);
@@ -1250,35 +1281,24 @@
 						});
 					}
 				} else {
-					index.search('', function(success, response) {
+					algolia.search('', function(success, response) {
 						_this.set('count', Math.floor(response.nbHits / 50) * 50);
 					}, {
 						'analytics': false
 					});
 				}
 				// update results on input
-				this.observe('query', function(newValue) {
-					newValue = newValue.toString();
-					var query = newValue.match(queryRegExp)[0].trim();
-					var substr = newValue.substr(query.length);
-					var props = {};
-					var match;
-					while ((match = propsRegExp.exec(substr)) !== null) {
-						var temp = match[0].split(':');
-						props[temp[0].trim()] = temp[1].trim();
-					}
-					if (!newValue) {
-						app.views.searchResults.set('projects', []);
-					} else {
-						index.search(query, function(success, response) {
-							// select the last version of the project by default
-							for (var i = 0, c = response.hits.length; i < c; i++) {
-								response.hits[i].selectedVersion = response.hits[i].lastversion;
-							}
-							app.views.searchResults.set('projects', response.hits);
-						}, {
-							'hitsPerPage': 10
-						});
+				this.observe('page query loaded', function(newValue, oldValue, keypath) {
+					if (this.get('loaded')) {
+						if (keypath === 'query' && this.get('page')) {
+							this.set('page', 0);
+						} else {
+							search(this.get('query').toString(), this.get('page'), function(response) {
+								app.views.searchResults.set('projects', response.hits || []);
+								app.views.searchResults.set('nbPages', response.nbPages || 0);
+								app.views.searchResults.set('page', response.page || 0);
+							});
+						}
 					}
 				}, {
 					'init': false
@@ -1297,15 +1317,15 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive);
-	var download = function(url) {
+	}(ractive, amd_algolia, amd_search);
+	var amd_download = function(url) {
 		var $iframe = $('#download-helper');
 		if (!$iframe.length) {
 			$iframe = $('<iframe id="download-helper" style="display: none"></iframe>').appendTo('body');
 		}
 		$iframe.attr('src', url);
 	};
-	var decorators_tooltip = function(node, title, placement, trigger, container) {
+	var amd_decorators_tooltip = function(node, title, placement, trigger, container) {
 		var $node = $(node).tooltip({
 			'title': title,
 			'placement': placement || 'top',
@@ -1318,7 +1338,7 @@
 			}
 		};
 	};
-	var decorators_helpers = {
+	var amd_decorators_helpers = {
 		'create': function(fn) {
 			return function(node) {
 				var ractive = this;
@@ -1365,7 +1385,7 @@
 			};
 		}
 	};
-	var decorators_zero_clipboard = function(helpers) {
+	var amd_decorators_zero_clipboard = function(helpers) {
 		return helpers.create(function(node) {
 			var $bridge = $('#global-zeroclipboard-html-bridge');
 			var $node = $(node);
@@ -1391,8 +1411,8 @@
 				ractive.set('flash', false);
 			});
 		});
-	}(decorators_helpers);
-	var rvc_components_search_results = function(Ractive) {
+	}(amd_decorators_helpers);
+	var amd_rvc_components_search_results = function(Ractive) {
 		var __options__ = {
 			template: [{
 				t: 4,
@@ -1941,22 +1961,131 @@
 					},
 					' '
 				]
+			}, {
+				t: 4,
+				x: {
+					r: ['nbPages'],
+					s: '${0}>1'
+				},
+				f: [
+					' ', {
+						t: 7,
+						e: 'ul',
+						a: {
+							'class': ['pager']
+						},
+						f: [{
+								t: 7,
+								e: 'li',
+								a: {
+									'class': [
+										'previous ', {
+											t: 4,
+											r: 'page',
+											n: true,
+											f: ['disabled']
+										}
+									]
+								},
+								f: [{
+									t: 7,
+									e: 'a',
+									a: {
+										'class': ['link']
+									},
+									f: [{
+											t: 7,
+											e: 'i',
+											a: {
+												'class': ['fa fa-angle-left']
+											}
+										},
+										' Previous Page'
+									],
+									v: {
+										click: {
+											n: 'loadPage',
+											d: [{
+												t: 2,
+												x: {
+													r: ['page'],
+													s: '${0}-1'
+												}
+											}]
+										}
+									}
+								}]
+							},
+							' ', {
+								t: 7,
+								e: 'li',
+								a: {
+									'class': [
+										'next ', {
+											t: 4,
+											n: true,
+											x: {
+												r: [
+													'page',
+													'nbPages'
+												],
+												s: '${0}<${1}'
+											},
+											f: ['disabled']
+										}
+									]
+								},
+								f: [{
+									t: 7,
+									e: 'a',
+									a: {
+										'class': ['link']
+									},
+									f: [
+										'Next Page ', {
+											t: 7,
+											e: 'i',
+											a: {
+												'class': ['fa fa-angle-right']
+											}
+										}
+									],
+									v: {
+										click: {
+											n: 'loadPage',
+											d: [{
+												t: 2,
+												x: {
+													r: ['page'],
+													s: '${0}+1'
+												}
+											}]
+										}
+									}
+								}]
+							}
+						]
+					},
+					' '
+				]
 			}]
 		}, component = {};
-		var downloadHelper = download;
-		var listFiles = list_files;
-		var SelectFilesView = rvc_components_select_files;
-		var tooltipDecorator = decorators_tooltip;
-		var versionList = rvc_components_version_list;
-		var zeroClipboardDecorator = decorators_zero_clipboard;
+		var downloadHelper = amd_download;
+		var listFiles = amd_list_files;
+		var SelectFilesView = amd_rvc_components_select_files;
+		var tooltipDecorator = amd_decorators_tooltip;
+		var versionList = amd_rvc_components_version_list;
+		var zeroClipboardDecorator = amd_decorators_zero_clipboard;
 		component.exports = {
 			'components': {
 				'versionList': versionList
 			},
 			'data': {
 				'app': {},
+				'nbPages': 0,
 				'flash': true,
 				'listFiles': listFiles,
+				'page': 0,
 				'projects': []
 			},
 			'decorators': {
@@ -1980,6 +2109,12 @@
 					'download': function(event, project) {
 						downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
 					},
+					'loadPage': function(event, i) {
+						if (i >= 0 && i < this.get('nbPages')) {
+							app.views.searchInput.set('page', i);
+							$('body, html').scrollTop(0);
+						}
+					},
 					'toggle': function(event, i) {
 						this.set('projects.' + i + '.insert', true);
 						var $body = $('body');
@@ -1988,7 +2123,7 @@
 						var keypath = 'projects.' + i + '.showAll';
 						$moreFiles.slideToggle(200, function() {
 							if ($link.offset().top < $body.scrollTop()) {
-								$('body').animate({
+								$('body, html').animate({
 									'scrollTop': $link.closest('.list-item').offset().top - 10
 								});
 							}
@@ -2011,10 +2146,11 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, download, list_files, rvc_components_select_files, decorators_tooltip, rvc_components_version_list, decorators_zero_clipboard);
-	var serialize = function(query, collection) {
+	}(ractive, amd_download, amd_list_files, amd_rvc_components_select_files, amd_decorators_tooltip, amd_rvc_components_version_list, amd_decorators_zero_clipboard);
+	var amd_serialize = function(query, page, collection) {
 		var result = {
 			'query': query,
+			'page': page,
 			'collection': []
 		};
 		for (var i = 0, c = collection.length; i < c; i++) {
@@ -2027,6 +2163,7 @@
 		// don't include empty values
 		if (result.query || result.collection.length) {
 			result.query = result.query || undefined;
+			result.page = result.page || undefined;
 			if (!result.collection.length) {
 				result.collection = undefined;
 			}
@@ -2034,14 +2171,14 @@
 		}
 		return '';
 	};
-	var unserialize = function(string) {
+	var amd_unserialize = function(string) {
 		try {
 			return JSON.parse(string);
 		} catch (e) {
 			return false;
 		}
 	};
-	var app = function(CollectionView, LinksView, Modal, ReportNewVersionView, SearchInputView, SearchResultsView, SelectFilesView, versionList, serialize, unserialize) {
+	var amd_app = function(CollectionView, LinksView, Modal, ReportNewVersionView, SearchInputView, SearchResultsView, SelectFilesView, versionList, serialize, unserialize) {
 		var $body = $('body');
 		var $carousel = $('#carousel');
 		var $window = $(window);
@@ -2092,17 +2229,19 @@
 				});
 			}
 			// only if there is a difference between hash and the current data
-			if (hash !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
+			if (hash !== serialize(app.views.searchInput.get('query'), app.views.searchInput.get('page'), app.views.collection.get('projects'))) {
 				var data = unserialize(hash);
 				if (data) {
 					app.views.searchInput.set('query', data.query || '');
+					app.views.searchInput.set('page', data.page || 0);
 					app.views.collection.set('projects', data.collection || []);
 				}
 			}
+			app.views.searchInput.set('loaded', true);
 		});
 		// update permalink on change
 		function observer() {
-			var serialized = serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'));
+			var serialized = serialize(app.views.searchInput.get('query'), app.views.searchInput.get('page'), app.views.collection.get('projects'));
 			if (serialized) {
 				location.hash = '!' + serialized;
 			} else {
@@ -2113,7 +2252,7 @@
 				}
 			}
 		}
-		app.views.searchInput.observe('query', observer, {
+		app.views.searchInput.observe('page query', observer, {
 			'init': false
 		});
 		app.views.collection.observe('projects', observer, {
@@ -2138,5 +2277,5 @@
 		// we don't have require.js in production
 		window.app = app;
 		return app;
-	}(rvc_components_collection, rvc_components_links, rvc_components_modal, rvc_components_report_new_version, rvc_components_search_input, rvc_components_search_results, rvc_components_select_files, rvc_components_version_list, serialize, unserialize);
+	}(amd_rvc_components_collection, amd_rvc_components_links, amd_rvc_components_modal, amd_rvc_components_report_new_version, amd_rvc_components_search_input, amd_rvc_components_search_results, amd_rvc_components_select_files, amd_rvc_components_version_list, amd_serialize, amd_unserialize);
 })(window);

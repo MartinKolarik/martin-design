@@ -73,19 +73,22 @@ define([
 		}
 
 		// only if there is a difference between hash and the current data
-		if(hash !== serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'))) {
+		if(hash !== serialize(app.views.searchInput.get('query'), app.views.searchInput.get('page'), app.views.collection.get('projects'))) {
 			var data = unserialize(hash);
 
 			if(data) {
 				app.views.searchInput.set('query', data.query || '');
+				app.views.searchInput.set('page', data.page || 0);
 				app.views.collection.set('projects', data.collection || []);// TODO fetch the file list from API
 			}
 		}
+
+		app.views.searchInput.set('loaded', true);
 	});
 
 	// update permalink on change
 	function observer() {
-		var serialized = serialize(app.views.searchInput.get('query'), app.views.collection.get('projects'));
+		var serialized = serialize(app.views.searchInput.get('query'), app.views.searchInput.get('page'), app.views.collection.get('projects'));
 
 		if(serialized) {
 			location.hash = '!' + serialized;
@@ -99,7 +102,7 @@ define([
 		}
 	}
 
-	app.views.searchInput.observe('query', observer, { 'init': false });
+	app.views.searchInput.observe('page query', observer, { 'init': false });
 	app.views.collection.observe('projects', observer, { 'init': false });
 
 	// configure ZeroClipboard
