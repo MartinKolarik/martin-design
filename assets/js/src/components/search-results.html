@@ -145,6 +145,7 @@
 
 			this.observe('projects', function(n) {
 				if(n.length === 1 && typeof n[0].showAll === 'undefined') {
+					_this.set('projects.0.insert', true);
 					_this.set('projects.0.showAll', true);
 				}
 			});
