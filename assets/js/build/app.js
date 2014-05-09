@@ -1972,7 +1972,7 @@
 						t: 7,
 						e: 'ul',
 						a: {
-							'class': ['pager']
+							'class': ['pagination pull-right']
 						},
 						f: [{
 								t: 7,
@@ -2000,7 +2000,7 @@
 												'class': ['fa fa-angle-left']
 											}
 										},
-										' Previous Page'
+										' Previous'
 									],
 									v: {
 										click: {
@@ -2017,6 +2017,253 @@
 								}]
 							},
 							' ', {
+								t: 4,
+								x: {
+									r: ['pagination.0'],
+									s: '${0}>=1'
+								},
+								f: [
+									' ', {
+										t: 7,
+										e: 'li',
+										f: [{
+											t: 7,
+											e: 'a',
+											a: {
+												'class': ['link']
+											},
+											f: ['1'],
+											v: {
+												click: {
+													n: 'loadPage',
+													a: [0]
+												}
+											}
+										}]
+									},
+									' ', {
+										t: 4,
+										x: {
+											r: ['pagination.0'],
+											s: '${0}===2'
+										},
+										f: [
+											' ', {
+												t: 7,
+												e: 'li',
+												f: [{
+													t: 7,
+													e: 'a',
+													a: {
+														'class': ['link']
+													},
+													f: ['2'],
+													v: {
+														click: {
+															n: 'loadPage',
+															a: [1]
+														}
+													}
+												}]
+											},
+											' '
+										]
+									},
+									' ', {
+										t: 4,
+										x: {
+											r: ['pagination.0'],
+											s: '${0}>2'
+										},
+										f: [
+											' ', {
+												t: 7,
+												e: 'li',
+												a: {
+													'class': ['disabled']
+												},
+												f: [{
+													t: 7,
+													e: 'a',
+													f: ['...']
+												}]
+											},
+											' '
+										]
+									},
+									' '
+								]
+							},
+							' ', {
+								t: 4,
+								r: 'pagination',
+								f: [
+									' ', {
+										t: 7,
+										e: 'li',
+										a: {
+											'class': [{
+												t: 2,
+												x: {
+													r: [
+														'.',
+														'page'
+													],
+													s: '${0}===${1}?"active":""'
+												}
+											}]
+										},
+										f: [{
+											t: 7,
+											e: 'a',
+											a: {
+												'class': ['link']
+											},
+											f: [{
+												t: 2,
+												x: {
+													r: ['.'],
+													s: '${0}+1'
+												}
+											}],
+											v: {
+												click: {
+													n: 'loadPage',
+													d: [{
+														t: 2,
+														r: '.'
+													}]
+												}
+											}
+										}]
+									},
+									' '
+								]
+							},
+							' ', {
+								t: 4,
+								x: {
+									r: [
+										'pagination.length',
+										'pagination',
+										'nbPages'
+									],
+									s: '${1}[${0}-1]<=${2}-2'
+								},
+								f: [
+									' ', {
+										t: 4,
+										x: {
+											r: [
+												'pagination.length',
+												'pagination',
+												'nbPages'
+											],
+											s: '${1}[${0}-1]===${2}-3'
+										},
+										f: [
+											' ', {
+												t: 7,
+												e: 'li',
+												f: [{
+													t: 7,
+													e: 'a',
+													a: {
+														'class': ['link']
+													},
+													f: [{
+														t: 2,
+														x: {
+															r: ['nbPages'],
+															s: '${0}-1'
+														}
+													}],
+													v: {
+														click: {
+															n: 'loadPage',
+															d: [{
+																t: 2,
+																x: {
+																	r: ['nbPages'],
+																	s: '${0}-2'
+																}
+															}]
+														}
+													}
+												}]
+											},
+											' '
+										]
+									},
+									' ', {
+										t: 4,
+										x: {
+											r: [
+												'pagination.length',
+												'pagination',
+												'nbPages'
+											],
+											s: '${1}[${0}-1]<${2}-3'
+										},
+										f: [
+											' ', {
+												t: 7,
+												e: 'li',
+												a: {
+													'class': ['disabled']
+												},
+												f: [{
+													t: 7,
+													e: 'a',
+													f: ['...']
+												}]
+											},
+											' '
+										]
+									},
+									' ', {
+										t: 7,
+										e: 'li',
+										a: {
+											'class': [{
+												t: 2,
+												x: {
+													r: [
+														'.',
+														'page'
+													],
+													s: '${0}===${1}?"active":""'
+												}
+											}]
+										},
+										f: [{
+											t: 7,
+											e: 'a',
+											a: {
+												'class': ['link']
+											},
+											f: [{
+												t: 2,
+												r: 'nbPages'
+											}],
+											v: {
+												click: {
+													n: 'loadPage',
+													d: [{
+														t: 2,
+														x: {
+															r: ['nbPages'],
+															s: '${0}-1'
+														}
+													}]
+												}
+											}
+										}]
+									},
+									' '
+								]
+							},
+							' ', {
 								t: 7,
 								e: 'li',
 								a: {
@@ -2029,7 +2276,7 @@
 													'page',
 													'nbPages'
 												],
-												s: '${0}<${1}'
+												s: '${0}<${1}-1'
 											},
 											f: ['disabled']
 										}
@@ -2042,7 +2289,7 @@
 										'class': ['link']
 									},
 									f: [
-										'Next Page ', {
+										'Next ', {
 											t: 7,
 											e: 'i',
 											a: {
@@ -2080,6 +2327,33 @@
 			'components': {
 				'versionList': versionList
 			},
+			'computed': {
+				'pagination': function() {
+					var current = this.get('page');
+					var total = this.get('nbPages');
+					var length = 5;
+					var half = Math.floor(length / 2);
+					var result = [];
+					var start, end;
+					if (total < length) {
+						start = 0;
+						end = total - 1;
+					} else if (current <= half) {
+						start = 0;
+						end = length - 1;
+					} else if (current >= total - half) {
+						start = total - length;
+						end = total - 1;
+					} else {
+						start = current - half;
+						end = start + length - 1;
+					}
+					for (var i = start; i <= end; i++) {
+						result.push(i);
+					}
+					return result;
+				}
+			},
 			'data': {
 				'app': {},
 				'nbPages': 0,
@@ -2110,7 +2384,7 @@
 						downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
 					},
 					'loadPage': function(event, i) {
-						if (i >= 0 && i < this.get('nbPages')) {
+						if (i >= 0 && i < this.get('nbPages') && i !== this.get('page')) {
 							app.views.searchInput.set('page', i);
 							$('body, html').scrollTop(0);
 						}
@@ -2133,6 +2407,7 @@
 				});
 				this.observe('projects', function(n) {
 					if (n.length === 1 && typeof n[0].showAll === 'undefined') {
+						_this.set('projects.0.insert', true);
 						_this.set('projects.0.showAll', true);
 					}
 				});

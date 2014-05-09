@@ -70,9 +70,35 @@
 {{/projects}}
 
 {{#nbPages > 1}}
-	<ul class="pager">
-		<li class="previous {{^page}}disabled{{/}}"><a class="link" on-click="loadPage:{{page - 1}}"><i class="fa fa-angle-left"></i> Previous Page</a></li>
-		<li class="next {{^page < nbPages}}disabled{{/}}"><a class="link" on-click="loadPage:{{page + 1}}">Next Page <i class="fa fa-angle-right"></i></a></li>
+	<ul class="pagination pull-right">
+		<li class="previous {{^page}}disabled{{/}}"><a class="link" on-click="loadPage:{{page - 1}}"><i class="fa fa-angle-left"></i> Previous</a></li>
+
+		{{#pagination[0] >= 1}}
+			<li><a class="link" on-click="loadPage:0">1</a></li>
+			{{#pagination[0] === 2}}
+				<li><a class="link" on-click="loadPage:1">2</a></li>
+			{{/}}
+			{{#pagination[0] > 2}}
+				<li class="disabled"><a>...</a></li>
+			{{/}}
+		{{/}}
+
+		{{#pagination}}
+			<li class="{{this === page ? 'active' : ''}}"><a class="link" on-click="loadPage:{{this}}">{{this + 1}}</a></li>
+		{{/pagination}}
+
+		{{#pagination[pagination.length - 1] <= nbPages - 2}}
+			{{#pagination[pagination.length - 1] === nbPages - 3}}
+				<li><a class="link" on-click="loadPage:{{nbPages - 2}}">{{nbPages - 1}}</a></li>
+			{{/}}
+
+			{{#pagination[pagination.length - 1] < nbPages - 3}}
+				<li class="disabled"><a>...</a></li>
+			{{/}}
+			<li class="{{this === page ? 'active' : ''}}"><a class="link" on-click="loadPage:{{nbPages - 1}}">{{nbPages}}</a></li>
+		{{/}}
+
+		<li class="next {{^page < nbPages - 1}}disabled{{/}}"><a class="link" on-click="loadPage:{{page + 1}}">Next <i class="fa fa-angle-right"></i></a></li>
 	</ul>
 {{/}}
 
@@ -87,6 +113,36 @@
 	component.exports		= {
 		'components': {
 			'versionList'	: versionList
+		},
+		'computed'	: {
+			'pagination'	: function() {
+				var current	= this.get('page');
+				var total	= this.get('nbPages');
+				var length	= 5;
+				var half	= Math.floor(length / 2);
+				var result	= [];
+				var start, end;
+
+				if(total < length) {
+					start	= 0;
+					end		= total - 1;
+				} else if(current <= half) {
+					start	= 0;
+					end		= length - 1;
+				} else if(current >= (total - half)) {
+					start	= total - length;
+					end		= total - 1;
+				} else {
+					start	= current - half;
+					end		= start + length - 1;
+				}
+
+				for(var i = start; i <= end; i++) {
+					result.push(i);
+				}
+
+				return result;
+			}
 		},
 		'data'		: {
 			'app'		: {},
@@ -119,7 +175,7 @@
 					downloadHelper('//cdn.jsdelivr.net/' + project.name + '/' + project.selectedVersion + '/' + project.zip);
 				},
 				'loadPage'	: function(event, i) {
-					if(i >= 0 && i < this.get('nbPages')) {
+					if(i >= 0 && i < this.get('nbPages') && i !== this.get('page')) {
 						app.views.searchInput.set('page', i);
 						$('body, html').scrollTop(0);
 					}
