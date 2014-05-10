@@ -26,7 +26,7 @@
 
 			<div class="file-list">
 				{{# {files: listFiles(this)} }}
-					<div class="col-xs-{{#flash}}11{{/flash}}{{^flash}}12{{/flash}}" style="padding-right: 0">
+					<div class="col-xs-{{flash ? 11 : 12}}" style="padding-right: 0">
 						<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{files.0}}">
 					</div>
 					{{#flash}}
@@ -42,7 +42,7 @@
 							<div class="more-files" style="display: {{showAll ? 'block' : 'none'}}">
 								{{#files:j}}
 									{{#j > 0}}
-										<div class="col-xs-{{#flash}}11{{/flash}}{{^flash}}12{{/flash}}" style="padding-right: 0">
+										<div class="col-xs-{{flash ? 11 : 12}}" style="padding-right: 0">
 											<input type="text" class="form-control output" value="{{app.cdnRoot}}/{{name}}/{{selectedVersion}}/{{this}}">
 										</div>
 										{{#flash}}
@@ -199,12 +199,12 @@
 				}
 			});
 
-			this.observe('projects', function(n) {
-				if(n.length === 1 && typeof n[0].showAll === 'undefined') {
+			this.observe('projects.length', function(n) {
+				if(n === 1) {
 					_this.set('projects.0.insert', true);
 					_this.set('projects.0.showAll', true);
 				}
-			});
+			}, { 'defer': true });
 		}
 	}
 </script>

@@ -44,10 +44,13 @@
 					if(keypath === 'query' && this.get('page')) {
 						this.set('page', 0)
 					} else {
-						search(this.get('query').toString(), this.get('page'), function(response) {
-							app.views.searchResults.set('projects', response.hits || []);
-							app.views.searchResults.set('nbPages', response.nbPages || 0);
-							app.views.searchResults.set('page', response.page || 0);
+						search(this.get('query').toString(), this.get('page'), function(response, query) {
+							// the query might have changed since we sent the request
+							if(query === _this.get('query')) {
+								app.views.searchResults.set('projects', response.hits || []);
+								app.views.searchResults.set('nbPages', response.nbPages || 0);
+								app.views.searchResults.set('page', response.page || 0);
+							}
 						});
 					}
 				}

@@ -1,45 +1,205 @@
 /*
 
-	rvc.js - v0.1.5 - 2014-04-01
+	rvc.js - v0.1.1 - 2014-05-10
 	==========================================================
 
-	Next-generation DOM manipulation - http://ractivejs.org
-	Follow @RactiveJS for updates
-
-	----------------------------------------------------------
-
-	Copyright 2014 Rich Harris
-
-	Permission is hereby granted, free of charge, to any person
-	obtaining a copy of this software and associated documentation
-	files (the "Software"), to deal in the Software without
-	restriction, including without limitation the rights to use,
-	copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the
-	Software is furnished to do so, subject to the following
-	conditions:
-
-	The above copyright notice and this permission notice shall be
-	included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-	OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-	HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-	WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-	OTHER DEALINGS IN THE SOFTWARE.
+	https://github.com/ractivejs/rvc
+	MIT licensed.
 
 */
 
-define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
+define( [ 'ractive' ], function( Ractive ) {
 
 	'use strict';
 
+	var loader = function() {
+		// precompiled can be true indicating all resources have been compiled
+		// or it can be an array of paths prefixes which are precompiled
+		var precompiled;
+		var loader = function( pluginId, ext, allowExts, compile ) {
+			if ( arguments.length == 3 ) {
+				compile = allowExts;
+				allowExts = undefined;
+			} else if ( arguments.length == 2 ) {
+				compile = ext;
+				ext = allowExts = undefined;
+			}
+			return {
+				buildCache: {},
+				load: function( name, req, load, config ) {
+					var path = req.toUrl( name );
+					var queryString = '';
+					if ( path.indexOf( '?' ) != -1 ) {
+						queryString = path.substr( path.indexOf( '?' ) );
+						path = path.substr( 0, path.length - queryString.length );
+					}
+					// precompiled -> load from .ext.js extension
+					if ( config.precompiled instanceof Array ) {
+						for ( var i = 0; i < config.precompiled.length; i++ )
+							if ( path.substr( 0, config.precompiled[ i ].length ) == config.precompiled[ i ] )
+								return require( [ path + '.' + pluginId + '.js' + queryString ], load, load.error );
+					} else if ( config.precompiled === true )
+						return require( [ path + '.' + pluginId + '.js' + queryString ], load, load.error );
+					// only add extension if a moduleID not a path
+					if ( ext && name.substr( 0, 1 ) != '/' && !name.match( /:\/\// ) ) {
+						var validExt = false;
+						if ( allowExts ) {
+							for ( var i = 0; i < allowExts.length; i++ ) {
+								if ( name.substr( name.length - allowExts[ i ].length - 1 ) == '.' + allowExts[ i ] )
+									validExt = true;
+							}
+						}
+						if ( !validExt )
+							path += '.' + ext + queryString;
+						else
+							path += queryString;
+					} else {
+						path += queryString;
+					}
+					var self = this;
+					loader.fetch( path, function( source ) {
+						compile( name, source, req, function( compiled ) {
+							if ( typeof compiled == 'string' ) {
+								if ( config.isBuild )
+									self.buildCache[ name ] = compiled;
+								load.fromText( compiled );
+							} else
+								load( compiled );
+						}, load.error, config );
+					}, load.error );
+				},
+				write: function( pluginName, moduleName, write ) {
+					var compiled = this.buildCache[ moduleName ];
+					if ( compiled )
+						write.asModule( pluginName + '!' + moduleName, compiled );
+				},
+				writeFile: function( pluginName, name, req, write ) {
+					write.asModule( pluginName + '!' + name, req.toUrl( name + '.' + pluginId + '.js' ), this.buildCache[ name ] );
+				}
+			};
+		};
+		//loader.load = function(name, req, load, config) {
+		//  load(loader);
+		//}
+		if ( typeof window != 'undefined' ) {
+			var progIds = [
+				'Msxml2.XMLHTTP',
+				'Microsoft.XMLHTTP',
+				'Msxml2.XMLHTTP.4.0'
+			];
+			var getXhr = function( path ) {
+				// check if same domain
+				var sameDomain = true,
+					domainCheck = /^(\w+:)?\/\/([^\/]+)/.exec( path );
+				if ( typeof window != 'undefined' && domainCheck ) {
+					sameDomain = domainCheck[ 2 ] === window.location.host;
+					if ( domainCheck[ 1 ] )
+						sameDomain &= domainCheck[ 1 ] === window.location.protocol;
+				}
+				// create xhr
+				var xhr;
+				if ( typeof XMLHttpRequest !== 'undefined' )
+					xhr = new XMLHttpRequest();
+				else {
+					var progId;
+					for ( var i = 0; i < 3; i += 1 ) {
+						progId = progIds[ i ];
+						try {
+							xhr = new ActiveXObject( progId );
+						} catch ( e ) {}
+						if ( xhr ) {
+							progIds = [ progId ];
+							// so faster next time
+							break;
+						}
+					}
+				}
+				// use cors if necessary
+				if ( !sameDomain ) {
+					if ( typeof XDomainRequest != 'undefined' )
+						xhr = new XDomainRequest();
+					else if ( !( 'withCredentials' in xhr ) )
+						throw new Error( 'getXhr(): Cross Origin XHR not supported.' );
+				}
+				if ( !xhr )
+					throw new Error( 'getXhr(): XMLHttpRequest not available' );
+				return xhr;
+			};
+			loader.fetch = function( url, callback, errback ) {
+				// get the xhr with CORS enabled if cross domain
+				var xhr = getXhr( url );
+				xhr.open( 'GET', url, !requirejs.inlineRequire );
+				xhr.onreadystatechange = function( evt ) {
+					var status, err;
+					//Do not explicitly handle errors, those should be
+					//visible via console output in the browser.
+					if ( xhr.readyState === 4 ) {
+						status = xhr.status;
+						if ( status > 399 && status < 600 ) {
+							err = new Error( url + ' HTTP status: ' + status );
+							err.xhr = xhr;
+							if ( errback )
+								errback( err );
+						} else {
+							if ( xhr.responseText == '' )
+								return errback( new Error( url + ' empty response' ) );
+							callback( xhr.responseText );
+						}
+					}
+				};
+				xhr.send( null );
+			};
+		} else if ( typeof process !== 'undefined' && process.versions && !!process.versions.node ) {
+			var fs = requirejs.nodeRequire( 'fs' );
+			loader.fetch = function( path, callback ) {
+				callback( fs.readFileSync( path, 'utf8' ) );
+			};
+		} else if ( typeof Packages !== 'undefined' ) {
+			loader.fetch = function( path, callback, errback ) {
+				var stringBuffer, line, encoding = 'utf-8',
+					file = new java.io.File( path ),
+					lineSeparator = java.lang.System.getProperty( 'line.separator' ),
+					input = new java.io.BufferedReader( new java.io.InputStreamReader( new java.io.FileInputStream( file ), encoding ) ),
+					content = '';
+				try {
+					stringBuffer = new java.lang.StringBuffer();
+					line = input.readLine();
+					// Byte Order Mark (BOM) - The Unicode Standard, version 3.0, page 324
+					// http://www.unicode.org/faq/utf_bom.html
+					// Note that when we use utf-8, the BOM should appear as 'EF BB BF', but it doesn't due to this bug in the JDK:
+					// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4508058
+					if ( line && line.length() && line.charAt( 0 ) === 65279 ) {
+						// Eat the BOM, since we've already found the encoding on this file,
+						// and we plan to concatenating this buffer with others; the BOM should
+						// only appear at the top of a file.
+						line = line.substring( 1 );
+					}
+					stringBuffer.append( line );
+					while ( ( line = input.readLine() ) !== null ) {
+						stringBuffer.append( lineSeparator );
+						stringBuffer.append( line );
+					}
+					//Make sure we return a JavaScript string and not a Java string.
+					content = String( stringBuffer.toString() );
+				} catch ( err ) {
+					if ( errback )
+						errback( err );
+				} finally {
+					input.close();
+				}
+				callback( content );
+			};
+		} else {
+			loader.fetch = function() {
+				throw new Error( 'Environment unsupported.' );
+			};
+		}
+		return loader;
+	}();
+
 	/*
 
-	rcu (Ractive component utils) - 0.1.0 - 2014-04-01
+	rcu (Ractive component utils) - 0.1.1 - 2014-05-10
 	==============================================================
 
 	Copyright 2014 Rich Harris and contributors
@@ -92,25 +252,28 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 				scripts = [];
 				styles = [];
 				modules = [];
+				// Extract certain top-level nodes from the template. We work backwards
+				// so that we can easily splice them out as we go
 				i = template.length;
 				while ( i-- ) {
 					item = template[ i ];
 					if ( item && item.t === 7 ) {
-						if ( item.e === 'link' && ( item.a && item.a.rel[ 0 ] === 'ractive' ) ) {
+						if ( item.e === 'link' && ( item.a && item.a.rel === 'ractive' ) ) {
 							links.push( template.splice( i, 1 )[ 0 ] );
 						}
-						if ( item.e === 'script' && ( !item.a || !item.a.type || item.a.type[ 0 ] === 'text/javascript' ) ) {
+						if ( item.e === 'script' && ( !item.a || !item.a.type || item.a.type === 'text/javascript' ) ) {
 							scripts.push( template.splice( i, 1 )[ 0 ] );
 						}
-						if ( item.e === 'style' && ( !item.a || !item.a.type || item.a.type[ 0 ] === 'text/css' ) ) {
+						if ( item.e === 'style' && ( !item.a || !item.a.type || item.a.type === 'text/css' ) ) {
 							styles.push( template.splice( i, 1 )[ 0 ] );
 						}
 					}
 				}
+				// Extract names from links
 				imports = links.map( function( link ) {
 					var href, name;
-					href = link.a.href && link.a.href[ 0 ];
-					name = link.a.name && link.a.name[ 0 ] || getName( href );
+					href = link.a.href && link.a.href;
+					name = link.a.name && link.a.name || getName( href );
 					if ( typeof name !== 'string' ) {
 						throw new Error( 'Error parsing link tag' );
 					}
@@ -123,6 +286,7 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 				while ( match = requirePattern.exec( script ) ) {
 					modules.push( match[ 1 ] || match[ 2 ] );
 				}
+				// TODO glue together text nodes, where applicable
 				return {
 					template: template,
 					imports: imports,
@@ -136,28 +300,12 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 				return item.f;
 			}
 		}( getName );
-		var resolve = function resolvePath( relativePath, base ) {
-			var pathParts, relativePathParts, part;
-			if ( relativePath.charAt( 0 ) !== '.' ) {
-				return relativePath;
-			}
-			pathParts = ( base || '' ).split( '/' );
-			relativePathParts = relativePath.split( '/' );
-			pathParts.pop();
-			while ( part = relativePathParts.shift() ) {
-				if ( part === '..' ) {
-					pathParts.pop();
-				} else if ( part !== '.' ) {
-					pathParts.push( part );
-				}
-			}
-			return pathParts.join( '/' );
-		};
-		var make = function( resolve, parse ) {
+		var make = function( parse ) {
 			return function makeComponent( source, config, callback ) {
-				var definition, baseUrl, make, loadImport, imports, loadModule, modules, remainingDependencies, onloaded, onerror, errorMessage, ready;
+				var definition, url, make, loadImport, imports, loadModule, modules, remainingDependencies, onloaded, onerror, errorMessage, ready;
 				config = config || {};
-				baseUrl = config.baseUrl || '';
+				// Implementation-specific config
+				url = config.url || '';
 				loadImport = config.loadImport;
 				loadModule = config.loadModule;
 				onerror = config.onerror;
@@ -171,7 +319,7 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 					};
 					if ( definition.script ) {
 						try {
-							fn = new Function( 'component', 'require', 'Ractive', definition.script );
+							fn = new Function( 'component', 'require', 'Ractive', definition.script + '\n//# sourceURL=' + url.substr( url.lastIndexOf( '/' ) + 1 ) + '.js' );
 						} catch ( err ) {
 							errorMessage = 'Error creating function from component script: ' + err.message || err;
 							if ( onerror ) {
@@ -202,7 +350,15 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 					Component = Ractive.extend( options );
 					callback( Component );
 				};
-				remainingDependencies = definition.imports.length + definition.modules.length;
+				// If the definition includes sub-components e.g.
+				//     <link rel='ractive' href='foo.html'>
+				//
+				// ...then we need to load them first, using the loadImport method
+				// specified by the implementation.
+				//
+				// In some environments (e.g. AMD) the same goes for modules, which
+				// most be loaded before the script can execute
+				remainingDependencies = definition.imports.length + ( loadModule ? definition.modules.length : 0 );
 				if ( remainingDependencies ) {
 					onloaded = function() {
 						if ( !--remainingDependencies ) {
@@ -219,23 +375,16 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 						}
 						imports = {};
 						definition.imports.forEach( function( toImport ) {
-							var name, path;
-							name = toImport.name;
-							path = resolve( baseUrl, toImport.href );
-							loadImport( name, path, function( Component ) {
-								imports[ name ] = Component;
+							loadImport( toImport.name, toImport.href, url, function( Component ) {
+								imports[ toImport.name ] = Component;
 								onloaded();
 							} );
 						} );
 					}
-					if ( definition.modules.length ) {
-						if ( !loadModule ) {
-							throw new Error( 'Component definition includes modules (e.g. `require("' + definition.imports[ 0 ].href + '")`) but no loadModule method was passed to rcu.make()' );
-						}
+					if ( loadModule && definition.modules.length ) {
 						modules = {};
 						definition.modules.forEach( function( name ) {
-							var path = resolve( name, baseUrl );
-							loadModule( name, path, function( Component ) {
+							loadModule( name, name, url, function( Component ) {
 								modules[ name ] = Component;
 								onloaded();
 							} );
@@ -246,7 +395,27 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 				}
 				ready = true;
 			};
-		}( resolve, parse );
+		}( parse );
+		var resolve = function resolvePath( relativePath, base ) {
+			var pathParts, relativePathParts, part;
+			if ( relativePath.charAt( 0 ) !== '.' ) {
+				// not a relative path!
+				return relativePath;
+			}
+			// 'foo/bar/baz.html' -> ['foo', 'bar', 'baz.html']
+			pathParts = ( base || '' ).split( '/' );
+			relativePathParts = relativePath.split( '/' );
+			// ['foo', 'bar', 'baz.html'] -> ['foo', 'bar']
+			pathParts.pop();
+			while ( part = relativePathParts.shift() ) {
+				if ( part === '..' ) {
+					pathParts.pop();
+				} else if ( part !== '.' ) {
+					pathParts.push( part );
+				}
+			}
+			return pathParts.join( '/' );
+		};
 		var rcu = function( parse, make, resolve, getName ) {
 			return {
 				init: function( copy ) {
@@ -264,12 +433,13 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 	var load = function( rcu ) {
 
 		rcu.init( Ractive );
-		return function load( req, source, callback ) {
+		return function load( name, req, source, callback ) {
 			rcu.make( source, {
-				loadImport: function( name, path, callback ) {
+				url: name + '.html',
+				loadImport: function( name, path, baseUrl, callback ) {
 					req( [ 'rvc!' + path.replace( /\.html$/, '' ) ], callback );
 				},
-				loadModule: function( name, path, callback ) {
+				loadModule: function( name, path, baseUrl, callback ) {
 					req( [ path ], callback );
 				},
 				require: function( name ) {
@@ -348,6 +518,7 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 				importMap = [],
 				builtModule;
 			definition = rcu.parse( source );
+			// Add dependencies from <link> tags, i.e. sub-components
 			definition.imports.forEach( function( toImport, i ) {
 				var href, name, argumentName;
 				href = toImport.href;
@@ -357,6 +528,7 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 				dependencyArgs.push( argumentName );
 				importMap.push( '"' + name + '":' + argumentName );
 			} );
+			// Add dependencies from inline require() calls
 			dependencies = dependencies.concat( definition.modules );
 			builtModule = '' + 'define("rvc!' + name + '",' + JSON.stringify( dependencies ) + ',function(' + dependencyArgs.join( ',' ) + '){\n' + '  var __options__={\n    template:' + toSource( definition.template, null, '', '' ) + ',\n' + ( definition.css ? '    css:' + JSON.stringify( minifycss( definition.css ) ) + ',\n' : '' ) + ( definition.imports.length ? '    components:{' + importMap.join( ',' ) + '}\n' : '' ) + '  },\n' + '  component={};';
 			if ( definition.script ) {
@@ -367,17 +539,17 @@ define( [ 'amd-loader', 'ractive' ], function( amdLoader, Ractive ) {
 		};
 	}( rcuamd, tosource, minifycss );
 
-	var rvc = function( rcu, load, build ) {
+	var rvc = function( amdLoader, rcu, load, build ) {
 
 		rcu.init( Ractive );
 		return amdLoader( 'rvc', 'html', function( name, source, req, callback, errback, config ) {
 			if ( config.isBuild ) {
 				build( name, source, callback );
 			} else {
-				load( req, source, callback );
+				load( name, req, source, callback );
 			}
 		} );
-	}( rcuamd, load, build );
+	}( loader, rcuamd, load, build );
 
 	return rvc;
 

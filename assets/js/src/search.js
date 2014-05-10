@@ -8,7 +8,7 @@ define([
 
 	return function(queryString, page, callback) {
 		if(!queryString) {
-			callback(false);
+			callback(false, '');
 		} else  {
 			var query	= queryString.match(queryRegExp)[0].trim();
 			var substr	= queryString.substr(query.length);
@@ -27,7 +27,7 @@ define([
 					response.hits[i].selectedVersion = response.hits[i].lastversion;
 				}
 
-				callback(response);
+				callback(response, queryString);
 			}, { 'hitsPerPage': 10, 'page': page });
 		}
 	};

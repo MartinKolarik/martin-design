@@ -1,6 +1,5 @@
 (function(global) {
 	var ractive = global.Ractive;
-	var amd_amd_loader = {};
 	var amd_build_links = function(collection, group) {
 		var isCss = /\.css$/i;
 		var isJs = /\.js$/i;
@@ -70,8 +69,8 @@
 					t: 7,
 					e: 'div',
 					a: {
-						'class': ['modal fade'],
-						role: ['dialog'],
+						'class': 'modal fade',
+						role: 'dialog',
 						id: [{
 							t: 2,
 							r: 'id'
@@ -92,22 +91,22 @@
 							t: 7,
 							e: 'div',
 							a: {
-								'class': ['modal-content']
+								'class': 'modal-content'
 							},
 							f: [{
 									t: 7,
 									e: 'div',
 									a: {
-										'class': ['modal-header']
+										'class': 'modal-header'
 									},
 									f: [{
 											t: 7,
 											e: 'button',
 											a: {
-												type: ['button'],
-												'class': ['close'],
-												'data-dismiss': ['modal'],
-												'aria-hidden': ['true']
+												type: 'button',
+												'class': 'close',
+												'data-dismiss': 'modal',
+												'aria-hidden': 'true'
 											},
 											f: ['\xD7']
 										},
@@ -115,7 +114,7 @@
 											t: 7,
 											e: 'h4',
 											a: {
-												'class': ['modal-title']
+												'class': 'modal-title'
 											},
 											f: [{
 												t: 3,
@@ -128,7 +127,7 @@
 									t: 7,
 									e: 'div',
 									a: {
-										'class': ['modal-body']
+										'class': 'modal-body'
 									},
 									f: [{
 										t: 8,
@@ -139,7 +138,7 @@
 									t: 7,
 									e: 'div',
 									a: {
-										'class': ['modal-footer']
+										'class': 'modal-footer'
 									},
 									f: [{
 											t: 3,
@@ -154,7 +153,7 @@
 													t: 7,
 													e: 'button',
 													a: {
-														type: ['button'],
+														type: 'button',
 														'class': [
 															'btn ', {
 																t: 2,
@@ -162,18 +161,19 @@
 															}
 														]
 													},
-													f: [{
-														t: 2,
-														r: 'label'
-													}],
 													v: {
 														click: {
 															n: [{
 																t: 2,
 																r: 'handler'
-															}]
+															}],
+															d: []
 														}
-													}
+													},
+													f: [{
+														t: 2,
+														r: 'label'
+													}]
 												},
 												' '
 											]
@@ -273,15 +273,15 @@
 										t: 7,
 										e: 'div',
 										a: {
-											'class': ['row'],
-											style: ['padding: 0 5px']
+											'class': 'row',
+											style: 'padding: 0 5px'
 										},
 										f: [{
 												t: 7,
 												e: 'div',
 												a: {
-													'class': ['col-xs-2 col-xs-offset-9'],
-													style: ['text-align: right']
+													'class': 'col-xs-2 col-xs-offset-9',
+													style: 'text-align: right'
 												},
 												f: ['Group links']
 											},
@@ -289,27 +289,27 @@
 												t: 7,
 												e: 'div',
 												a: {
-													'class': ['col-sm-1']
+													'class': 'col-sm-1'
 												},
 												f: [{
 														t: 7,
 														e: 'input',
 														a: {
-															type: ['checkbox'],
-															'class': ['switch-inline'],
-															id: ['group-links'],
+															type: 'checkbox',
+															'class': 'switch-inline',
+															id: 'group-links',
 															checked: [{
 																t: 2,
 																r: 'groupLinks'
 															}],
-															value: ['1']
+															value: '1'
 														}
 													},
 													' ', {
 														t: 7,
 														e: 'label',
 														a: {
-															'for': ['group-links']
+															'for': 'group-links'
 														}
 													}
 												]
@@ -323,8 +323,8 @@
 								t: 7,
 								e: 'ul',
 								a: {
-									id: ['link-list'],
-									'class': ['list-style-none']
+									id: 'link-list',
+									'class': 'list-style-none'
 								},
 								f: [{
 										t: 4,
@@ -350,8 +350,8 @@
 															t: 7,
 															e: 'input',
 															a: {
-																type: ['text'],
-																'class': ['form-control output'],
+																type: 'text',
+																'class': 'form-control output',
 																value: [{
 																		t: 2,
 																		r: 'app.cdnRoot'
@@ -367,7 +367,7 @@
 													' '
 												]
 											},
-											' '
+											''
 										]
 									},
 									' ', {
@@ -394,8 +394,8 @@
 															t: 7,
 															e: 'input',
 															a: {
-																type: ['text'],
-																'class': ['form-control output'],
+																type: 'text',
+																'class': 'form-control output',
 																value: [{
 																		t: 2,
 																		r: 'app.cdnRoot'
@@ -411,7 +411,7 @@
 													' '
 												]
 											},
-											' '
+											''
 										]
 									},
 									' ', {
@@ -438,8 +438,8 @@
 															t: 7,
 															e: 'input',
 															a: {
-																type: ['text'],
-																'class': ['form-control output'],
+																type: 'text',
+																'class': 'form-control output',
 																value: [{
 																		t: 2,
 																		r: 'app.cdnRoot'
@@ -455,7 +455,7 @@
 													' '
 												]
 											},
-											' '
+											''
 										]
 									}
 								]
@@ -464,12 +464,12 @@
 								t: 7,
 								e: 'div',
 								a: {
-									'class': ['email-updates']
+									'class': 'email-updates'
 								},
 								f: [{
 										t: 4,
+										n: 51,
 										r: 'subscribed',
-										n: true,
 										f: [
 											' ', {
 												t: 7,
@@ -480,13 +480,13 @@
 												t: 7,
 												e: 'input',
 												a: {
-													type: ['text'],
-													'class': ['form-control'],
+													type: 'text',
+													'class': 'form-control',
 													value: [{
 														t: 2,
 														r: 'email'
 													}],
-													placeholder: ['Enter your e-mail address if you want to receive updates']
+													placeholder: 'Enter your e-mail address if you want to receive updates'
 												}
 											},
 											' ', {
@@ -496,12 +496,12 @@
 													t: 7,
 													e: 'button',
 													a: {
-														'class': ['btn primary btn-inverse']
+														'class': 'btn primary btn-inverse'
 													},
-													f: ['Keep me updated'],
 													v: {
 														click: 'submit'
-													}
+													},
+													f: ['Keep me updated']
 												}]
 											},
 											' '
@@ -622,10 +622,10 @@
 						t: 7,
 						e: 'input',
 						a: {
-							type: ['text'],
-							'class': ['form-control'],
-							id: ['new-version-email'],
-							placeholder: ['Please enter your e-mail address']
+							type: 'text',
+							'class': 'form-control',
+							id: 'new-version-email',
+							placeholder: 'Please enter your e-mail address'
 						}
 					}]
 				},
@@ -718,12 +718,11 @@
 						t: 7,
 						e: 'ol',
 						a: {
-							id: ['file-list'],
-							'class': ['list-style-none']
+							id: 'file-list',
+							'class': 'list-style-none'
 						},
 						f: [{
 							t: 4,
-							i: 'i',
 							x: {
 								r: [
 									'listFiles',
@@ -731,6 +730,7 @@
 								],
 								s: '${0}(${1})'
 							},
+							i: 'i',
 							f: [
 								' ', {
 									t: 7,
@@ -739,8 +739,8 @@
 											t: 7,
 											e: 'input',
 											a: {
-												type: ['checkbox'],
-												'class': ['checkbox primary'],
+												type: 'checkbox',
+												'class': 'checkbox primary',
 												id: [
 													'file', {
 														t: 2,
@@ -836,120 +836,122 @@
 	var amd_rvc_components_version_list = function(Ractive) {
 		var __options__ = {
 			template: [{
-				t: 4,
-				r: 'project',
-				f: [
-					' ', {
-						t: 7,
-						e: 'ul',
-						a: {
-							'class': [
-								'dropdown-menu ', {
-									t: 2,
-									r: 'class'
-								}
-							],
-							role: ['menu']
-						},
-						f: [{
-								t: 4,
-								r: 'versions',
-								i: 'j',
-								f: [
-									' ', {
-										t: 4,
-										x: {
-											r: [
-												'.',
-												'selectedVersion'
-											],
-											s: '${0}!==${1}'
-										},
-										f: [
-											' ', {
-												t: 7,
-												e: 'li',
-												f: [{
-													t: 7,
-													e: 'a',
-													a: {
-														'class': ['link']
-													},
-													f: [{
-														t: 2,
-														r: '.'
-													}],
-													v: {
-														click: {
-															n: 'set',
-															d: [{
-																	t: 2,
-																	x: {
-																		r: ['i'],
-																		s: '"projects."+${0}+".selectedVersion"'
-																	}
-																},
-																',', {
-																	t: 2,
-																	r: '.'
-																}
-															]
-														}
-													}
-												}]
-											},
-											' '
-										]
-									},
-									' '
-								]
+					t: 4,
+					r: 'project',
+					f: [
+						' ', {
+							t: 7,
+							e: 'ul',
+							a: {
+								'class': [
+									'dropdown-menu ', {
+										t: 2,
+										r: 'class'
+									}
+								],
+								role: 'menu'
 							},
-							' ', {
-								t: 4,
-								x: {
-									r: ['versions.length'],
-									s: '${0}>1'
+							f: [{
+									t: 4,
+									r: 'versions',
+									i: 'j',
+									f: [
+										' ', {
+											t: 4,
+											x: {
+												r: [
+													'.',
+													'selectedVersion'
+												],
+												s: '${0}!==${1}'
+											},
+											f: [
+												' ', {
+													t: 7,
+													e: 'li',
+													f: [{
+														t: 7,
+														e: 'a',
+														a: {
+															'class': 'link'
+														},
+														v: {
+															click: {
+																n: 'set',
+																d: [{
+																		t: 2,
+																		x: {
+																			r: ['i'],
+																			s: '"projects."+${0}+".selectedVersion"'
+																		}
+																	},
+																	',', {
+																		t: 2,
+																		r: '.'
+																	}
+																]
+															}
+														},
+														f: [{
+															t: 2,
+															r: '.'
+														}]
+													}]
+												},
+												' '
+											]
+										},
+										''
+									]
 								},
-								f: [{
+								' ', {
+									t: 4,
+									x: {
+										r: ['versions.length'],
+										s: '${0}>1'
+									},
+									f: [{
+										t: 7,
+										e: 'li',
+										a: {
+											'class': 'divider'
+										}
+									}]
+								},
+								' ', {
 									t: 7,
 									e: 'li',
-									a: {
-										'class': ['divider']
-									}
-								}]
-							},
-							' ', {
-								t: 7,
-								e: 'li',
-								f: [{
-									t: 7,
-									e: 'a',
-									a: {
-										'class': ['link']
-									},
-									f: ['Found newer version?'],
-									v: {
-										click: {
-											n: 'reportNew',
-											d: [{
-												t: 2,
-												kx: {
-													r: 'projects',
-													m: [{
-														t: 30,
-														n: 'i'
-													}]
-												}
-											}]
-										}
-									}
-								}]
-							}
-						]
-					},
-					' '
-				]
-			}]
+									f: [{
+										t: 7,
+										e: 'a',
+										a: {
+											'class': 'link'
+										},
+										v: {
+											click: {
+												n: 'reportNew',
+												d: [{
+													t: 2,
+													kx: {
+														r: 'projects',
+														m: [{
+															t: 30,
+															n: 'i'
+														}]
+													}
+												}]
+											}
+										},
+										f: ['Found newer version?']
+									}]
+								}
+							]
+						},
+						' '
+					]
+				},
+				''
+			]
 		}, component = {};
 		var ReportNewVersionView = amd_rvc_components_report_new_version;
 		var SelectFilesView = amd_rvc_components_select_files;
@@ -1009,141 +1011,143 @@
 	var amd_rvc_components_collection = function(Ractive) {
 		var __options__ = {
 			template: [{
-				t: 4,
-				r: 'projects.length',
-				f: [
-					' ', {
-						t: 7,
-						e: 'header',
-						f: [{
+					t: 4,
+					r: 'projects.length',
+					f: [
+						' ', {
 							t: 7,
-							e: 'h2',
-							f: ['My collection']
-						}]
-					},
-					' ', {
-						t: 7,
-						e: 'div',
-						a: {
-							'class': ['row']
-						},
-						f: [{
-							t: 7,
-							e: 'div',
-							a: {
-								'class': ['col-md-6 col-md-offset-3']
-							},
+							e: 'header',
 							f: [{
-								t: 4,
-								r: 'projects',
-								i: 'i',
-								f: [
-									' ', {
-										t: 7,
-										e: 'div',
-										a: {
-											'class': ['row list-item']
-										},
-										f: [{
-											t: 7,
-											e: 'div',
-											a: {
-												'class': ['col-sm-12 collection-item']
-											},
-											f: [{
-													t: 2,
-													r: 'name'
-												},
-												' ', {
-													t: 7,
-													e: 'small',
-													a: {
-														'class': ['btn-group']
-													},
-													f: [
-														'(', {
-															t: 7,
-															e: 'a',
-															a: {
-																'class': ['link'],
-																'data-toggle': ['dropdown']
-															},
-															f: [{
-																t: 2,
-																r: 'selectedVersion'
-															}]
-														},
-														') ', {
-															t: 7,
-															e: 'versionList',
-															a: {
-																project: [{
-																	t: 2,
-																	r: '.'
-																}],
-																index: [{
-																	t: 2,
-																	r: 'i'
-																}],
-																'class': ['pull-right']
-															}
-														}
-													]
-												},
-												' ', {
-													t: 7,
-													e: 'a',
-													a: {
-														'class': ['btn pull-right primary btn-link btn-inverse']
-													},
-													f: ['Remove'],
-													v: {
-														click: {
-															n: 'remove',
-															d: [{
-																t: 2,
-																r: 'i'
-															}]
-														}
-													}
-												}
-											]
-										}]
-									},
-									' '
-								]
+								t: 7,
+								e: 'h2',
+								f: ['My collection']
 							}]
-						}]
-					},
-					' ', {
-						t: 7,
-						e: 'div',
-						a: {
-							'class': ['row']
 						},
-						f: [{
+						' ', {
 							t: 7,
 							e: 'div',
 							a: {
-								'class': ['col-xs-12'],
-								style: ['text-align: center']
+								'class': 'row'
 							},
 							f: [{
 								t: 7,
-								e: 'button',
+								e: 'div',
 								a: {
-									'class': ['btn primary btn-inverse']
+									'class': 'col-md-6 col-md-offset-3'
 								},
-								f: ['Use my collection'],
-								v: {
-									click: 'use'
-								}
+								f: [{
+									t: 4,
+									r: 'projects',
+									i: 'i',
+									f: [
+										' ', {
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'row list-item'
+											},
+											f: [{
+												t: 7,
+												e: 'div',
+												a: {
+													'class': 'col-sm-12 collection-item'
+												},
+												f: [{
+														t: 2,
+														r: 'name'
+													},
+													' ', {
+														t: 7,
+														e: 'small',
+														a: {
+															'class': 'btn-group'
+														},
+														f: [
+															'(', {
+																t: 7,
+																e: 'a',
+																a: {
+																	'class': 'link',
+																	'data-toggle': 'dropdown'
+																},
+																f: [{
+																	t: 2,
+																	r: 'selectedVersion'
+																}]
+															},
+															') ', {
+																t: 7,
+																e: 'versionList',
+																a: {
+																	project: [{
+																		t: 2,
+																		r: '.'
+																	}],
+																	index: [{
+																		t: 2,
+																		r: 'i'
+																	}],
+																	'class': 'pull-right'
+																}
+															}
+														]
+													},
+													' ', {
+														t: 7,
+														e: 'a',
+														a: {
+															'class': 'btn pull-right primary btn-link btn-inverse'
+														},
+														v: {
+															click: {
+																n: 'remove',
+																d: [{
+																	t: 2,
+																	r: 'i'
+																}]
+															}
+														},
+														f: ['Remove']
+													}
+												]
+											}]
+										},
+										' '
+									]
+								}]
 							}]
-						}]
-					},
-					' '
-				]
-			}]
+						},
+						' ', {
+							t: 7,
+							e: 'div',
+							a: {
+								'class': 'row'
+							},
+							f: [{
+								t: 7,
+								e: 'div',
+								a: {
+									'class': 'col-xs-12',
+									style: 'text-align: center'
+								},
+								f: [{
+									t: 7,
+									e: 'button',
+									a: {
+										'class': 'btn primary btn-inverse'
+									},
+									v: {
+										click: 'use'
+									},
+									f: ['Use my collection']
+								}]
+							}]
+						},
+						' '
+					]
+				},
+				''
+			]
 		}, component = {};
 		var LinksView = amd_rvc_components_links;
 		var versionList = amd_rvc_components_version_list;
@@ -1187,7 +1191,7 @@
 		var queryRegExp = /^((?:(?:[^\s:]+(?![a-z]*\s*:))\s*)*)/i;
 		return function(queryString, page, callback) {
 			if (!queryString) {
-				callback(false);
+				callback(false, '');
 			} else {
 				var query = queryString.match(queryRegExp)[0].trim();
 				var substr = queryString.substr(query.length);
@@ -1203,7 +1207,7 @@
 					for (var i = 0, c = response.hits.length; i < c; i++) {
 						response.hits[i].selectedVersion = response.hits[i].lastversion;
 					}
-					callback(response);
+					callback(response, queryString);
 				}, {
 					'hitsPerPage': 10,
 					'page': page
@@ -1217,9 +1221,9 @@
 					t: 7,
 					e: 'input',
 					a: {
-						type: ['text'],
-						id: ['search-input'],
-						'class': ['form-control input-lg'],
+						type: 'text',
+						id: 'search-input',
+						'class': 'form-control input-lg',
 						placeholder: [
 							'Search in more than ', {
 								t: 2,
@@ -1237,13 +1241,13 @@
 					t: 7,
 					e: 'p',
 					a: {
-						'class': ['show-more']
+						'class': 'show-more'
 					},
 					f: [{
 						t: 7,
 						e: 'a',
 						a: {
-							href: ['#!{"query":"*"}']
+							href: '#!{"query":"*"}'
 						},
 						f: ['Browse all projects']
 					}]
@@ -1293,10 +1297,13 @@
 						if (keypath === 'query' && this.get('page')) {
 							this.set('page', 0);
 						} else {
-							search(this.get('query').toString(), this.get('page'), function(response) {
-								app.views.searchResults.set('projects', response.hits || []);
-								app.views.searchResults.set('nbPages', response.nbPages || 0);
-								app.views.searchResults.set('page', response.page || 0);
+							search(this.get('query').toString(), this.get('page'), function(response, query) {
+								// the query might have changed since we sent the request
+								if (query === _this.get('query')) {
+									app.views.searchResults.set('projects', response.hits || []);
+									app.views.searchResults.set('nbPages', response.nbPages || 0);
+									app.views.searchResults.set('page', response.page || 0);
+								}
 							});
 						}
 					}
@@ -1387,9 +1394,9 @@
 	};
 	var amd_decorators_zero_clipboard = function(helpers) {
 		return helpers.create(function(node) {
+			var clip = new ZeroClipboard(node);
 			var $bridge = $('#global-zeroclipboard-html-bridge');
 			var $node = $(node);
-			var clip = new ZeroClipboard(node);
 			var ractive = this;
 			clip.on('mouseover', function() {
 				$bridge.tooltip('destroy').tooltip({
@@ -1415,907 +1422,904 @@
 	var amd_rvc_components_search_results = function(Ractive) {
 		var __options__ = {
 			template: [{
-				t: 4,
-				r: 'projects',
-				i: 'i',
-				f: [
-					' ', {
-						t: 7,
-						e: 'div',
-						a: {
-							'class': ['result list-item']
-						},
-						f: [{
-								t: 7,
-								e: 'div',
-								a: {
-									'class': ['row']
-								},
-								f: [{
-										t: 7,
-										e: 'div',
-										a: {
-											'class': ['col-md-6']
-										},
-										f: [{
-												t: 7,
-												e: 'h4',
-												f: [{
-														t: 7,
-														e: 'a',
-														a: {
-															href: [
-																'#!{"query":"', {
-																	t: 2,
-																	r: 'name'
-																},
-																'"}'
-															]
-														},
-														f: [{
-															t: 2,
-															r: 'name'
-														}]
-													},
-													' ', {
-														t: 7,
-														e: 'small',
-														a: {
-															'class': ['btn-group']
-														},
-														f: [
-															'(', {
-																t: 7,
-																e: 'a',
-																a: {
-																	'class': ['link'],
-																	'data-toggle': ['dropdown']
-																},
-																f: [{
-																	t: 2,
-																	r: 'selectedVersion'
-																}]
-															},
-															') ', {
-																t: 7,
-																e: 'versionList',
-																a: {
-																	project: [{
-																		t: 2,
-																		r: '.'
-																	}]
-																}
-															}
-														]
-													}
-												]
-											},
-											' ', {
-												t: 7,
-												e: 'small',
-												f: [
-													'by ', {
-														t: 7,
-														e: 'a',
-														a: {
-															href: [
-																'#!{"query":"author: ', {
-																	t: 2,
-																	r: 'author'
-																},
-																'"}'
-															]
-														},
-														f: [{
-															t: 2,
-															r: 'author'
-														}]
-													}
-												]
-											}
-										]
-									},
-									' ', {
-										t: 7,
-										e: 'div',
-										a: {
-											'class': ['col-md-6 buttons']
-										},
-										f: [{
-												t: 7,
-												e: 'button',
-												a: {
-													'class': ['btn btn-link btn-inverse gray']
-												},
-												f: [{
-													t: 7,
-													e: 'i',
-													a: {
-														'class': ['fa fa-check fa-2x']
-													}
-												}],
-												v: {
-													click: {
-														n: 'add',
-														d: [{
-															t: 2,
-															r: '.'
-														}]
-													}
-												},
-												o: {
-													n: 'tooltip',
-													a: ' Add to collection'
-												}
-											},
-											' ', {
-												t: 7,
-												e: 'button',
-												a: {
-													'class': ['btn btn-link btn-inverse gray']
-												},
-												f: [{
-													t: 7,
-													e: 'i',
-													a: {
-														'class': ['fa fa-download fa-2x']
-													}
-												}],
-												v: {
-													click: {
-														n: 'download',
-														d: [{
-															t: 2,
-															r: '.'
-														}]
-													}
-												},
-												o: {
-													n: 'tooltip',
-													a: ' Download ZIP'
-												}
-											},
-											' ', {
-												t: 7,
-												e: 'a',
-												a: {
-													'class': ['btn btn-link btn-inverse gray'],
-													href: [{
-														t: 2,
-														r: 'homepage'
-													}],
-													target: ['_blank']
-												},
-												f: [{
-													t: 7,
-													e: 'i',
-													a: {
-														'class': ['fa fa-home fa-2x']
-													}
-												}],
-												o: {
-													n: 'tooltip',
-													a: ' Homepage'
-												}
-											},
-											' ', {
-												t: 7,
-												e: 'a',
-												a: {
-													'class': ['btn btn-link btn-inverse gray'],
-													style: [{
-														t: 4,
-														r: 'github',
-														n: true,
-														f: ['visibility: hidden']
-													}],
-													href: [{
-														t: 2,
-														r: 'github'
-													}],
-													target: ['_blank']
-												},
-												f: [{
-													t: 7,
-													e: 'i',
-													a: {
-														'class': ['fa fa-github fa-2x']
-													}
-												}],
-												o: {
-													n: 'tooltip',
-													a: ' GitHub'
-												}
-											}
-										]
-									}
-								]
+					t: 4,
+					r: 'projects',
+					i: 'i',
+					f: [
+						' ', {
+							t: 7,
+							e: 'div',
+							a: {
+								'class': 'result list-item'
 							},
-							' ', {
-								t: 7,
-								e: 'div',
-								a: {
-									'class': ['row']
-								},
-								f: [{
-										t: 7,
-										e: 'div',
-										a: {
-											'class': ['col-xs-12']
-										},
-										f: [{
-											t: 7,
-											e: 'p',
-											f: [{
-												t: 2,
-												r: 'description'
-											}]
-										}]
+							f: [{
+									t: 7,
+									e: 'div',
+									a: {
+										'class': 'row'
 									},
-									' ', {
-										t: 7,
-										e: 'div',
-										a: {
-											'class': ['file-list']
-										},
-										f: [{
-											t: 4,
-											x: {
-												r: [
-													'listFiles',
-													'.'
-												],
-												s: '{files:${0}(${1})}'
+									f: [{
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'col-md-6'
 											},
-											f: [
+											f: [{
+													t: 7,
+													e: 'h4',
+													f: [{
+															t: 7,
+															e: 'a',
+															a: {
+																href: [
+																	'#!{"query":"', {
+																		t: 2,
+																		r: 'name'
+																	},
+																	'"}'
+																]
+															},
+															f: [{
+																t: 2,
+																r: 'name'
+															}]
+														},
+														' ', {
+															t: 7,
+															e: 'small',
+															a: {
+																'class': 'btn-group'
+															},
+															f: [
+																'(', {
+																	t: 7,
+																	e: 'a',
+																	a: {
+																		'class': 'link',
+																		'data-toggle': 'dropdown'
+																	},
+																	f: [{
+																		t: 2,
+																		r: 'selectedVersion'
+																	}]
+																},
+																') ', {
+																	t: 7,
+																	e: 'versionList',
+																	a: {
+																		project: [{
+																			t: 2,
+																			r: '.'
+																		}]
+																	}
+																}
+															]
+														}
+													]
+												},
 												' ', {
 													t: 7,
-													e: 'div',
+													e: 'small',
+													f: [
+														'by ', {
+															t: 7,
+															e: 'a',
+															a: {
+																href: [
+																	'#!{"query":"author: ', {
+																		t: 2,
+																		r: 'author'
+																	},
+																	'"}'
+																]
+															},
+															f: [{
+																t: 2,
+																r: 'author'
+															}]
+														}
+													]
+												}
+											]
+										},
+										' ', {
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'col-md-6 buttons'
+											},
+											f: [{
+													t: 7,
+													e: 'button',
 													a: {
-														'class': [
-															'col-xs-', {
-																t: 4,
-																r: 'flash',
-																f: ['11']
-															}, {
-																t: 4,
-																r: 'flash',
-																n: true,
-																f: ['12']
-															}
-														],
-														style: ['padding-right: 0']
+														'class': 'btn btn-link btn-inverse gray'
+													},
+													v: {
+														click: {
+															n: 'add',
+															d: [{
+																t: 2,
+																r: '.'
+															}]
+														}
+													},
+													o: {
+														n: 'tooltip',
+														a: ' Add to collection'
 													},
 													f: [{
 														t: 7,
-														e: 'input',
+														e: 'i',
 														a: {
-															type: ['text'],
-															'class': ['form-control output'],
-															value: [{
-																	t: 2,
-																	r: 'app.cdnRoot'
-																},
-																'/', {
-																	t: 2,
-																	r: 'name'
-																},
-																'/', {
-																	t: 2,
-																	r: 'selectedVersion'
-																},
-																'/', {
-																	t: 2,
-																	r: 'files.0'
-																}
-															]
+															'class': 'fa fa-check fa-2x'
 														}
 													}]
 												},
 												' ', {
-													t: 4,
-													r: 'flash',
-													f: [
-														' ', {
+													t: 7,
+													e: 'button',
+													a: {
+														'class': 'btn btn-link btn-inverse gray'
+													},
+													v: {
+														click: {
+															n: 'download',
+															d: [{
+																t: 2,
+																r: '.'
+															}]
+														}
+													},
+													o: {
+														n: 'tooltip',
+														a: ' Download ZIP'
+													},
+													f: [{
+														t: 7,
+														e: 'i',
+														a: {
+															'class': 'fa fa-download fa-2x'
+														}
+													}]
+												},
+												' ', {
+													t: 7,
+													e: 'a',
+													a: {
+														'class': 'btn btn-link btn-inverse gray',
+														href: [{
+															t: 2,
+															r: 'homepage'
+														}],
+														target: '_blank'
+													},
+													o: {
+														n: 'tooltip',
+														a: ' Homepage'
+													},
+													f: [{
+														t: 7,
+														e: 'i',
+														a: {
+															'class': 'fa fa-home fa-2x'
+														}
+													}]
+												},
+												' ', {
+													t: 7,
+													e: 'a',
+													a: {
+														'class': 'btn btn-link btn-inverse gray',
+														style: [{
+															t: 4,
+															n: 51,
+															r: 'github',
+															f: ['visibility: hidden']
+														}],
+														href: [{
+															t: 2,
+															r: 'github'
+														}],
+														target: '_blank'
+													},
+													o: {
+														n: 'tooltip',
+														a: ' GitHub'
+													},
+													f: [{
+														t: 7,
+														e: 'i',
+														a: {
+															'class': 'fa fa-github fa-2x'
+														}
+													}]
+												}
+											]
+										}
+									]
+								},
+								' ', {
+									t: 7,
+									e: 'div',
+									a: {
+										'class': 'row'
+									},
+									f: [{
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'col-xs-12'
+											},
+											f: [{
+												t: 7,
+												e: 'p',
+												f: [{
+													t: 2,
+													r: 'description'
+												}]
+											}]
+										},
+										' ', {
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'file-list'
+											},
+											f: [{
+												t: 4,
+												x: {
+													r: [
+														'listFiles',
+														'.'
+													],
+													s: '{files:${0}(${1})}'
+												},
+												f: [
+													' ', {
+														t: 7,
+														e: 'div',
+														a: {
+															'class': [
+																'col-xs-', {
+																	t: 2,
+																	x: {
+																		r: ['flash'],
+																		s: '${0}?11:12'
+																	}
+																}
+															],
+															style: 'padding-right: 0'
+														},
+														f: [{
 															t: 7,
-															e: 'div',
+															e: 'input',
 															a: {
-																'class': ['col-xs-1'],
-																style: ['padding-right: 0']
-															},
-															f: [{
+																type: 'text',
+																'class': 'form-control output',
+																value: [{
+																		t: 2,
+																		r: 'app.cdnRoot'
+																	},
+																	'/', {
+																		t: 2,
+																		r: 'name'
+																	},
+																	'/', {
+																		t: 2,
+																		r: 'selectedVersion'
+																	},
+																	'/', {
+																		t: 2,
+																		r: 'files.0'
+																	}
+																]
+															}
+														}]
+													},
+													' ', {
+														t: 4,
+														r: 'flash',
+														f: [
+															' ', {
 																t: 7,
-																e: 'button',
+																e: 'div',
 																a: {
-																	'class': ['btn btn-link btn-inverse gray'],
-																	'data-clipboard-text': [{
-																			t: 2,
-																			r: 'app.cdnRoot'
-																		},
-																		'/', {
-																			t: 2,
-																			r: 'name'
-																		},
-																		'/', {
-																			t: 2,
-																			r: 'selectedVersion'
-																		},
-																		'/', {
-																			t: 2,
-																			r: 'files.0'
-																		}
-																	]
+																	'class': 'col-xs-1',
+																	style: 'padding-right: 0'
 																},
 																f: [{
 																	t: 7,
-																	e: 'i',
+																	e: 'button',
 																	a: {
-																		'class': ['fa fa-chain']
-																	}
-																}],
-																o: 'zeroClipboard'
-															}]
-														},
-														' '
-													]
-												},
-												' ', {
-													t: 4,
-													x: {
-														r: ['files.length'],
-														s: '${0}>1'
+																		'class': 'btn btn-link btn-inverse gray',
+																		'data-clipboard-text': [{
+																				t: 2,
+																				r: 'app.cdnRoot'
+																			},
+																			'/', {
+																				t: 2,
+																				r: 'name'
+																			},
+																			'/', {
+																				t: 2,
+																				r: 'selectedVersion'
+																			},
+																			'/', {
+																				t: 2,
+																				r: 'files.0'
+																			}
+																		]
+																	},
+																	o: 'zeroClipboard',
+																	f: [{
+																		t: 7,
+																		e: 'i',
+																		a: {
+																			'class': 'fa fa-chain'
+																		}
+																	}]
+																}]
+															},
+															' '
+														]
 													},
-													f: [
-														' ', {
-															t: 4,
-															r: 'insert',
-															f: [
-																' ', {
+													' ', {
+														t: 4,
+														x: {
+															r: ['files.length'],
+															s: '${0}>1'
+														},
+														f: [
+															' ', {
+																t: 4,
+																r: 'insert',
+																f: [
+																	' ', {
+																		t: 7,
+																		e: 'div',
+																		a: {
+																			'class': 'more-files',
+																			style: [
+																				'display: ', {
+																					t: 2,
+																					x: {
+																						r: ['showAll'],
+																						s: '${0}?"block":"none"'
+																					}
+																				}
+																			]
+																		},
+																		f: [{
+																			t: 4,
+																			r: 'files',
+																			i: 'j',
+																			f: [
+																				' ', {
+																					t: 4,
+																					x: {
+																						r: ['j'],
+																						s: '${0}>0'
+																					},
+																					f: [
+																						' ', {
+																							t: 7,
+																							e: 'div',
+																							a: {
+																								'class': [
+																									'col-xs-', {
+																										t: 2,
+																										x: {
+																											r: ['flash'],
+																											s: '${0}?11:12'
+																										}
+																									}
+																								],
+																								style: 'padding-right: 0'
+																							},
+																							f: [{
+																								t: 7,
+																								e: 'input',
+																								a: {
+																									type: 'text',
+																									'class': 'form-control output',
+																									value: [{
+																											t: 2,
+																											r: 'app.cdnRoot'
+																										},
+																										'/', {
+																											t: 2,
+																											r: 'name'
+																										},
+																										'/', {
+																											t: 2,
+																											r: 'selectedVersion'
+																										},
+																										'/', {
+																											t: 2,
+																											r: '.'
+																										}
+																									]
+																								}
+																							}]
+																						},
+																						' ', {
+																							t: 4,
+																							r: 'flash',
+																							f: [
+																								' ', {
+																									t: 7,
+																									e: 'div',
+																									a: {
+																										'class': 'col-xs-1',
+																										style: 'padding-right: 0'
+																									},
+																									f: [{
+																										t: 7,
+																										e: 'button',
+																										a: {
+																											'class': 'btn btn-link btn-inverse gray',
+																											'data-clipboard-text': [{
+																													t: 2,
+																													r: 'app.cdnRoot'
+																												},
+																												'/', {
+																													t: 2,
+																													r: 'name'
+																												},
+																												'/', {
+																													t: 2,
+																													r: 'selectedVersion'
+																												},
+																												'/', {
+																													t: 2,
+																													r: '.'
+																												}
+																											]
+																										},
+																										o: 'zeroClipboard',
+																										f: [{
+																											t: 7,
+																											e: 'i',
+																											a: {
+																												'class': 'fa fa-chain'
+																											}
+																										}]
+																									}]
+																								},
+																								' '
+																							]
+																						},
+																						''
+																					]
+																				},
+																				''
+																			]
+																		}]
+																	},
+																	' '
+																]
+															},
+															' ', {
+																t: 7,
+																e: 'div',
+																a: {
+																	'class': 'col-xs-12'
+																},
+																f: [{
 																	t: 7,
-																	e: 'div',
+																	e: 'button',
 																	a: {
-																		'class': ['more-files'],
-																		style: [
-																			'display: ', {
+																		'class': 'btn btn-link btn-inverse gray'
+																	},
+																	v: {
+																		click: {
+																			n: 'toggle',
+																			d: [{
+																				t: 2,
+																				r: 'i'
+																			}]
+																		}
+																	},
+																	o: {
+																		n: 'tooltip',
+																		d: [
+																			' ', {
 																				t: 2,
 																				x: {
 																					r: ['showAll'],
-																					s: '${0}?"block":"none"'
+																					s: '${0}?"Show only main file":"Show all files"'
 																				}
 																			}
 																		]
 																	},
 																	f: [{
-																		t: 4,
-																		r: 'files',
-																		i: 'j',
-																		f: [
-																			' ', {
-																				t: 4,
-																				x: {
-																					r: ['j'],
-																					s: '${0}>0'
-																				},
-																				f: [
-																					' ', {
-																						t: 7,
-																						e: 'div',
-																						a: {
-																							'class': [
-																								'col-xs-', {
-																									t: 4,
-																									r: 'flash',
-																									f: ['11']
-																								}, {
-																									t: 4,
-																									r: 'flash',
-																									n: true,
-																									f: ['12']
-																								}
-																							],
-																							style: ['padding-right: 0']
-																						},
-																						f: [{
-																							t: 7,
-																							e: 'input',
-																							a: {
-																								type: ['text'],
-																								'class': ['form-control output'],
-																								value: [{
-																										t: 2,
-																										r: 'app.cdnRoot'
-																									},
-																									'/', {
-																										t: 2,
-																										r: 'name'
-																									},
-																									'/', {
-																										t: 2,
-																										r: 'selectedVersion'
-																									},
-																									'/', {
-																										t: 2,
-																										r: '.'
-																									}
-																								]
-																							}
-																						}]
-																					},
-																					' ', {
-																						t: 4,
-																						r: 'flash',
-																						f: [
-																							' ', {
-																								t: 7,
-																								e: 'div',
-																								a: {
-																									'class': ['col-xs-1'],
-																									style: ['padding-right: 0']
-																								},
-																								f: [{
-																									t: 7,
-																									e: 'button',
-																									a: {
-																										'class': ['btn btn-link btn-inverse gray'],
-																										'data-clipboard-text': [{
-																												t: 2,
-																												r: 'app.cdnRoot'
-																											},
-																											'/', {
-																												t: 2,
-																												r: 'name'
-																											},
-																											'/', {
-																												t: 2,
-																												r: 'selectedVersion'
-																											},
-																											'/', {
-																												t: 2,
-																												r: '.'
-																											}
-																										]
-																									},
-																									f: [{
-																										t: 7,
-																										e: 'i',
-																										a: {
-																											'class': ['fa fa-chain']
-																										}
-																									}],
-																									o: 'zeroClipboard'
-																								}]
-																							},
-																							' '
-																						]
-																					},
-																					' '
-																				]
-																			},
-																			' '
-																		]
-																	}]
-																},
-																' '
-															]
-														},
-														' ', {
-															t: 7,
-															e: 'div',
-															a: {
-																'class': ['col-xs-12']
-															},
-															f: [{
-																t: 7,
-																e: 'button',
-																a: {
-																	'class': ['btn btn-link btn-inverse gray']
-																},
-																f: [{
-																	t: 7,
-																	e: 'i',
-																	a: {
-																		'class': [
-																			'fa ', {
-																				t: 2,
-																				x: {
-																					r: ['showAll'],
-																					s: '${0}?"fa-angle-double-up":"fa-angle-double-down"'
+																		t: 7,
+																		e: 'i',
+																		a: {
+																			'class': [
+																				'fa ', {
+																					t: 2,
+																					x: {
+																						r: ['showAll'],
+																						s: '${0}?"fa-angle-double-up":"fa-angle-double-down"'
+																					}
 																				}
-																			}
-																		]
-																	}
-																}],
-																v: {
-																	click: {
-																		n: 'toggle',
-																		d: [{
-																			t: 2,
-																			r: 'i'
-																		}]
-																	}
-																},
-																o: {
-																	n: 'tooltip',
-																	d: [
-																		' ', {
-																			t: 2,
-																			x: {
-																				r: ['showAll'],
-																				s: '${0}?"Show only main file":"Show all files"'
-																			}
+																			]
 																		}
-																	]
-																}
-															}]
+																	}]
+																}]
+															},
+															' '
+														]
+													},
+													''
+												]
+											}]
+										}
+									]
+								}
+							]
+						},
+						' '
+					]
+				},
+				'', {
+					t: 4,
+					x: {
+						r: ['nbPages'],
+						s: '${0}>1'
+					},
+					f: [
+						' ', {
+							t: 7,
+							e: 'ul',
+							a: {
+								'class': 'pagination pull-right'
+							},
+							f: [{
+									t: 7,
+									e: 'li',
+									a: {
+										'class': [
+											'previous ', {
+												t: 4,
+												n: 51,
+												r: 'page',
+												f: ['disabled']
+											}
+										]
+									},
+									f: [{
+										t: 7,
+										e: 'a',
+										a: {
+											'class': 'link'
+										},
+										v: {
+											click: {
+												n: 'loadPage',
+												d: [{
+													t: 2,
+													x: {
+														r: ['page'],
+														s: '${0}-1'
+													}
+												}]
+											}
+										},
+										f: [{
+												t: 7,
+												e: 'i',
+												a: {
+													'class': 'fa fa-angle-left'
+												}
+											},
+											' Previous'
+										]
+									}]
+								},
+								' ', {
+									t: 4,
+									x: {
+										r: ['pagination.0'],
+										s: '${0}>=1'
+									},
+									f: [
+										' ', {
+											t: 7,
+											e: 'li',
+											f: [{
+												t: 7,
+												e: 'a',
+												a: {
+													'class': 'link'
+												},
+												v: {
+													click: {
+														n: 'loadPage',
+														a: [0]
+													}
+												},
+												f: ['1']
+											}]
+										},
+										' ', {
+											t: 4,
+											x: {
+												r: ['pagination.0'],
+												s: '${0}===2'
+											},
+											f: [
+												' ', {
+													t: 7,
+													e: 'li',
+													f: [{
+														t: 7,
+														e: 'a',
+														a: {
+															'class': 'link'
 														},
-														' '
-													]
+														v: {
+															click: {
+																n: 'loadPage',
+																a: [1]
+															}
+														},
+														f: ['2']
+													}]
 												},
 												' '
 											]
-										}]
-									}
-								]
-							}
-						]
-					},
-					' '
-				]
-			}, {
-				t: 4,
-				x: {
-					r: ['nbPages'],
-					s: '${0}>1'
-				},
-				f: [
-					' ', {
-						t: 7,
-						e: 'ul',
-						a: {
-							'class': ['pagination pull-right']
-						},
-						f: [{
-								t: 7,
-								e: 'li',
-								a: {
-									'class': [
-										'previous ', {
+										},
+										' ', {
 											t: 4,
-											r: 'page',
-											n: true,
-											f: ['disabled']
-										}
-									]
-								},
-								f: [{
-									t: 7,
-									e: 'a',
-									a: {
-										'class': ['link']
-									},
-									f: [{
-											t: 7,
-											e: 'i',
-											a: {
-												'class': ['fa fa-angle-left']
-											}
-										},
-										' Previous'
-									],
-									v: {
-										click: {
-											n: 'loadPage',
-											d: [{
-												t: 2,
-												x: {
-													r: ['page'],
-													s: '${0}-1'
-												}
-											}]
-										}
-									}
-								}]
-							},
-							' ', {
-								t: 4,
-								x: {
-									r: ['pagination.0'],
-									s: '${0}>=1'
-								},
-								f: [
-									' ', {
-										t: 7,
-										e: 'li',
-										f: [{
-											t: 7,
-											e: 'a',
-											a: {
-												'class': ['link']
+											x: {
+												r: ['pagination.0'],
+												s: '${0}>2'
 											},
-											f: ['1'],
-											v: {
-												click: {
-													n: 'loadPage',
-													a: [0]
-												}
-											}
-										}]
-									},
-									' ', {
-										t: 4,
-										x: {
-											r: ['pagination.0'],
-											s: '${0}===2'
-										},
-										f: [
-											' ', {
-												t: 7,
-												e: 'li',
-												f: [{
+											f: [
+												' ', {
 													t: 7,
-													e: 'a',
+													e: 'li',
 													a: {
-														'class': ['link']
-													},
-													f: ['2'],
-													v: {
-														click: {
-															n: 'loadPage',
-															a: [1]
-														}
-													}
-												}]
-											},
-											' '
-										]
-									},
-									' ', {
-										t: 4,
-										x: {
-											r: ['pagination.0'],
-											s: '${0}>2'
-										},
-										f: [
-											' ', {
-												t: 7,
-												e: 'li',
-												a: {
-													'class': ['disabled']
-												},
-												f: [{
-													t: 7,
-													e: 'a',
-													f: ['...']
-												}]
-											},
-											' '
-										]
-									},
-									' '
-								]
-							},
-							' ', {
-								t: 4,
-								r: 'pagination',
-								f: [
-									' ', {
-										t: 7,
-										e: 'li',
-										a: {
-											'class': [{
-												t: 2,
-												x: {
-													r: [
-														'.',
-														'page'
-													],
-													s: '${0}===${1}?"active":""'
-												}
-											}]
-										},
-										f: [{
-											t: 7,
-											e: 'a',
-											a: {
-												'class': ['link']
-											},
-											f: [{
-												t: 2,
-												x: {
-													r: ['.'],
-													s: '${0}+1'
-												}
-											}],
-											v: {
-												click: {
-													n: 'loadPage',
-													d: [{
-														t: 2,
-														r: '.'
-													}]
-												}
-											}
-										}]
-									},
-									' '
-								]
-							},
-							' ', {
-								t: 4,
-								x: {
-									r: [
-										'pagination.length',
-										'pagination',
-										'nbPages'
-									],
-									s: '${1}[${0}-1]<=${2}-2'
-								},
-								f: [
-									' ', {
-										t: 4,
-										x: {
-											r: [
-												'pagination.length',
-												'pagination',
-												'nbPages'
-											],
-											s: '${1}[${0}-1]===${2}-3'
-										},
-										f: [
-											' ', {
-												t: 7,
-												e: 'li',
-												f: [{
-													t: 7,
-													e: 'a',
-													a: {
-														'class': ['link']
+														'class': 'disabled'
 													},
 													f: [{
-														t: 2,
-														x: {
-															r: ['nbPages'],
-															s: '${0}-1'
-														}
-													}],
-													v: {
-														click: {
-															n: 'loadPage',
-															d: [{
-																t: 2,
-																x: {
-																	r: ['nbPages'],
-																	s: '${0}-2'
-																}
-															}]
-														}
+														t: 7,
+														e: 'a',
+														f: ['...']
+													}]
+												},
+												' '
+											]
+										},
+										''
+									]
+								},
+								' ', {
+									t: 4,
+									r: 'pagination',
+									f: [
+										' ', {
+											t: 7,
+											e: 'li',
+											a: {
+												'class': [{
+													t: 2,
+													x: {
+														r: [
+															'.',
+															'page'
+														],
+														s: '${0}===${1}?"active":""'
 													}
 												}]
 											},
-											' '
-										]
-									},
-									' ', {
-										t: 4,
-										x: {
-											r: [
-												'pagination.length',
-												'pagination',
-												'nbPages'
-											],
-											s: '${1}[${0}-1]<${2}-3'
-										},
-										f: [
-											' ', {
+											f: [{
 												t: 7,
-												e: 'li',
+												e: 'a',
 												a: {
-													'class': ['disabled']
+													'class': 'link'
+												},
+												v: {
+													click: {
+														n: 'loadPage',
+														d: [{
+															t: 2,
+															r: '.'
+														}]
+													}
 												},
 												f: [{
-													t: 7,
-													e: 'a',
-													f: ['...']
+													t: 2,
+													x: {
+														r: ['.'],
+														s: '${0}+1'
+													}
 												}]
-											},
-											' '
-										]
-									},
-									' ', {
-										t: 7,
-										e: 'li',
-										a: {
-											'class': [{
-												t: 2,
-												x: {
-													r: [
-														'.',
-														'page'
-													],
-													s: '${0}===${1}?"active":""'
-												}
 											}]
 										},
-										f: [{
-											t: 7,
-											e: 'a',
-											a: {
-												'class': ['link']
-											},
-											f: [{
-												t: 2,
-												r: 'nbPages'
-											}],
-											v: {
-												click: {
-													n: 'loadPage',
-													d: [{
-														t: 2,
-														x: {
-															r: ['nbPages'],
-															s: '${0}-1'
-														}
-													}]
-												}
-											}
-										}]
-									},
-									' '
-								]
-							},
-							' ', {
-								t: 7,
-								e: 'li',
-								a: {
-									'class': [
-										'next ', {
-											t: 4,
-											n: true,
-											x: {
-												r: [
-													'page',
-													'nbPages'
-												],
-												s: '${0}<${1}-1'
-											},
-											f: ['disabled']
-										}
+										' '
 									]
 								},
-								f: [{
-									t: 7,
-									e: 'a',
-									a: {
-										'class': ['link']
+								' ', {
+									t: 4,
+									x: {
+										r: [
+											'pagination.length',
+											'pagination',
+											'nbPages'
+										],
+										s: '${1}[${0}-1]<=${2}-2'
 									},
 									f: [
-										'Next ', {
+										' ', {
+											t: 4,
+											x: {
+												r: [
+													'pagination.length',
+													'pagination',
+													'nbPages'
+												],
+												s: '${1}[${0}-1]===${2}-3'
+											},
+											f: [
+												' ', {
+													t: 7,
+													e: 'li',
+													f: [{
+														t: 7,
+														e: 'a',
+														a: {
+															'class': 'link'
+														},
+														v: {
+															click: {
+																n: 'loadPage',
+																d: [{
+																	t: 2,
+																	x: {
+																		r: ['nbPages'],
+																		s: '${0}-2'
+																	}
+																}]
+															}
+														},
+														f: [{
+															t: 2,
+															x: {
+																r: ['nbPages'],
+																s: '${0}-1'
+															}
+														}]
+													}]
+												},
+												' '
+											]
+										},
+										' ', {
+											t: 4,
+											x: {
+												r: [
+													'pagination.length',
+													'pagination',
+													'nbPages'
+												],
+												s: '${1}[${0}-1]<${2}-3'
+											},
+											f: [
+												' ', {
+													t: 7,
+													e: 'li',
+													a: {
+														'class': 'disabled'
+													},
+													f: [{
+														t: 7,
+														e: 'a',
+														f: ['...']
+													}]
+												},
+												' '
+											]
+										},
+										' ', {
 											t: 7,
-											e: 'i',
+											e: 'li',
 											a: {
-												'class': ['fa fa-angle-right']
-											}
-										}
-									],
-									v: {
-										click: {
-											n: 'loadPage',
-											d: [{
-												t: 2,
-												x: {
-													r: ['page'],
-													s: '${0}+1'
-												}
+												'class': [{
+													t: 2,
+													x: {
+														r: [
+															'.',
+															'page'
+														],
+														s: '${0}===${1}?"active":""'
+													}
+												}]
+											},
+											f: [{
+												t: 7,
+												e: 'a',
+												a: {
+													'class': 'link'
+												},
+												v: {
+													click: {
+														n: 'loadPage',
+														d: [{
+															t: 2,
+															x: {
+																r: ['nbPages'],
+																s: '${0}-1'
+															}
+														}]
+													}
+												},
+												f: [{
+													t: 2,
+													r: 'nbPages'
+												}]
 											}]
-										}
-									}
-								}]
-							}
-						]
-					},
-					' '
-				]
-			}]
+										},
+										' '
+									]
+								},
+								' ', {
+									t: 7,
+									e: 'li',
+									a: {
+										'class': [
+											'next ', {
+												t: 4,
+												n: 51,
+												x: {
+													r: [
+														'page',
+														'nbPages'
+													],
+													s: '${0}<${1}-1'
+												},
+												f: ['disabled']
+											}
+										]
+									},
+									f: [{
+										t: 7,
+										e: 'a',
+										a: {
+											'class': 'link'
+										},
+										v: {
+											click: {
+												n: 'loadPage',
+												d: [{
+													t: 2,
+													x: {
+														r: ['page'],
+														s: '${0}+1'
+													}
+												}]
+											}
+										},
+										f: [
+											'Next ', {
+												t: 7,
+												e: 'i',
+												a: {
+													'class': 'fa fa-angle-right'
+												}
+											}
+										]
+									}]
+								}
+							]
+						},
+						' '
+					]
+				},
+				''
+			]
 		}, component = {};
 		var downloadHelper = amd_download;
 		var listFiles = amd_list_files;
@@ -2405,11 +2409,13 @@
 						});
 					}
 				});
-				this.observe('projects', function(n) {
-					if (n.length === 1 && typeof n[0].showAll === 'undefined') {
+				this.observe('projects.length', function(n) {
+					if (n === 1) {
 						_this.set('projects.0.insert', true);
 						_this.set('projects.0.showAll', true);
 					}
+				}, {
+					'defer': true
 				});
 			}
 		};

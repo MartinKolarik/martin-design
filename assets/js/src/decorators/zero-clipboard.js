@@ -4,9 +4,9 @@ define([
 	helpers
 ) {
 	return helpers.create(function(node) {
+		var clip	= new ZeroClipboard(node);
 		var $bridge	= $('#global-zeroclipboard-html-bridge');
 		var $node	= $(node);
-		var clip	= new ZeroClipboard(node);
 		var ractive	= this;
 
 		clip.on('mouseover', function() {
