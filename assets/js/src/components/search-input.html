@@ -47,7 +47,7 @@
 						search(this.get('query').toString(), this.get('page'), function(response, query) {
 							// the query might have changed since we sent the request
 							if(query === _this.get('query')) {
-								app.views.searchResults.set('projects', response.hits || []);
+								app.views.searchResults.set('projects', $.extend(true, [], response.hits));
 								app.views.searchResults.set('nbPages', response.nbPages || 0);
 								app.views.searchResults.set('page', response.page || 0);
 							}
