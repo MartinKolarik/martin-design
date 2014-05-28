@@ -148,35 +148,32 @@
 											t: 4,
 											r: 'buttons',
 											i: 'i',
-											f: [
-												' ', {
-													t: 7,
-													e: 'button',
-													a: {
-														type: 'button',
-														'class': [
-															'btn ', {
-																t: 2,
-																r: 'class'
-															}
-														]
-													},
-													v: {
-														click: {
-															n: [{
-																t: 2,
-																r: 'handler'
-															}],
-															d: []
+											f: [{
+												t: 7,
+												e: 'button',
+												a: {
+													type: 'button',
+													'class': [
+														'btn ', {
+															t: 2,
+															r: 'class'
 														}
-													},
-													f: [{
-														t: 2,
-														r: 'label'
-													}]
+													]
 												},
-												' '
-											]
+												v: {
+													click: {
+														n: [{
+															t: 2,
+															r: 'handler'
+														}],
+														d: []
+													}
+												},
+												f: [{
+													t: 2,
+													r: 'label'
+												}]
+											}]
 										}
 									]
 								}
@@ -264,60 +261,56 @@
 					f: [{
 						t: 4,
 						r: 'links',
-						f: [
-							' ', {
+						f: [{
 								t: 4,
 								r: 'showSwitch',
-								f: [
-									' ', {
-										t: 7,
-										e: 'div',
-										a: {
-											'class': 'row',
-											style: 'padding: 0 5px'
-										},
-										f: [{
-												t: 7,
-												e: 'div',
-												a: {
-													'class': 'col-xs-2 col-xs-offset-9',
-													style: 'text-align: right'
-												},
-												f: ['Group links']
-											},
-											' ', {
-												t: 7,
-												e: 'div',
-												a: {
-													'class': 'col-sm-1'
-												},
-												f: [{
-														t: 7,
-														e: 'input',
-														a: {
-															type: 'checkbox',
-															'class': 'switch-inline',
-															id: 'group-links',
-															checked: [{
-																t: 2,
-																r: 'groupLinks'
-															}],
-															value: '1'
-														}
-													},
-													' ', {
-														t: 7,
-														e: 'label',
-														a: {
-															'for': 'group-links'
-														}
-													}
-												]
-											}
-										]
+								f: [{
+									t: 7,
+									e: 'div',
+									a: {
+										'class': 'row',
+										style: 'padding: 0 5px'
 									},
-									' '
-								]
+									f: [{
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'col-xs-2 col-xs-offset-9',
+												style: 'text-align: right'
+											},
+											f: ['Group links']
+										},
+										' ', {
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'col-sm-1'
+											},
+											f: [{
+													t: 7,
+													e: 'input',
+													a: {
+														type: 'checkbox',
+														'class': 'switch-inline',
+														id: 'group-links',
+														checked: [{
+															t: 2,
+															r: 'groupLinks'
+														}],
+														value: '1'
+													}
+												},
+												' ', {
+													t: 7,
+													e: 'label',
+													a: {
+														'for': 'group-links'
+													}
+												}
+											]
+										}
+									]
+								}]
 							},
 							' ', {
 								t: 7,
@@ -329,8 +322,7 @@
 								f: [{
 										t: 4,
 										r: 'js.length',
-										f: [
-											' ', {
+										f: [{
 												t: 7,
 												e: 'li',
 												f: [{
@@ -342,39 +334,34 @@
 											' ', {
 												t: 4,
 												r: 'js',
-												f: [
-													' ', {
+												f: [{
+													t: 7,
+													e: 'li',
+													f: [{
 														t: 7,
-														e: 'li',
-														f: [{
-															t: 7,
-															e: 'input',
-															a: {
-																type: 'text',
-																'class': 'form-control output',
-																value: [{
-																		t: 2,
-																		r: 'app.cdnRoot'
-																	},
-																	'/', {
-																		t: 2,
-																		r: '.'
-																	}
-																]
-															}
-														}]
-													},
-													' '
-												]
-											},
-											''
+														e: 'input',
+														a: {
+															type: 'text',
+															'class': 'form-control output',
+															value: [{
+																	t: 2,
+																	r: 'app.cdnRoot'
+																},
+																'/', {
+																	t: 2,
+																	r: '.'
+																}
+															]
+														}
+													}]
+												}]
+											}
 										]
 									},
 									' ', {
 										t: 4,
 										r: 'css.length',
-										f: [
-											' ', {
+										f: [{
 												t: 7,
 												e: 'li',
 												f: [{
@@ -386,39 +373,34 @@
 											' ', {
 												t: 4,
 												r: 'css',
-												f: [
-													' ', {
+												f: [{
+													t: 7,
+													e: 'li',
+													f: [{
 														t: 7,
-														e: 'li',
-														f: [{
-															t: 7,
-															e: 'input',
-															a: {
-																type: 'text',
-																'class': 'form-control output',
-																value: [{
-																		t: 2,
-																		r: 'app.cdnRoot'
-																	},
-																	'/', {
-																		t: 2,
-																		r: '.'
-																	}
-																]
-															}
-														}]
-													},
-													' '
-												]
-											},
-											''
+														e: 'input',
+														a: {
+															type: 'text',
+															'class': 'form-control output',
+															value: [{
+																	t: 2,
+																	r: 'app.cdnRoot'
+																},
+																'/', {
+																	t: 2,
+																	r: '.'
+																}
+															]
+														}
+													}]
+												}]
+											}
 										]
 									},
 									' ', {
 										t: 4,
 										r: 'others.length',
-										f: [
-											' ', {
+										f: [{
 												t: 7,
 												e: 'li',
 												f: [{
@@ -430,32 +412,28 @@
 											' ', {
 												t: 4,
 												r: 'others',
-												f: [
-													' ', {
+												f: [{
+													t: 7,
+													e: 'li',
+													f: [{
 														t: 7,
-														e: 'li',
-														f: [{
-															t: 7,
-															e: 'input',
-															a: {
-																type: 'text',
-																'class': 'form-control output',
-																value: [{
-																		t: 2,
-																		r: 'app.cdnRoot'
-																	},
-																	'/', {
-																		t: 2,
-																		r: '.'
-																	}
-																]
-															}
-														}]
-													},
-													' '
-												]
-											},
-											''
+														e: 'input',
+														a: {
+															type: 'text',
+															'class': 'form-control output',
+															value: [{
+																	t: 2,
+																	r: 'app.cdnRoot'
+																},
+																'/', {
+																	t: 2,
+																	r: '.'
+																}
+															]
+														}
+													}]
+												}]
+											}
 										]
 									}
 								]
@@ -470,8 +448,7 @@
 										t: 4,
 										n: 51,
 										r: 'subscribed',
-										f: [
-											' ', {
+										f: [{
 												t: 7,
 												e: 'strong',
 												f: ['E-mail updates']
@@ -501,45 +478,40 @@
 													v: {
 														click: 'submit'
 													},
-													f: ['Keep me updated']
+													f: ['Keep Me Updated']
 												}]
-											},
-											' '
+											}
 										]
 									},
 									' ', {
 										t: 4,
 										r: 'subscribed',
-										f: [
-											' ', {
-												t: 7,
-												e: 'p',
-												f: [
-													'We\'ll send you an e-mail to ', {
-														t: 7,
-														e: 'a',
-														a: {
-															href: [
-																'mailto:', {
-																	t: 2,
-																	r: 'email'
-																}
-															]
-														},
-														f: [{
-															t: 2,
-															r: 'email'
-														}]
+										f: [{
+											t: 7,
+											e: 'p',
+											f: [
+												'We\'ll send you an e-mail to ', {
+													t: 7,
+													e: 'a',
+													a: {
+														href: [
+															'mailto:', {
+																t: 2,
+																r: 'email'
+															}
+														]
 													},
-													' when there is a new version available.'
-												]
-											},
-											' '
-										]
+													f: [{
+														t: 2,
+														r: 'email'
+													}]
+												},
+												' when there is a new version available.'
+											]
+										}]
 									}
 								]
-							},
-							' '
+							}
 						]
 					}]
 				},
@@ -635,6 +607,11 @@
 		component.exports = {
 			'el': 'body',
 			'append': true,
+			'complete': function() {
+				setTimeout(function() {
+					$('#new-version-email').focus();
+				}, 500);
+			},
 			'components': {
 				'modal': amd_rvc_components_modal
 			},
@@ -643,11 +620,11 @@
 				'title': 'Report a new version of ',
 				'project': {},
 				'buttons': [{
-					'label': 'cancel',
+					'label': 'Cancel',
 					'class': 'btn-default',
 					'handler': 'cancel'
 				}, {
-					'label': 'select',
+					'label': 'Report',
 					'class': 'primary',
 					'handler': 'submit'
 				}],
@@ -731,58 +708,55 @@
 								s: '${0}(${1})'
 							},
 							i: 'i',
-							f: [
-								' ', {
-									t: 7,
-									e: 'li',
-									f: [{
-											t: 7,
-											e: 'input',
-											a: {
-												type: 'checkbox',
-												'class': 'checkbox primary',
-												id: [
-													'file', {
-														t: 2,
-														r: 'i'
-													}
-												],
-												value: [{
+							f: [{
+								t: 7,
+								e: 'li',
+								f: [{
+										t: 7,
+										e: 'input',
+										a: {
+											type: 'checkbox',
+											'class': 'checkbox primary',
+											id: [
+												'file', {
 													t: 2,
-													r: '.'
-												}],
-												checked: [{
-													t: 2,
-													x: {
-														r: [
-															'.',
-															'project.mainfile'
-														],
-														s: '${0}===${1}'
-													}
-												}]
-											}
-										},
-										' ', {
-											t: 7,
-											e: 'label',
-											a: {
-												'for': [
-													'file', {
-														t: 2,
-														r: 'i'
-													}
-												]
-											},
-											f: [{
+													r: 'i'
+												}
+											],
+											value: [{
 												t: 2,
 												r: '.'
+											}],
+											checked: [{
+												t: 2,
+												x: {
+													r: [
+														'.',
+														'project.mainfile'
+													],
+													s: '${0}===${1}'
+												}
 											}]
 										}
-									]
-								},
-								' '
-							]
+									},
+									' ', {
+										t: 7,
+										e: 'label',
+										a: {
+											'for': [
+												'file', {
+													t: 2,
+													r: 'i'
+												}
+											]
+										},
+										f: [{
+											t: 2,
+											r: '.'
+										}]
+									}
+								]
+							}]
 						}]
 					}]
 				},
@@ -804,11 +778,11 @@
 				'title': 'Select files to include',
 				'project': {},
 				'buttons': [{
-					'label': 'cancel',
+					'label': 'Cancel',
 					'class': 'btn-default',
 					'handler': 'cancel'
 				}, {
-					'label': 'select',
+					'label': 'Select',
 					'class': 'primary',
 					'handler': 'submit'
 				}],
@@ -836,89 +810,34 @@
 	var amd_rvc_components_version_list = function(Ractive) {
 		var __options__ = {
 			template: [{
-					t: 4,
-					r: 'project',
-					f: [
-						' ', {
-							t: 7,
-							e: 'ul',
-							a: {
-								'class': [
-									'dropdown-menu ', {
-										t: 2,
-										r: 'class'
-									}
-								],
-								role: 'menu'
-							},
+				t: 4,
+				r: 'project',
+				f: [{
+					t: 7,
+					e: 'ul',
+					a: {
+						'class': [
+							'dropdown-menu ', {
+								t: 2,
+								r: 'class'
+							}
+						],
+						role: 'menu'
+					},
+					f: [{
+							t: 4,
+							r: 'versions',
+							i: 'j',
 							f: [{
-									t: 4,
-									r: 'versions',
-									i: 'j',
-									f: [
-										' ', {
-											t: 4,
-											x: {
-												r: [
-													'.',
-													'selectedVersion'
-												],
-												s: '${0}!==${1}'
-											},
-											f: [
-												' ', {
-													t: 7,
-													e: 'li',
-													f: [{
-														t: 7,
-														e: 'a',
-														a: {
-															'class': 'link'
-														},
-														v: {
-															click: {
-																n: 'set',
-																d: [{
-																		t: 2,
-																		x: {
-																			r: ['i'],
-																			s: '"projects."+${0}+".selectedVersion"'
-																		}
-																	},
-																	',', {
-																		t: 2,
-																		r: '.'
-																	}
-																]
-															}
-														},
-														f: [{
-															t: 2,
-															r: '.'
-														}]
-													}]
-												},
-												' '
-											]
-										},
-										''
-									]
+								t: 4,
+								x: {
+									r: [
+										'.',
+										'selectedVersion'
+									],
+									s: '${0}!==${1}'
 								},
-								' ', {
-									t: 4,
-									x: {
-										r: ['versions.length'],
-										s: '${0}>1'
-									},
-									f: [{
-										t: 7,
-										e: 'li',
-										a: {
-											'class': 'divider'
-										}
-									}]
-								},
-								' ', {
+								f: [{
 									t: 7,
 									e: 'li',
 									f: [{
@@ -929,29 +848,73 @@
 										},
 										v: {
 											click: {
-												n: 'reportNew',
+												n: 'set',
 												d: [{
-													t: 2,
-													kx: {
-														r: 'projects',
-														m: [{
-															t: 30,
-															n: 'i'
-														}]
+														t: 2,
+														x: {
+															r: ['i'],
+															s: '"projects."+${0}+".selectedVersion"'
+														}
+													},
+													',', {
+														t: 2,
+														r: '.'
 													}
-												}]
+												]
 											}
 										},
-										f: ['Found newer version?']
+										f: [{
+											t: 2,
+											r: '.'
+										}]
 									}]
-								}
-							]
+								}]
+							}]
 						},
-						' '
+						' ', {
+							t: 4,
+							x: {
+								r: ['versions.length'],
+								s: '${0}>1'
+							},
+							f: [{
+								t: 7,
+								e: 'li',
+								a: {
+									'class': 'divider'
+								}
+							}]
+						},
+						' ', {
+							t: 7,
+							e: 'li',
+							f: [{
+								t: 7,
+								e: 'a',
+								a: {
+									'class': 'link'
+								},
+								v: {
+									click: {
+										n: 'reportNew',
+										d: [{
+											t: 2,
+											rx: {
+												r: 'projects',
+												m: [{
+													t: 30,
+													n: 'i'
+												}]
+											}
+										}]
+									}
+								},
+								f: ['Found newer version?']
+							}]
+						}
 					]
-				},
-				''
-			]
+				}]
+			}]
 		}, component = {};
 		var ReportNewVersionView = amd_rvc_components_report_new_version;
 		var SelectFilesView = amd_rvc_components_select_files;
@@ -1011,143 +974,136 @@
 	var amd_rvc_components_collection = function(Ractive) {
 		var __options__ = {
 			template: [{
-					t: 4,
-					r: 'projects.length',
-					f: [
-						' ', {
+				t: 4,
+				r: 'projects.length',
+				f: [{
+						t: 7,
+						e: 'header',
+						f: [{
 							t: 7,
-							e: 'header',
-							f: [{
-								t: 7,
-								e: 'h2',
-								f: ['My collection']
-							}]
+							e: 'h2',
+							f: ['My Collection']
+						}]
+					},
+					' ', {
+						t: 7,
+						e: 'div',
+						a: {
+							'class': 'row'
 						},
-						' ', {
+						f: [{
 							t: 7,
 							e: 'div',
 							a: {
-								'class': 'row'
+								'class': 'col-md-6 col-md-offset-3'
 							},
 							f: [{
-								t: 7,
-								e: 'div',
-								a: {
-									'class': 'col-md-6 col-md-offset-3'
-								},
+								t: 4,
+								r: 'projects',
+								i: 'i',
 								f: [{
-									t: 4,
-									r: 'projects',
-									i: 'i',
-									f: [
-										' ', {
-											t: 7,
-											e: 'div',
-											a: {
-												'class': 'row list-item'
+									t: 7,
+									e: 'div',
+									a: {
+										'class': 'row list-item'
+									},
+									f: [{
+										t: 7,
+										e: 'div',
+										a: {
+											'class': 'col-sm-12 collection-item'
+										},
+										f: [{
+												t: 2,
+												r: 'name'
 											},
-											f: [{
+											' ', {
 												t: 7,
-												e: 'div',
+												e: 'small',
 												a: {
-													'class': 'col-sm-12 collection-item'
+													'class': 'btn-group'
 												},
-												f: [{
-														t: 2,
-														r: 'name'
-													},
-													' ', {
-														t: 7,
-														e: 'small',
-														a: {
-															'class': 'btn-group'
-														},
-														f: [
-															'(', {
-																t: 7,
-																e: 'a',
-																a: {
-																	'class': 'link',
-																	'data-toggle': 'dropdown'
-																},
-																f: [{
-																	t: 2,
-																	r: 'selectedVersion'
-																}]
-															},
-															') ', {
-																t: 7,
-																e: 'versionList',
-																a: {
-																	project: [{
-																		t: 2,
-																		r: '.'
-																	}],
-																	index: [{
-																		t: 2,
-																		r: 'i'
-																	}],
-																	'class': 'pull-right'
-																}
-															}
-														]
-													},
-													' ', {
+												f: [
+													'(', {
 														t: 7,
 														e: 'a',
 														a: {
-															'class': 'btn pull-right primary btn-link btn-inverse'
+															'class': 'link',
+															'data-toggle': 'dropdown'
 														},
-														v: {
-															click: {
-																n: 'remove',
-																d: [{
-																	t: 2,
-																	r: 'i'
-																}]
-															}
-														},
-														f: ['Remove']
+														f: [{
+															t: 2,
+															r: 'selectedVersion'
+														}]
+													},
+													') ', {
+														t: 7,
+														e: 'versionList',
+														a: {
+															project: [{
+																t: 2,
+																r: '.'
+															}],
+															index: [{
+																t: 2,
+																r: 'i'
+															}],
+															'class': 'pull-right'
+														}
 													}
 												]
-											}]
-										},
-										' '
-									]
+											},
+											' ', {
+												t: 7,
+												e: 'a',
+												a: {
+													'class': 'btn pull-right primary btn-link btn-inverse'
+												},
+												v: {
+													click: {
+														n: 'remove',
+														d: [{
+															t: 2,
+															r: 'i'
+														}]
+													}
+												},
+												f: ['Remove']
+											}
+										]
+									}]
 								}]
 							}]
+						}]
+					},
+					' ', {
+						t: 7,
+						e: 'div',
+						a: {
+							'class': 'row'
 						},
-						' ', {
+						f: [{
 							t: 7,
 							e: 'div',
 							a: {
-								'class': 'row'
+								'class': 'col-xs-12',
+								style: 'text-align: center'
 							},
 							f: [{
 								t: 7,
-								e: 'div',
+								e: 'button',
 								a: {
-									'class': 'col-xs-12',
-									style: 'text-align: center'
+									'class': 'btn primary btn-inverse'
 								},
-								f: [{
-									t: 7,
-									e: 'button',
-									a: {
-										'class': 'btn primary btn-inverse'
-									},
-									v: {
-										click: 'use'
-									},
-									f: ['Use my collection']
-								}]
+								v: {
+									click: 'use'
+								},
+								f: ['Use My Collection']
 							}]
-						},
-						' '
-					]
-				},
-				''
-			]
+						}]
+					}
+				]
+			}]
 		}, component = {};
 		var LinksView = amd_rvc_components_links;
 		var versionList = amd_rvc_components_version_list;
@@ -1247,9 +1203,15 @@
 						t: 7,
 						e: 'a',
 						a: {
-							href: '#!{"query":"*"}'
+							'class': 'link'
 						},
-						f: ['Browse all projects']
+						v: {
+							click: {
+								n: 'search',
+								a: '*'
+							}
+						},
+						f: ['Browse All Projects']
 					}]
 				},
 				' '
@@ -1300,7 +1262,7 @@
 							search(this.get('query').toString(), this.get('page'), function(response, query) {
 								// the query might have changed since we sent the request
 								if (query === _this.get('query')) {
-									app.views.searchResults.set('projects', response.hits || []);
+									app.views.searchResults.set('projects', $.extend(true, [], response.hits));
 									app.views.searchResults.set('nbPages', response.nbPages || 0);
 									app.views.searchResults.set('page', response.page || 0);
 								}
@@ -1312,6 +1274,9 @@
 				});
 				// auto focus on load
 				$('#search-input').focus();
+				this.on('search', function(event, query) {
+					this.set('query', query);
+				});
 				// restore query from hash
 				$(window).triggerHandler('searchReady');
 			}
@@ -1331,6 +1296,39 @@
 			$iframe = $('<iframe id="download-helper" style="display: none"></iframe>').appendTo('body');
 		}
 		$iframe.attr('src', url);
+	};
+	var amd_get_labels = function(name) {
+		var tags = [];
+		name = name.toLowerCase();
+		if (name.substr(0, 2) === 'wp') {
+			tags.push({
+				'text': 'WordPress',
+				'color': 'blue',
+				'keyword': 'wp'
+			});
+		}
+		if (name.indexOf('jquery') !== -1) {
+			tags.push({
+				'text': 'jQuery',
+				'color': 'dark-blue',
+				'keyword': 'jQuery'
+			});
+		}
+		if (name.indexOf('bootstrap') !== -1) {
+			tags.push({
+				'text': 'Bootstrap',
+				'color': 'purple',
+				'keyword': 'Bootstrap'
+			});
+		}
+		if (name.indexOf('font') !== -1) {
+			tags.push({
+				'text': 'Font',
+				'color': 'emerald',
+				'keyword': 'Font'
+			});
+		}
+		return tags;
 	};
 	var amd_decorators_tooltip = function(node, title, placement, trigger, container) {
 		var $node = $(node).tooltip({
@@ -1400,7 +1398,7 @@
 			var ractive = this;
 			clip.on('mouseover', function() {
 				$bridge.tooltip('destroy').tooltip({
-					'title': 'Copy to clipboard',
+					'title': 'Copy to Clipboard',
 					'placement': 'top'
 				}).tooltip('show');
 			});
@@ -1422,101 +1420,80 @@
 	var amd_rvc_components_search_results = function(Ractive) {
 		var __options__ = {
 			template: [{
-					t: 4,
-					r: 'projects',
-					i: 'i',
-					f: [
-						' ', {
+				t: 4,
+				r: 'projects',
+				i: 'i',
+				f: [{
+					t: 7,
+					e: 'div',
+					a: {
+						'class': 'result list-item'
+					},
+					f: [{
 							t: 7,
 							e: 'div',
 							a: {
-								'class': 'result list-item'
+								'class': 'row'
 							},
 							f: [{
 									t: 7,
 									e: 'div',
 									a: {
-										'class': 'row'
+										'class': 'col-md-6'
 									},
 									f: [{
 											t: 7,
-											e: 'div',
-											a: {
-												'class': 'col-md-6'
-											},
+											e: 'h4',
 											f: [{
 													t: 7,
-													e: 'h4',
-													f: [{
-															t: 7,
-															e: 'a',
-															a: {
-																href: [
-																	'#!{"query":"', {
-																		t: 2,
-																		r: 'name'
-																	},
-																	'"}'
-																]
-															},
-															f: [{
-																t: 2,
-																r: 'name'
-															}]
-														},
-														' ', {
-															t: 7,
-															e: 'small',
-															a: {
-																'class': 'btn-group'
-															},
-															f: [
-																'(', {
-																	t: 7,
-																	e: 'a',
-																	a: {
-																		'class': 'link',
-																		'data-toggle': 'dropdown'
-																	},
-																	f: [{
-																		t: 2,
-																		r: 'selectedVersion'
-																	}]
-																},
-																') ', {
-																	t: 7,
-																	e: 'versionList',
-																	a: {
-																		project: [{
-																			t: 2,
-																			r: '.'
-																		}]
-																	}
+													e: 'a',
+													a: {
+														'class': 'link'
+													},
+													v: {
+														click: {
+															n: 'search',
+															d: [
+																'author: ', {
+																	t: 2,
+																	r: 'author'
 																}
 															]
 														}
-													]
+													},
+													f: [{
+														t: 2,
+														r: 'name'
+													}]
 												},
 												' ', {
 													t: 7,
 													e: 'small',
+													a: {
+														'class': 'btn-group'
+													},
 													f: [
-														'by ', {
+														'(', {
 															t: 7,
 															e: 'a',
 															a: {
-																href: [
-																	'#!{"query":"author: ', {
-																		t: 2,
-																		r: 'author'
-																	},
-																	'"}'
-																]
+																'class': 'link',
+																'data-toggle': 'dropdown'
 															},
 															f: [{
 																t: 2,
-																r: 'author'
+																r: 'selectedVersion'
 															}]
+														},
+														') ', {
+															t: 7,
+															e: 'versionList',
+															a: {
+																project: [{
+																	t: 2,
+																	r: '.'
+																}]
+															}
 														}
 													]
 												}
@@ -1524,117 +1501,68 @@
 										},
 										' ', {
 											t: 7,
-											e: 'div',
-											a: {
-												'class': 'col-md-6 buttons'
-											},
-											f: [{
-													t: 7,
-													e: 'button',
-													a: {
-														'class': 'btn btn-link btn-inverse gray'
-													},
-													v: {
-														click: {
-															n: 'add',
-															d: [{
-																t: 2,
-																r: '.'
-															}]
-														}
-													},
-													o: {
-														n: 'tooltip',
-														a: ' Add to collection'
-													},
-													f: [{
-														t: 7,
-														e: 'i',
-														a: {
-															'class': 'fa fa-check fa-2x'
-														}
-													}]
-												},
-												' ', {
-													t: 7,
-													e: 'button',
-													a: {
-														'class': 'btn btn-link btn-inverse gray'
-													},
-													v: {
-														click: {
-															n: 'download',
-															d: [{
-																t: 2,
-																r: '.'
-															}]
-														}
-													},
-													o: {
-														n: 'tooltip',
-														a: ' Download ZIP'
-													},
-													f: [{
-														t: 7,
-														e: 'i',
-														a: {
-															'class': 'fa fa-download fa-2x'
-														}
-													}]
-												},
-												' ', {
+											e: 'small',
+											f: [
+												'by ', {
 													t: 7,
 													e: 'a',
 													a: {
-														'class': 'btn btn-link btn-inverse gray',
-														href: [{
-															t: 2,
-															r: 'homepage'
-														}],
-														target: '_blank'
-													},
-													o: {
-														n: 'tooltip',
-														a: ' Homepage'
+														href: [
+															'#!{"query":"author: ', {
+																t: 2,
+																r: 'author'
+															},
+															'"}'
+														]
 													},
 													f: [{
-														t: 7,
-														e: 'i',
-														a: {
-															'class': 'fa fa-home fa-2x'
-														}
-													}]
-												},
-												' ', {
-													t: 7,
-													e: 'a',
-													a: {
-														'class': 'btn btn-link btn-inverse gray',
-														style: [{
-															t: 4,
-															n: 51,
-															r: 'github',
-															f: ['visibility: hidden']
-														}],
-														href: [{
-															t: 2,
-															r: 'github'
-														}],
-														target: '_blank'
-													},
-													o: {
-														n: 'tooltip',
-														a: ' GitHub'
-													},
-													f: [{
-														t: 7,
-														e: 'i',
-														a: {
-															'class': 'fa fa-github fa-2x'
-														}
+														t: 2,
+														r: 'author'
 													}]
 												}
 											]
+										},
+										' ', {
+											t: 7,
+											e: 'div',
+											a: {
+												'class': 'labels'
+											},
+											f: [{
+												t: 4,
+												x: {
+													r: [
+														'getLabels',
+														'name'
+													],
+													s: '${0}(${1})'
+												},
+												f: [{
+													t: 7,
+													e: 'span',
+													a: {
+														'class': [
+															'link label ', {
+																t: 2,
+																r: 'color'
+															}
+														]
+													},
+													v: {
+														click: {
+															n: 'search',
+															d: [{
+																t: 2,
+																r: 'keyword'
+															}]
+														}
+													},
+													f: [{
+														t: 2,
+														r: 'text'
+													}]
+												}]
+											}]
 										}
 									]
 								},
@@ -1642,353 +1570,485 @@
 									t: 7,
 									e: 'div',
 									a: {
-										'class': 'row'
+										'class': 'col-md-6 buttons'
 									},
 									f: [{
 											t: 7,
-											e: 'div',
+											e: 'button',
 											a: {
-												'class': 'col-xs-12'
+												'class': 'btn btn-link btn-inverse gray'
+											},
+											v: {
+												click: {
+													n: 'add',
+													d: [{
+														t: 2,
+														r: '.'
+													}]
+												}
+											},
+											o: {
+												n: 'tooltip',
+												a: ' Add to Collection'
 											},
 											f: [{
 												t: 7,
-												e: 'p',
-												f: [{
-													t: 2,
-													r: 'description'
-												}]
+												e: 'i',
+												a: {
+													'class': 'fa fa-check fa-2x'
+												}
 											}]
 										},
 										' ', {
 											t: 7,
-											e: 'div',
+											e: 'button',
 											a: {
-												'class': 'file-list'
+												'class': 'btn btn-link btn-inverse gray'
+											},
+											v: {
+												click: {
+													n: 'download',
+													d: [{
+														t: 2,
+														r: '.'
+													}]
+												}
+											},
+											o: {
+												n: 'tooltip',
+												a: ' Download ZIP'
 											},
 											f: [{
-												t: 4,
-												x: {
-													r: [
-														'listFiles',
-														'.'
-													],
-													s: '{files:${0}(${1})}'
-												},
-												f: [
-													' ', {
-														t: 7,
-														e: 'div',
-														a: {
-															'class': [
-																'col-xs-', {
-																	t: 2,
-																	x: {
-																		r: ['flash'],
-																		s: '${0}?11:12'
-																	}
-																}
-															],
-															style: 'padding-right: 0'
-														},
-														f: [{
-															t: 7,
-															e: 'input',
-															a: {
-																type: 'text',
-																'class': 'form-control output',
-																value: [{
-																		t: 2,
-																		r: 'app.cdnRoot'
-																	},
-																	'/', {
-																		t: 2,
-																		r: 'name'
-																	},
-																	'/', {
-																		t: 2,
-																		r: 'selectedVersion'
-																	},
-																	'/', {
-																		t: 2,
-																		r: 'files.0'
-																	}
-																]
-															}
-														}]
-													},
-													' ', {
-														t: 4,
-														r: 'flash',
-														f: [
-															' ', {
-																t: 7,
-																e: 'div',
-																a: {
-																	'class': 'col-xs-1',
-																	style: 'padding-right: 0'
-																},
-																f: [{
-																	t: 7,
-																	e: 'button',
-																	a: {
-																		'class': 'btn btn-link btn-inverse gray',
-																		'data-clipboard-text': [{
-																				t: 2,
-																				r: 'app.cdnRoot'
-																			},
-																			'/', {
-																				t: 2,
-																				r: 'name'
-																			},
-																			'/', {
-																				t: 2,
-																				r: 'selectedVersion'
-																			},
-																			'/', {
-																				t: 2,
-																				r: 'files.0'
-																			}
-																		]
-																	},
-																	o: 'zeroClipboard',
-																	f: [{
-																		t: 7,
-																		e: 'i',
-																		a: {
-																			'class': 'fa fa-chain'
-																		}
-																	}]
-																}]
-															},
-															' '
-														]
-													},
-													' ', {
-														t: 4,
-														x: {
-															r: ['files.length'],
-															s: '${0}>1'
-														},
-														f: [
-															' ', {
-																t: 4,
-																r: 'insert',
-																f: [
-																	' ', {
-																		t: 7,
-																		e: 'div',
-																		a: {
-																			'class': 'more-files',
-																			style: [
-																				'display: ', {
-																					t: 2,
-																					x: {
-																						r: ['showAll'],
-																						s: '${0}?"block":"none"'
-																					}
-																				}
-																			]
-																		},
-																		f: [{
-																			t: 4,
-																			r: 'files',
-																			i: 'j',
-																			f: [
-																				' ', {
-																					t: 4,
-																					x: {
-																						r: ['j'],
-																						s: '${0}>0'
-																					},
-																					f: [
-																						' ', {
-																							t: 7,
-																							e: 'div',
-																							a: {
-																								'class': [
-																									'col-xs-', {
-																										t: 2,
-																										x: {
-																											r: ['flash'],
-																											s: '${0}?11:12'
-																										}
-																									}
-																								],
-																								style: 'padding-right: 0'
-																							},
-																							f: [{
-																								t: 7,
-																								e: 'input',
-																								a: {
-																									type: 'text',
-																									'class': 'form-control output',
-																									value: [{
-																											t: 2,
-																											r: 'app.cdnRoot'
-																										},
-																										'/', {
-																											t: 2,
-																											r: 'name'
-																										},
-																										'/', {
-																											t: 2,
-																											r: 'selectedVersion'
-																										},
-																										'/', {
-																											t: 2,
-																											r: '.'
-																										}
-																									]
-																								}
-																							}]
-																						},
-																						' ', {
-																							t: 4,
-																							r: 'flash',
-																							f: [
-																								' ', {
-																									t: 7,
-																									e: 'div',
-																									a: {
-																										'class': 'col-xs-1',
-																										style: 'padding-right: 0'
-																									},
-																									f: [{
-																										t: 7,
-																										e: 'button',
-																										a: {
-																											'class': 'btn btn-link btn-inverse gray',
-																											'data-clipboard-text': [{
-																													t: 2,
-																													r: 'app.cdnRoot'
-																												},
-																												'/', {
-																													t: 2,
-																													r: 'name'
-																												},
-																												'/', {
-																													t: 2,
-																													r: 'selectedVersion'
-																												},
-																												'/', {
-																													t: 2,
-																													r: '.'
-																												}
-																											]
-																										},
-																										o: 'zeroClipboard',
-																										f: [{
-																											t: 7,
-																											e: 'i',
-																											a: {
-																												'class': 'fa fa-chain'
-																											}
-																										}]
-																									}]
-																								},
-																								' '
-																							]
-																						},
-																						''
-																					]
-																				},
-																				''
-																			]
-																		}]
-																	},
-																	' '
-																]
-															},
-															' ', {
-																t: 7,
-																e: 'div',
-																a: {
-																	'class': 'col-xs-12'
-																},
-																f: [{
-																	t: 7,
-																	e: 'button',
-																	a: {
-																		'class': 'btn btn-link btn-inverse gray'
-																	},
-																	v: {
-																		click: {
-																			n: 'toggle',
-																			d: [{
-																				t: 2,
-																				r: 'i'
-																			}]
-																		}
-																	},
-																	o: {
-																		n: 'tooltip',
-																		d: [
-																			' ', {
-																				t: 2,
-																				x: {
-																					r: ['showAll'],
-																					s: '${0}?"Show only main file":"Show all files"'
-																				}
-																			}
-																		]
-																	},
-																	f: [{
-																		t: 7,
-																		e: 'i',
-																		a: {
-																			'class': [
-																				'fa ', {
-																					t: 2,
-																					x: {
-																						r: ['showAll'],
-																						s: '${0}?"fa-angle-double-up":"fa-angle-double-down"'
-																					}
-																				}
-																			]
-																		}
-																	}]
-																}]
-															},
-															' '
-														]
-													},
-													''
-												]
+												t: 7,
+												e: 'i',
+												a: {
+													'class': 'fa fa-download fa-2x'
+												}
+											}]
+										},
+										' ', {
+											t: 7,
+											e: 'a',
+											a: {
+												'class': 'btn btn-link btn-inverse gray',
+												href: [{
+													t: 2,
+													r: 'homepage'
+												}],
+												target: '_blank'
+											},
+											o: {
+												n: 'tooltip',
+												a: ' Homepage'
+											},
+											f: [{
+												t: 7,
+												e: 'i',
+												a: {
+													'class': 'fa fa-home fa-2x'
+												}
+											}]
+										},
+										' ', {
+											t: 7,
+											e: 'a',
+											a: {
+												'class': 'btn btn-link btn-inverse gray',
+												style: [{
+													t: 4,
+													n: 51,
+													r: 'github',
+													f: ['visibility: hidden']
+												}],
+												href: [{
+													t: 2,
+													r: 'github'
+												}],
+												target: '_blank'
+											},
+											o: {
+												n: 'tooltip',
+												a: ' GitHub'
+											},
+											f: [{
+												t: 7,
+												e: 'i',
+												a: {
+													'class': 'fa fa-github fa-2x'
+												}
 											}]
 										}
 									]
 								}
 							]
 						},
-						' '
-					]
-				},
-				'', {
-					t: 4,
-					x: {
-						r: ['nbPages'],
-						s: '${0}>1'
-					},
-					f: [
 						' ', {
 							t: 7,
-							e: 'ul',
+							e: 'div',
 							a: {
-								'class': 'pagination pull-right'
+								'class': 'row'
+							},
+							f: [{
+									t: 7,
+									e: 'div',
+									a: {
+										'class': 'col-xs-12'
+									},
+									f: [{
+										t: 7,
+										e: 'p',
+										f: [{
+											t: 2,
+											r: 'description'
+										}]
+									}]
+								},
+								' ', {
+									t: 7,
+									e: 'div',
+									a: {
+										'class': 'file-list'
+									},
+									f: [{
+										t: 4,
+										x: {
+											r: [
+												'listFiles',
+												'.'
+											],
+											s: '{files:${0}(${1})}'
+										},
+										f: [{
+												t: 7,
+												e: 'div',
+												a: {
+													'class': [
+														'col-xs-', {
+															t: 2,
+															x: {
+																r: ['flash'],
+																s: '${0}?11:12'
+															}
+														}
+													],
+													style: 'padding-right: 0'
+												},
+												f: [{
+													t: 7,
+													e: 'input',
+													a: {
+														type: 'text',
+														'class': 'form-control output',
+														value: [{
+																t: 2,
+																r: 'app.cdnRoot'
+															},
+															'/', {
+																t: 2,
+																r: 'name'
+															},
+															'/', {
+																t: 2,
+																r: 'selectedVersion'
+															},
+															'/', {
+																t: 2,
+																r: 'files.0'
+															}
+														]
+													}
+												}]
+											},
+											' ', {
+												t: 4,
+												r: 'flash',
+												f: [{
+													t: 7,
+													e: 'div',
+													a: {
+														'class': 'col-xs-1',
+														style: 'padding-right: 0'
+													},
+													f: [{
+														t: 7,
+														e: 'button',
+														a: {
+															'class': 'btn btn-link btn-inverse gray',
+															'data-clipboard-text': [{
+																	t: 2,
+																	r: 'app.cdnRoot'
+																},
+																'/', {
+																	t: 2,
+																	r: 'name'
+																},
+																'/', {
+																	t: 2,
+																	r: 'selectedVersion'
+																},
+																'/', {
+																	t: 2,
+																	r: 'files.0'
+																}
+															]
+														},
+														o: 'zeroClipboard',
+														f: [{
+															t: 7,
+															e: 'i',
+															a: {
+																'class': 'fa fa-chain'
+															}
+														}]
+													}]
+												}]
+											},
+											' ', {
+												t: 4,
+												x: {
+													r: ['files.length'],
+													s: '${0}>1'
+												},
+												f: [{
+														t: 4,
+														r: 'insert',
+														f: [{
+															t: 7,
+															e: 'div',
+															a: {
+																'class': 'more-files',
+																style: [
+																	'display: ', {
+																		t: 2,
+																		x: {
+																			r: ['showAll'],
+																			s: '${0}?"block":"none"'
+																		}
+																	}
+																]
+															},
+															f: [{
+																t: 4,
+																r: 'files',
+																i: 'j',
+																f: [{
+																	t: 4,
+																	x: {
+																		r: ['j'],
+																		s: '${0}>0'
+																	},
+																	f: [{
+																			t: 7,
+																			e: 'div',
+																			a: {
+																				'class': [
+																					'col-xs-', {
+																						t: 2,
+																						x: {
+																							r: ['flash'],
+																							s: '${0}?11:12'
+																						}
+																					}
+																				],
+																				style: 'padding-right: 0'
+																			},
+																			f: [{
+																				t: 7,
+																				e: 'input',
+																				a: {
+																					type: 'text',
+																					'class': 'form-control output',
+																					value: [{
+																							t: 2,
+																							r: 'app.cdnRoot'
+																						},
+																						'/', {
+																							t: 2,
+																							r: 'name'
+																						},
+																						'/', {
+																							t: 2,
+																							r: 'selectedVersion'
+																						},
+																						'/', {
+																							t: 2,
+																							r: '.'
+																						}
+																					]
+																				}
+																			}]
+																		},
+																		' ', {
+																			t: 4,
+																			r: 'flash',
+																			f: [{
+																				t: 7,
+																				e: 'div',
+																				a: {
+																					'class': 'col-xs-1',
+																					style: 'padding-right: 0'
+																				},
+																				f: [{
+																					t: 7,
+																					e: 'button',
+																					a: {
+																						'class': 'btn btn-link btn-inverse gray',
+																						'data-clipboard-text': [{
+																								t: 2,
+																								r: 'app.cdnRoot'
+																							},
+																							'/', {
+																								t: 2,
+																								r: 'name'
+																							},
+																							'/', {
+																								t: 2,
+																								r: 'selectedVersion'
+																							},
+																							'/', {
+																								t: 2,
+																								r: '.'
+																							}
+																						]
+																					},
+																					o: 'zeroClipboard',
+																					f: [{
+																						t: 7,
+																						e: 'i',
+																						a: {
+																							'class': 'fa fa-chain'
+																						}
+																					}]
+																				}]
+																			}]
+																		}
+																	]
+																}]
+															}]
+														}]
+													},
+													' ', {
+														t: 7,
+														e: 'div',
+														a: {
+															'class': 'col-xs-12'
+														},
+														f: [{
+															t: 7,
+															e: 'button',
+															a: {
+																'class': 'btn btn-link btn-inverse gray'
+															},
+															v: {
+																click: {
+																	n: 'toggle',
+																	d: [{
+																		t: 2,
+																		r: 'i'
+																	}]
+																}
+															},
+															o: {
+																n: 'tooltip',
+																d: [
+																	' ', {
+																		t: 2,
+																		x: {
+																			r: ['showAll'],
+																			s: '${0}?"Show Only Main File":"Show All Files"'
+																		}
+																	}
+																]
+															},
+															f: [{
+																t: 7,
+																e: 'i',
+																a: {
+																	'class': [
+																		'fa ', {
+																			t: 2,
+																			x: {
+																				r: ['showAll'],
+																				s: '${0}?"fa-angle-double-up":"fa-angle-double-down"'
+																			}
+																		}
+																	]
+																}
+															}]
+														}]
+													}
+												]
+											}
+										]
+									}]
+								}
+							]
+						}
+					]
+				}]
+			}, {
+				t: 4,
+				x: {
+					r: ['nbPages'],
+					s: '${0}>1'
+				},
+				f: [{
+					t: 7,
+					e: 'ul',
+					a: {
+						'class': 'pagination pull-right'
+					},
+					f: [{
+							t: 7,
+							e: 'li',
+							a: {
+								'class': [
+									'previous ', {
+										t: 4,
+										n: 51,
+										r: 'page',
+										f: ['disabled']
+									}
+								]
+							},
+							f: [{
+								t: 7,
+								e: 'a',
+								a: {
+									'class': 'link'
+								},
+								v: {
+									click: {
+										n: 'loadPage',
+										d: [{
+											t: 2,
+											x: {
+												r: ['page'],
+												s: '${0}-1'
+											}
+										}]
+									}
+								},
+								f: [{
+										t: 7,
+										e: 'i',
+										a: {
+											'class': 'fa fa-angle-left'
+										}
+									},
+									' Previous'
+								]
+							}]
+						},
+						' ', {
+							t: 4,
+							x: {
+								r: ['pagination.0'],
+								s: '${0}>=1'
 							},
 							f: [{
 									t: 7,
 									e: 'li',
-									a: {
-										'class': [
-											'previous ', {
-												t: 4,
-												n: 51,
-												r: 'page',
-												f: ['disabled']
-											}
-										]
-									},
 									f: [{
 										t: 7,
 										e: 'a',
@@ -1998,149 +2058,151 @@
 										v: {
 											click: {
 												n: 'loadPage',
-												d: [{
-													t: 2,
-													x: {
-														r: ['page'],
-														s: '${0}-1'
-													}
-												}]
+												a: [0]
 											}
 										},
-										f: [{
-												t: 7,
-												e: 'i',
-												a: {
-													'class': 'fa fa-angle-left'
-												}
-											},
-											' Previous'
-										]
+										f: ['1']
 									}]
 								},
 								' ', {
 									t: 4,
 									x: {
 										r: ['pagination.0'],
-										s: '${0}>=1'
+										s: '${0}===2'
 									},
-									f: [
-										' ', {
+									f: [{
+										t: 7,
+										e: 'li',
+										f: [{
 											t: 7,
-											e: 'li',
-											f: [{
-												t: 7,
-												e: 'a',
-												a: {
-													'class': 'link'
-												},
-												v: {
-													click: {
-														n: 'loadPage',
-														a: [0]
-													}
-												},
-												f: ['1']
-											}]
-										},
-										' ', {
-											t: 4,
-											x: {
-												r: ['pagination.0'],
-												s: '${0}===2'
+											e: 'a',
+											a: {
+												'class': 'link'
 											},
-											f: [
-												' ', {
-													t: 7,
-													e: 'li',
-													f: [{
-														t: 7,
-														e: 'a',
-														a: {
-															'class': 'link'
-														},
-														v: {
-															click: {
-																n: 'loadPage',
-																a: [1]
-															}
-														},
-														f: ['2']
-													}]
-												},
-												' '
-											]
-										},
-										' ', {
-											t: 4,
-											x: {
-												r: ['pagination.0'],
-												s: '${0}>2'
+											v: {
+												click: {
+													n: 'loadPage',
+													a: [1]
+												}
 											},
-											f: [
-												' ', {
-													t: 7,
-													e: 'li',
-													a: {
-														'class': 'disabled'
-													},
-													f: [{
-														t: 7,
-														e: 'a',
-														f: ['...']
-													}]
-												},
-												' '
-											]
-										},
-										''
-									]
+											f: ['2']
+										}]
+									}]
 								},
 								' ', {
 									t: 4,
-									r: 'pagination',
-									f: [
-										' ', {
+									x: {
+										r: ['pagination.0'],
+										s: '${0}>2'
+									},
+									f: [{
+										t: 7,
+										e: 'li',
+										a: {
+											'class': 'disabled'
+										},
+										f: [{
 											t: 7,
-											e: 'li',
+											e: 'a',
+											f: ['...']
+										}]
+									}]
+								}
+							]
+						},
+						' ', {
+							t: 4,
+							r: 'pagination',
+							f: [{
+								t: 7,
+								e: 'li',
+								a: {
+									'class': [{
+										t: 2,
+										x: {
+											r: [
+												'.',
+												'page'
+											],
+											s: '${0}===${1}?"active":""'
+										}
+									}]
+								},
+								f: [{
+									t: 7,
+									e: 'a',
+									a: {
+										'class': 'link'
+									},
+									v: {
+										click: {
+											n: 'loadPage',
+											d: [{
+												t: 2,
+												r: '.'
+											}]
+										}
+									},
+									f: [{
+										t: 2,
+										x: {
+											r: ['.'],
+											s: '${0}+1'
+										}
+									}]
+								}]
+							}]
+						},
+						' ', {
+							t: 4,
+							x: {
+								r: [
+									'pagination.length',
+									'pagination',
+									'nbPages'
+								],
+								s: '${1}[${0}-1]<=${2}-2'
+							},
+							f: [{
+									t: 4,
+									x: {
+										r: [
+											'pagination.length',
+											'pagination',
+											'nbPages'
+										],
+										s: '${1}[${0}-1]===${2}-3'
+									},
+									f: [{
+										t: 7,
+										e: 'li',
+										f: [{
+											t: 7,
+											e: 'a',
 											a: {
-												'class': [{
-													t: 2,
-													x: {
-														r: [
-															'.',
-															'page'
-														],
-														s: '${0}===${1}?"active":""'
-													}
-												}]
+												'class': 'link'
+											},
+											v: {
+												click: {
+													n: 'loadPage',
+													d: [{
+														t: 2,
+														x: {
+															r: ['nbPages'],
+															s: '${0}-2'
+														}
+													}]
+												}
 											},
 											f: [{
-												t: 7,
-												e: 'a',
-												a: {
-													'class': 'link'
-												},
-												v: {
-													click: {
-														n: 'loadPage',
-														d: [{
-															t: 2,
-															r: '.'
-														}]
-													}
-												},
-												f: [{
-													t: 2,
-													x: {
-														r: ['.'],
-														s: '${0}+1'
-													}
-												}]
+												t: 2,
+												x: {
+													r: ['nbPages'],
+													s: '${0}-1'
+												}
 											}]
-										},
-										' '
-									]
+										}]
+									}]
 								},
 								' ', {
 									t: 4,
@@ -2150,139 +2212,35 @@
 											'pagination',
 											'nbPages'
 										],
-										s: '${1}[${0}-1]<=${2}-2'
+										s: '${1}[${0}-1]<${2}-3'
 									},
-									f: [
-										' ', {
-											t: 4,
-											x: {
-												r: [
-													'pagination.length',
-													'pagination',
-													'nbPages'
-												],
-												s: '${1}[${0}-1]===${2}-3'
-											},
-											f: [
-												' ', {
-													t: 7,
-													e: 'li',
-													f: [{
-														t: 7,
-														e: 'a',
-														a: {
-															'class': 'link'
-														},
-														v: {
-															click: {
-																n: 'loadPage',
-																d: [{
-																	t: 2,
-																	x: {
-																		r: ['nbPages'],
-																		s: '${0}-2'
-																	}
-																}]
-															}
-														},
-														f: [{
-															t: 2,
-															x: {
-																r: ['nbPages'],
-																s: '${0}-1'
-															}
-														}]
-													}]
-												},
-												' '
-											]
+									f: [{
+										t: 7,
+										e: 'li',
+										a: {
+											'class': 'disabled'
 										},
-										' ', {
-											t: 4,
-											x: {
-												r: [
-													'pagination.length',
-													'pagination',
-													'nbPages'
-												],
-												s: '${1}[${0}-1]<${2}-3'
-											},
-											f: [
-												' ', {
-													t: 7,
-													e: 'li',
-													a: {
-														'class': 'disabled'
-													},
-													f: [{
-														t: 7,
-														e: 'a',
-														f: ['...']
-													}]
-												},
-												' '
-											]
-										},
-										' ', {
+										f: [{
 											t: 7,
-											e: 'li',
-											a: {
-												'class': [{
-													t: 2,
-													x: {
-														r: [
-															'.',
-															'page'
-														],
-														s: '${0}===${1}?"active":""'
-													}
-												}]
-											},
-											f: [{
-												t: 7,
-												e: 'a',
-												a: {
-													'class': 'link'
-												},
-												v: {
-													click: {
-														n: 'loadPage',
-														d: [{
-															t: 2,
-															x: {
-																r: ['nbPages'],
-																s: '${0}-1'
-															}
-														}]
-													}
-												},
-												f: [{
-													t: 2,
-													r: 'nbPages'
-												}]
-											}]
-										},
-										' '
-									]
+											e: 'a',
+											f: ['...']
+										}]
+									}]
 								},
 								' ', {
 									t: 7,
 									e: 'li',
 									a: {
-										'class': [
-											'next ', {
-												t: 4,
-												n: 51,
-												x: {
-													r: [
-														'page',
-														'nbPages'
-													],
-													s: '${0}<${1}-1'
-												},
-												f: ['disabled']
+										'class': [{
+											t: 2,
+											x: {
+												r: [
+													'.',
+													'page'
+												],
+												s: '${0}===${1}?"active":""'
 											}
-										]
+										}]
 									},
 									f: [{
 										t: 7,
@@ -2296,32 +2254,74 @@
 												d: [{
 													t: 2,
 													x: {
-														r: ['page'],
-														s: '${0}+1'
+														r: ['nbPages'],
+														s: '${0}-1'
 													}
 												}]
 											}
 										},
-										f: [
-											'Next ', {
-												t: 7,
-												e: 'i',
-												a: {
-													'class': 'fa fa-angle-right'
-												}
-											}
-										]
+										f: [{
+											t: 2,
+											r: 'nbPages'
+										}]
 									}]
 								}
 							]
 						},
-						' '
+						' ', {
+							t: 7,
+							e: 'li',
+							a: {
+								'class': [
+									'next ', {
+										t: 4,
+										n: 51,
+										x: {
+											r: [
+												'page',
+												'nbPages'
+											],
+											s: '${0}<${1}-1'
+										},
+										f: ['disabled']
+									}
+								]
+							},
+							f: [{
+								t: 7,
+								e: 'a',
+								a: {
+									'class': 'link'
+								},
+								v: {
+									click: {
+										n: 'loadPage',
+										d: [{
+											t: 2,
+											x: {
+												r: ['page'],
+												s: '${0}+1'
+											}
+										}]
+									}
+								},
+								f: [
+									'Next ', {
+										t: 7,
+										e: 'i',
+										a: {
+											'class': 'fa fa-angle-right'
+										}
+									}
+								]
+							}]
+						}
 					]
-				},
-				''
-			]
+				}]
+			}]
 		}, component = {};
 		var downloadHelper = amd_download;
+		var getLabels = amd_get_labels;
 		var listFiles = amd_list_files;
 		var SelectFilesView = amd_rvc_components_select_files;
 		var tooltipDecorator = amd_decorators_tooltip;
@@ -2360,6 +2360,7 @@
 			},
 			'data': {
 				'app': {},
+				'getLabels': getLabels,
 				'nbPages': 0,
 				'flash': true,
 				'listFiles': listFiles,
@@ -2392,6 +2393,9 @@
 							app.views.searchInput.set('page', i);
 							$('body, html').scrollTop(0);
 						}
+					},
+					'search': function(event, query) {
+						app.views.searchInput.set('query', query);
 					},
 					'toggle': function(event, i) {
 						this.set('projects.' + i + '.insert', true);
@@ -2427,7 +2431,7 @@
 			}
 		}
 		return Ractive.extend(__options__);
-	}(ractive, amd_download, amd_list_files, amd_rvc_components_select_files, amd_decorators_tooltip, amd_rvc_components_version_list, amd_decorators_zero_clipboard);
+	}(ractive, amd_download, amd_get_labels, amd_list_files, amd_rvc_components_select_files, amd_decorators_tooltip, amd_rvc_components_version_list, amd_decorators_zero_clipboard);
 	var amd_serialize = function(query, page, collection) {
 		var result = {
 			'query': query,
