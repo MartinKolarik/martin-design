@@ -1297,31 +1297,35 @@
 		}
 		$iframe.attr('src', url);
 	};
-	var amd_get_labels = function(name) {
+	var amd_get_labels = function(project) {
+		var description = (project.description || '').toLowerCase();
+		var files = project.assets.map(function(asset) {
+			return asset.files;
+		}).join(',').toLowerCase();
+		var name = project.name.toLowerCase();
 		var tags = [];
-		name = name.toLowerCase();
-		if (name.substr(0, 2) === 'wp') {
+		if (name.substr(0, 2) === 'wp' || name.indexOf('wordpress') !== -1 || description.indexOf('wordpress') !== -1) {
 			tags.push({
 				'text': 'WordPress',
 				'color': 'blue',
 				'keyword': 'wp'
 			});
 		}
-		if (name.indexOf('jquery') !== -1) {
+		if (name.indexOf('jquery') !== -1 || files.indexOf('jquery') !== -1) {
 			tags.push({
 				'text': 'jQuery',
 				'color': 'dark-blue',
 				'keyword': 'jQuery'
 			});
 		}
-		if (name.indexOf('bootstrap') !== -1) {
+		if (name.indexOf('bootstrap') !== -1 || description.indexOf('bootstrap') !== -1) {
 			tags.push({
 				'text': 'Bootstrap',
 				'color': 'purple',
 				'keyword': 'Bootstrap'
 			});
 		}
-		if (name.indexOf('font') !== -1) {
+		if (name.indexOf('font') !== -1 || project.mainfile.substr(-4) === '.css' && /(font|icon).*\.(otf|eot|svg|ttf|woff)(,|$)/.test(files)) {
 			tags.push({
 				'text': 'Font',
 				'color': 'emerald',
@@ -1453,12 +1457,10 @@
 													v: {
 														click: {
 															n: 'search',
-															d: [
-																'author: ', {
-																	t: 2,
-																	r: 'author'
-																}
-															]
+															d: [{
+																t: 2,
+																r: 'name'
+															}]
 														}
 													},
 													f: [{
@@ -1507,13 +1509,18 @@
 													t: 7,
 													e: 'a',
 													a: {
-														href: [
-															'#!{"query":"author: ', {
-																t: 2,
-																r: 'author'
-															},
-															'"}'
-														]
+														'class': 'link'
+													},
+													v: {
+														click: {
+															n: 'search',
+															d: [
+																'author: ', {
+																	t: 2,
+																	r: 'author'
+																}
+															]
+														}
 													},
 													f: [{
 														t: 2,
@@ -1533,7 +1540,7 @@
 												x: {
 													r: [
 														'getLabels',
-														'name'
+														'.'
 													],
 													s: '${0}(${1})'
 												},

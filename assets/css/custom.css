@@ -92,6 +92,9 @@ body > section:not(:empty) > .container {
   width: 100px;
   height: auto;
 }
+.label {
+  margin-right: 5px;
+}
 .link {
   cursor: pointer;
 }
