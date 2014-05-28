@@ -6,6 +6,11 @@
 	component.exports = {
 		'el'		: 'body',
 		'append'	: true,
+		'complete'	: function() {
+			setTimeout(function() {
+				$('#new-version-email').focus();
+			}, 500);
+		},
 		'components': {
 			'modal'	: require('rvc!components/modal')
 		},
@@ -15,12 +20,12 @@
 			'project'	: {},
 			'buttons'	: [
 				{
-					'label'		: 'cancel',
+					'label'		: 'Cancel',
 					'class'		: 'btn-default',
 					'handler'	: 'cancel'
 				},
 				{
-					'label'		: 'select',
+					'label'		: 'Report',
 					'class'		: 'primary',
 					'handler'	: 'submit'
 				}

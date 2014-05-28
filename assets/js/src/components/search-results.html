@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			<div class="col-md-6 buttons">
-				<button class="btn btn-link btn-inverse gray" on-click="add:{{this}}" decorator="tooltip: Add to collection"><i class="fa fa-check fa-2x"></i></button>
+				<button class="btn btn-link btn-inverse gray" on-click="add:{{this}}" decorator="tooltip: Add to Collection"><i class="fa fa-check fa-2x"></i></button>
 				<button class="btn btn-link btn-inverse gray" on-click="download:{{this}}" decorator="tooltip: Download ZIP"><i class="fa fa-download fa-2x"></i></button>
 				<a class="btn btn-link btn-inverse gray" href="{{homepage}}" target="_blank" decorator="tooltip: Homepage"><i class="fa fa-home fa-2x"></i></a>
 				<a class="btn btn-link btn-inverse gray" style="{{^github}}visibility: hidden{{/github}}" href="{{github}}" target="_blank" decorator="tooltip: GitHub"><i class="fa fa-github fa-2x"></i></a>
@@ -63,7 +63,7 @@
 						{{/insert}}
 
 						<div class="col-xs-12">
-							<button class="btn btn-link btn-inverse gray" on-click="toggle:{{i}}" decorator="tooltip: {{showAll ? 'Show only main file' : 'Show all files'}}">
+							<button class="btn btn-link btn-inverse gray" on-click="toggle:{{i}}" decorator="tooltip: {{showAll ? 'Show Only Main File' : 'Show All Files'}}">
 								<i class="fa {{ showAll ? 'fa-angle-double-up' : 'fa-angle-double-down' }}"></i>
 							</button>
 						</div>

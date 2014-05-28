@@ -13,7 +13,7 @@ define([
 			$bridge
 				.tooltip('destroy')
 				.tooltip({
-					'title'		: 'Copy to clipboard',
+					'title'		: 'Copy to Clipboard',
 					'placement'	: 'top'
 				})
 				.tooltip('show');
