@@ -8,6 +8,86 @@
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+.btn.purple {
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+.btn.purple.btn-link {
+  color: #8e44ad;
+  background-color: #ffffff;
+}
+.btn.purple:hover {
+  background-color: #7f3d9b;
+}
+.btn.purple:hover.btn-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+.btn.purple:hover.btn-inverse {
+  color: #8e44ad;
+  background-color: #ffffff;
+  border-color: #8e44ad;
+}
+.btn.dark-blue {
+  color: #ffffff;
+  background-color: #2b5797;
+}
+.btn.dark-blue.btn-link {
+  color: #2b5797;
+  background-color: #ffffff;
+}
+.btn.dark-blue:hover {
+  background-color: #254c83;
+}
+.btn.dark-blue:hover.btn-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+.btn.dark-blue:hover.btn-inverse {
+  color: #2b5797;
+  background-color: #ffffff;
+  border-color: #2b5797;
+}
+.btn.blue {
+  color: #ffffff;
+  background-color: #2d89ef;
+}
+.btn.blue.btn-link {
+  color: #2d89ef;
+  background-color: #ffffff;
+}
+.btn.blue:hover {
+  background-color: #157ced;
+}
+.btn.blue:hover.btn-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+.btn.blue:hover.btn-inverse {
+  color: #2d89ef;
+  background-color: #ffffff;
+  border-color: #2d89ef;
+}
+.btn.emerald {
+  color: #ffffff;
+  background-color: #27ae60;
+}
+.btn.emerald.btn-link {
+  color: #27ae60;
+  background-color: #ffffff;
+}
+.btn.emerald:hover {
+  background-color: #229955;
+}
+.btn.emerald:hover.btn-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+.btn.emerald:hover.btn-inverse {
+  color: #27ae60;
+  background-color: #ffffff;
+  border-color: #27ae60;
+}
 .btn.gray {
   color: #ffffff;
   background-color: #333333;
@@ -224,6 +304,90 @@ input.form-control {
 .radio-inline.radio-inline + label:before {
   border-radius: 99px;
 }
+.checkbox.purple + label:hover:before,
+.checkbox-inline.purple + label:hover:before,
+.radio.purple + label:hover:before,
+.radio-inline.purple + label:hover:before {
+  border-color: #8e44ad;
+}
+.checkbox.purple:checked + label:before,
+.checkbox-inline.purple:checked + label:before,
+.radio.purple:checked + label:before,
+.radio-inline.purple:checked + label:before {
+  color: #8e44ad;
+  background-color: #ffffff;
+  border-color: #8e44ad;
+}
+.checkbox.purple.inverse:checked + label:before,
+.checkbox-inline.purple.inverse:checked + label:before,
+.radio.purple.inverse:checked + label:before,
+.radio-inline.purple.inverse:checked + label:before {
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+.checkbox.dark-blue + label:hover:before,
+.checkbox-inline.dark-blue + label:hover:before,
+.radio.dark-blue + label:hover:before,
+.radio-inline.dark-blue + label:hover:before {
+  border-color: #2b5797;
+}
+.checkbox.dark-blue:checked + label:before,
+.checkbox-inline.dark-blue:checked + label:before,
+.radio.dark-blue:checked + label:before,
+.radio-inline.dark-blue:checked + label:before {
+  color: #2b5797;
+  background-color: #ffffff;
+  border-color: #2b5797;
+}
+.checkbox.dark-blue.inverse:checked + label:before,
+.checkbox-inline.dark-blue.inverse:checked + label:before,
+.radio.dark-blue.inverse:checked + label:before,
+.radio-inline.dark-blue.inverse:checked + label:before {
+  color: #ffffff;
+  background-color: #2b5797;
+}
+.checkbox.blue + label:hover:before,
+.checkbox-inline.blue + label:hover:before,
+.radio.blue + label:hover:before,
+.radio-inline.blue + label:hover:before {
+  border-color: #2d89ef;
+}
+.checkbox.blue:checked + label:before,
+.checkbox-inline.blue:checked + label:before,
+.radio.blue:checked + label:before,
+.radio-inline.blue:checked + label:before {
+  color: #2d89ef;
+  background-color: #ffffff;
+  border-color: #2d89ef;
+}
+.checkbox.blue.inverse:checked + label:before,
+.checkbox-inline.blue.inverse:checked + label:before,
+.radio.blue.inverse:checked + label:before,
+.radio-inline.blue.inverse:checked + label:before {
+  color: #ffffff;
+  background-color: #2d89ef;
+}
+.checkbox.emerald + label:hover:before,
+.checkbox-inline.emerald + label:hover:before,
+.radio.emerald + label:hover:before,
+.radio-inline.emerald + label:hover:before {
+  border-color: #27ae60;
+}
+.checkbox.emerald:checked + label:before,
+.checkbox-inline.emerald:checked + label:before,
+.radio.emerald:checked + label:before,
+.radio-inline.emerald:checked + label:before {
+  color: #27ae60;
+  background-color: #ffffff;
+  border-color: #27ae60;
+}
+.checkbox.emerald.inverse:checked + label:before,
+.checkbox-inline.emerald.inverse:checked + label:before,
+.radio.emerald.inverse:checked + label:before,
+.radio-inline.emerald.inverse:checked + label:before {
+  color: #ffffff;
+  background-color: #27ae60;
+}
 .checkbox.gray + label:hover:before,
 .checkbox-inline.gray + label:hover:before,
 .radio.gray + label:hover:before,
@@ -315,6 +479,62 @@ input.form-control {
 .switch-inline.switch-inline + label {
   display: inline-block;
 }
+.switch.purple + label,
+.switch-inline.purple + label,
+.switch.purple:checked + label,
+.switch-inline.purple:checked + label {
+  background-color: #8e44ad;
+}
+.switch.purple + label:before,
+.switch-inline.purple + label:before,
+.switch.purple:checked + label:before,
+.switch-inline.purple:checked + label:before {
+  background-color: #ffffff;
+  color: #8e44ad;
+  border: 1px solid #8e44ad;
+}
+.switch.dark-blue + label,
+.switch-inline.dark-blue + label,
+.switch.dark-blue:checked + label,
+.switch-inline.dark-blue:checked + label {
+  background-color: #2b5797;
+}
+.switch.dark-blue + label:before,
+.switch-inline.dark-blue + label:before,
+.switch.dark-blue:checked + label:before,
+.switch-inline.dark-blue:checked + label:before {
+  background-color: #ffffff;
+  color: #2b5797;
+  border: 1px solid #2b5797;
+}
+.switch.blue + label,
+.switch-inline.blue + label,
+.switch.blue:checked + label,
+.switch-inline.blue:checked + label {
+  background-color: #2d89ef;
+}
+.switch.blue + label:before,
+.switch-inline.blue + label:before,
+.switch.blue:checked + label:before,
+.switch-inline.blue:checked + label:before {
+  background-color: #ffffff;
+  color: #2d89ef;
+  border: 1px solid #2d89ef;
+}
+.switch.emerald + label,
+.switch-inline.emerald + label,
+.switch.emerald:checked + label,
+.switch-inline.emerald:checked + label {
+  background-color: #27ae60;
+}
+.switch.emerald + label:before,
+.switch-inline.emerald + label:before,
+.switch.emerald:checked + label:before,
+.switch-inline.emerald:checked + label:before {
+  background-color: #ffffff;
+  color: #27ae60;
+  border: 1px solid #27ae60;
+}
 .switch.gray + label,
 .switch-inline.gray + label,
 .switch.gray:checked + label,
@@ -367,6 +587,18 @@ input.form-control {
 .label {
   border-radius: 0;
   font-weight: normal;
+}
+.label.purple {
+  background-color: #8e44ad;
+}
+.label.dark-blue {
+  background-color: #2b5797;
+}
+.label.blue {
+  background-color: #2d89ef;
+}
+.label.emerald {
+  background-color: #27ae60;
 }
 .label.gray {
   background-color: #333333;

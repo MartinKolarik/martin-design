@@ -1,5 +1,5 @@
 <input type="text" id="search-input" class="form-control input-lg" placeholder="Search in more than {{count}} open source projects" value="{{query}}">
-<p class="show-more"><a href='#!{"query":"*"}'>Browse all projects</a></p>
+<p class="show-more"><a class="link" on-click="search:*">Browse all projects</a></p>
 
 <script type="text/javascript">
 	var algolia			= require('algolia');
@@ -58,6 +58,10 @@
 
 			// auto focus on load
 			$('#search-input').focus();
+
+			this.on('search', function(event, query) {
+				this.set('query', query);
+			});
 
 			// restore query from hash
 			$(window).triggerHandler('searchReady');
