@@ -59,11 +59,18 @@ header h1,
 header h2 {
   text-align: center;
 }
+body {
+  text-align: justify;
+}
 body > section:not(:empty) {
   border-bottom: 1px solid #eee;
 }
 body > section:not(:empty) > .container {
-  padding: 20px 0 20px 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+iframe {
+  border: none;
 }
 .btn.zeroclipboard-is-hover {
   border: 1px solid #333333;
@@ -164,13 +171,17 @@ body > section:not(:empty) > .container {
   text-align: center;
 }
 footer {
-  color: #ffffff;
+  color: #ccc;
   background-color: #333333;
-  padding: 40px 0 20px 0;
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
-footer li:first-child {
-  text-transform: uppercase;
-  margin-bottom: 10px;
+footer a {
+  color: #ccc;
+}
+footer a:hover,
+footer a:focus {
+  color: #eee;
 }
 #credits {
   background-color: #ccc;
@@ -186,6 +197,27 @@ footer li:first-child {
   border-top: 1px solid #262626;
   padding-top: 20px;
   text-align: center;
+}
+.about section,
+.faq section,
+.sponsors section {
+  padding-top: 20px;
+}
+.faq li {
+  margin-top: 20px;
+}
+.faq li p {
+  margin: 5px 0 25px;
+}
+.sponsors li {
+  margin-bottom: 5px;
+}
+.sponsors .sponsor {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.sponsors .sponsor img {
+  width: 100px;
 }
 .email-updates {
   margin-top: 20px;

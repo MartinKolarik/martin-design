@@ -80,12 +80,21 @@ header {
 	}
 }
 
-body > section:not(:empty) {
-	border-bottom: 1px solid #eee;
+body {
+	text-align: justify;
 
-	> .container {
-		padding: 20px 0 20px 0;
-	}
+	> section:not(:empty) {
+		border-bottom: 1px solid #eee;
+
+		> .container {
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+		}
+}
+
+iframe {
+	border: none;
 }
 
 .btn.zeroclipboard-is-hover {
@@ -218,13 +227,17 @@ body > section:not(:empty) {
 }
 
 footer {
-	color: @white;
+	color: #ccc;
 	background-color: @gray;
-	padding: 40px 0 20px 0;
+	padding-top: 40px;
+	padding-bottom: 20px;
 
-	li:first-child {
-		text-transform: uppercase;
-		margin-bottom: 10px;
+	a {
+		color: #ccc;
+
+		&:hover, &:focus {
+			color: #eee;
+		}
 	}
 }
 
@@ -240,6 +253,37 @@ footer {
 	border-top: 1px solid darken(@gray, 5%);
 	padding-top: 20px;
 	text-align: center;
+}
+
+.about, .faq, .sponsors {
+	section {
+		padding-top: 20px;
+	}
+}
+
+.faq {
+	li {
+		margin-top: 20px;
+
+		p {
+			margin: 5px 0 25px;
+		}
+	}
+}
+
+.sponsors {
+	li {
+		margin-bottom: 5px;
+	}
+
+	.sponsor {
+		margin-top: 20px;
+		margin-bottom: 20px;
+
+		img {
+			width: 100px;
+		}
+	}
 }
 
 // ***************
