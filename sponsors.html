@@ -1,11 +1,254 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title></title>
-</head>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="A free open source CDN for javascript libraries, jQuery plugins, CSS frameworks, Fonts and more">
+		<title>jsDelivr - Free open source CDN</title>
+		<link rel="icon" type="image/png" href="assets/img/favicon.png">
+		<link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.0.3/css/font-awesome.min.css">
+		<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700">
+		<link type="text/css" rel="stylesheet" href="assets/css/build/bundle.min.css">
+	</head>
 
-<body>
+	<body>
+		<!-- navigation -->
+		<header class="top-nav">
+			<div class="container">
+				<nav>
+					<ul class="navbar-nav navbar-right">
+						<li><a href="about.html">About</a></li>
+						<li><a href="faq.html">FAQ</a></li>
+						<li><a href="https://github.com/jsdelivr/jsdelivr/#how-to-submit-or-update-projects">Submit</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
 
-</body>
+		<!-- branding -->
+		<header class="navbar">
+			<div class="container">
+				<nav role="navigation">
+					<ul class="nav navbar-nav navbar-left">
+						<li>
+							<a href="/" class="navbar-brand">
+								<img src="assets/img/jsdelivr-logo.png" alt="jsDelivr logo">
+							</a>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="http://tracking.maxcdn.com/c/47243/36539/378" class="navbar-brand">
+								<img src="assets/img/sponsors-header/maxcdn.png" alt="Sponsored by MaxCDN" title="Sponsored by MaxCDN">
+							</a>
+						</li>
+						<li>
+							<a href="https://www.cloudflare.com" class="navbar-brand">
+								<img src="assets/img/sponsors-header/cloudflare.png" alt="Sponsored by Cloudflare" title="Sponsored by Cloudflare">
+							</a>
+						</li>
+						<li>
+							<a href="http://www.cedexis.com" class="navbar-brand">
+								<img src="assets/img/sponsors-header/cedexis.png" alt="Sponsored by Cedexis" title="Sponsored by Cedexis">
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<section class="sponsors">
+			<div class="container">
+				<section>
+					<h3>Sponsors</h3>
+
+					<p>
+						jsDelivr has been around since June of 2012 and is getting more popular every month. We currently serve around 10TB of traffic per month and we are always looking for companies that want to help us.
+					</p>
+				</section>
+
+				<section>
+					<h3>What we are looking for</h3>
+
+					<ul>
+						<li>
+							CDN Companies that can sponsor their services.
+							<ul>
+								<li>Custom CNAME and SSL for that custom CNAME are required.</li>
+							</ul>
+						</li>
+						<li>
+							VPS and Dedicated servers in "exotic" locations. Currently Russia, Brazil and South Africa are the top priority.
+							<ul>
+								<Li>Min 5GB HDD, 1TB Bandwidth, 512MB RAM, 2 cores CPU and CentOS x64 required.</Li>
+							</ul>
+						</li>
+						<li>Big dedicated servers to crunch access logs.</li>
+						<li>Big websites to add our RUM testing code. The more tests we get the better the performance we provide!</li>
+						<li>Companies and projects that are interested in using jsDelivr as their official CDN.</li>
+						<li>Promotion - bloggers and authors who are willing to write blog posts about our services or even IT stuff for our blog.</li>
+						<li>Coders/Designers to help with the website and our other projects.</li>
+						<li>Active people to get involved in various ways in the project.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>What can we offer</h3>
+
+					<ul>
+						<li>Logo/link on our website.</li>
+						<li>POP location on the <a href="about.html">Map</a> with name of the company.</li>
+						<li>Link in <a href="media.html">Media Mentions</a>.</li>
+						<li>We will consider any other request.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Sponsors</h3>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/cloudflare.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>Cloudflare</strong><br>
+							Cloudflare is one of our CDN providers. They offer us worldwide coverage and the best possible speed for all users around the globe.
+						</div>
+					</div>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/maxcdn.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>MaxCDN</strong><br>
+							MaxCDN is the second main CDN provider we use. They offer us worldwide coverage and the best possible speed for all users around the globe.
+						</div>
+					</div>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/cedexis.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>Cedexis</strong><br>
+							Cedexis allows us to do load balancing between an unlimited amount of CDN providers and failover in case one provider goes down.
+						</div>
+					</div>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/builtwith.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>Builtwith</strong><br>
+							Builtwith generously provides us with reports that help us track the usage of jsDelivr.
+						</div>
+					</div>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/leapswitch.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>Leapswitch</strong><br>
+							Leapswitch is sponsoring us with a custom POP locations in Portugal and Ukraine.
+						</div>
+					</div>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/prometeus.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>Prometeus</strong><br>
+							Prometeus is sponsoring us with a custom POP location in Italy.
+						</div>
+					</div>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/secureax.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>SecureAX</strong><br>
+							SecureAX is sponsoring us with a custom POP location in Singapore.
+						</div>
+					</div>
+
+					<div class="row sponsor">
+						<div class="col-sm-2">
+							<img src="assets/img/sponsors/jetdino.png">
+						</div>
+						<div class="col-sm-10">
+							<strong>Jetdino</strong><br>
+							Jetdino is sponsoring us with a custom POP location in Indonesia.
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</section>
+
+		<!-- credits -->
+		<section id="credits">
+			<div class="container">
+				<h4>Maintained By</h4>
+				<p><a href="https://twitter.com/jimaek">Dmitriy Akulov</a>.</p>
+				<h4>Webdesign & Branding by</h4>
+				<p><a>Martin Kolárik</a> and <a>Serguei Shimansky</a>.</p>
+				<h4>Sponsored By</h4>
+				<p><a>MaxCDN</a>, <a>Cloudflare</a>, <a>Cedexis</a>, <a>BuiltWith.com</a>, <a>Leapswitch</a>, <a>Prometeus</a>, <a>SecureAX</a>, <a>Jetdino</a> and <a>Algolia</a>.</p>
+			</div>
+		</section>
+
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-3">
+						<ul class="list-style-none">
+							<li><a href="about.html">About</a></li>
+							<li><a href="sponsors.html">Sponsors</a></li>
+							<li><a href="media.html">Media Mentions</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<ul class="list-style-none">
+							<li><a href="faq.html">FAQ</a></li>
+							<li><a href="https://github.com/jsdelivr/api/">API</a></li>
+							<li><a href="http://status.jsdelivr.com/">Status</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<ul class="list-style-none">
+							<li><a href="http://www.cdnperf.com">CDNperf</a></li>
+							<li><a href="http://www.super-ping.com">super-ping.com</a></li>
+							<li><a href="http://tools.maxcdn.com">tools.maxcdn.com</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<ul class="list-style-none">
+							<li><a href="http://blog.jsdelivr.com/">Blog</a></li>
+							<li><a href="https://github.com/jsdelivr">GitHub</a></li>
+							<li><a href="https://groups.google.com/forum/#!forum/jsdelivr">Mailing List</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div id="copyright">
+				<div class="container">
+					<div class="col-xs-12">
+						<small>jsDelivr © 2012 - 2014</small>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@2.1.0,bootstrap@3.1.1,zeroclipboard@1.3.3,algoliasearch@2.4.4"></script>
+		<script type="text/javascript" src="http://cdn.ractivejs.org/edge/ractive.min.js"></script>
+		<script type="text/javascript" src="assets/js/build/app.min.js"></script>
+	</body>
 </html>
