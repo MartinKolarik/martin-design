@@ -1,40 +1,40 @@
 define([
 	'decorators/helpers'
-], function(
+], function (
 	helpers
 ) {
-	return helpers.create(function(node) {
-		var clip	= new ZeroClipboard(node);
-		var $bridge	= $('#global-zeroclipboard-html-bridge');
-		var $node	= $(node);
-		var ractive	= this;
+	return helpers.create(function (node) {
+		var clip = new ZeroClipboard(node);
+		var $bridge = $('#global-zeroclipboard-html-bridge');
+		var $node = $(node);
+		var ractive = this;
 
-		clip.on('mouseover', function() {
+		clip.on('mouseover', function () {
 			$bridge
 				.tooltip('destroy')
 				.tooltip({
-					'title'		: 'Copy to Clipboard',
-					'placement'	: 'top'
+					'title': 'Copy to Clipboard',
+					'placement': 'top'
 				})
 				.tooltip('show');
 		});
 
-		clip.on('mouseout', function() {
+		clip.on('mouseout', function () {
 			$bridge.tooltip('destroy');
 			$node.removeClass('zeroclipboard-is-hover');
 		});
 
-		clip.on('complete', function() {
+		clip.on('complete', function () {
 			$bridge
 				.tooltip('destroy')
 				.tooltip({
-					'title'		: 'Copied!',
-					'placement'	: 'top'
+					'title': 'Copied!',
+					'placement': 'top'
 				})
 				.tooltip('show');
 		});
 
-		clip.on('noflash', function() {
+		clip.on('noflash', function () {
 			ractive.set('flash', false);
 		});
 	});

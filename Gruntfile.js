@@ -5,12 +5,12 @@ module.exports = function(grunt) {
 		'intro': grunt.file.read('assets/js/requirejs-ractive/wrapper/intro.js'),
 		'outro': grunt.file.read('assets/js/requirejs-ractive/wrapper/outro.js'),
 		'requirejs': {
-			'compile': {
+			'app': {
 				'options': {
-					'mainConfigFile': 'assets/js/src/main.js',
+					'mainConfigFile': 'assets/js/src/search/main.js',
 					'baseUrl': 'assets/js/src',
-					'name': 'app',
-					'out': 'assets/js/build/app.js',
+					'name': 'search/app',
+					'out': 'assets/js/build/search/app.js',
 					'stubModules': reqRactive,
 					'optimize': 'none',
 					'onModuleBundleComplete': function (data) {
@@ -29,13 +29,39 @@ module.exports = function(grunt) {
 						}));
 					}
 				}
+			},
+			'debug': {
+				'options': {
+					'mainConfigFile': 'assets/js/src/debug/app.js',
+					'baseUrl': 'assets/js/src',
+					'name': 'debug/app',
+					'out': 'assets/js/build/debug/app.js',
+					'optimize': 'none',
+					'onModuleBundleComplete': function (data) {
+						var fs			= module.require('fs');
+						var amdclean	= module.require('amdclean');
+						var outputFile	= data.path;
+
+						fs.writeFileSync(outputFile, amdclean.clean({
+							'filePath': outputFile,
+							'prefixTransform': function(name) {
+								return reqRactive.indexOf(name) === -1
+									? 'amd_' + name
+									: name;
+							}
+						}));
+					}
+				}
 			}
 		},
 		'concat': {
 			'closure': {
 				'files': [{
 					'expand': true,
-					'src': 'assets/js/build/app.js'
+					'src': 'assets/js/build/search/app.js'
+				}, {
+					'expand': true,
+					'src': 'assets/js/build/debug/app.js'
 				}],
 				'options': {
 					'banner': '<%= intro %>',
@@ -44,7 +70,7 @@ module.exports = function(grunt) {
 			}
 		},
 		'jsbeautifier': {
-			'files': 'assets/js/build/app.js',
+			'files': [ 'assets/js/build/search/app.js', 'assets/js/build/debug/app.js' ],
 			'options': {
 				'js': {
 					'indentWithTabs': true
@@ -54,11 +80,11 @@ module.exports = function(grunt) {
 		'uglify': {
 			'target': {
 				'options': {
-					'sourceMap': true,
-					'sourceMapName': 'assets/js/build/app.min.map'
+					'sourceMap': true
 				},
 				'files': {
-					'assets/js/build/app.min.js': 'assets/js/build/app.js'
+					'assets/js/build/search/app.min.js': 'assets/js/build/search/app.js',
+					'assets/js/build/debug/app.min.js': 'assets/js/build/debug/app.js'
 				}
 			}
 		},

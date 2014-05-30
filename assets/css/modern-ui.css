@@ -810,6 +810,27 @@ a.label:focus {
   border-radius: 0;
   background-color: #ffffff;
 }
+.progress {
+  border-radius: 0;
+}
+.progress .progress-bar.purple {
+  background-color: #8e44ad;
+}
+.progress .progress-bar.dark-blue {
+  background-color: #2b5797;
+}
+.progress .progress-bar.blue {
+  background-color: #2d89ef;
+}
+.progress .progress-bar.emerald {
+  background-color: #27ae60;
+}
+.progress .progress-bar.gray {
+  background-color: #333333;
+}
+.progress .progress-bar.primary {
+  background-color: #e80c1f;
+}
 body {
   background-color: #ffffff;
 }
@@ -821,6 +842,9 @@ a {
 a:hover,
 a:focus {
   color: #d00b1c;
+}
+pre {
+  border-radius: 0;
 }
 .table.table-fixed {
   table-layout: fixed;

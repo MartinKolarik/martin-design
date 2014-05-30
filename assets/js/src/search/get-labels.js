@@ -1,11 +1,11 @@
 define(function () {
-	return function(project) {
-		var description	= (project.description || '').toLowerCase();
-		var files		= project.assets.map(function(asset) { return asset.files }).join(',').toLowerCase();
-		var name		= project.name.toLowerCase();
-		var tags		= [];
+	return function (project) {
+		var description = (project.description || '').toLowerCase();
+		var files = project.assets.map(function (asset) { return asset.files }).join(',').toLowerCase();
+		var name = project.name.toLowerCase();
+		var tags = [];
 
-		if(name.substr(0, 2) === 'wp' || name.indexOf('wordpress') !== -1 || description.indexOf('wordpress') !== -1) {
+		if (name.substr(0, 2) === 'wp' || name.indexOf('wordpress') !== -1 || description.indexOf('wordpress') !== -1) {
 			tags.push({ 'text': 'WordPress', 'color': 'blue', 'keyword': 'wp' });
 		}
 

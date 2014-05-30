@@ -108,12 +108,12 @@
 {{/}}
 
 <script type="text/javascript">
-	var downloadHelper			= require('download');
-	var getLabels				= require('get-labels');
-	var listFiles				= require('list-files');
-	var SelectFilesView			= require('rvc!components/select-files');
+	var downloadHelper			= require('search/download');
+	var getLabels				= require('search/get-labels');
+	var listFiles				= require('search/list-files');
+	var SelectFilesView			= require('rvc!search/components/select-files');
 	var tooltipDecorator		= require('decorators/tooltip');
-	var versionList				= require('rvc!components/version-list');
+	var versionList				= require('rvc!search/components/version-list');
 	var zeroClipboardDecorator	= require('decorators/zero-clipboard');
 
 	component.exports		= {

@@ -2,7 +2,7 @@ define([
 	'decorators/helpers',
 	'decorators/tooltip',
 	'decorators/zero-clipboard'
-], function(
+], function (
 	helpers,
 	tooltip,
 	zeroClipboard

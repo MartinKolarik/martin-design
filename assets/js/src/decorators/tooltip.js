@@ -1,14 +1,14 @@
-define(function() {
-	return function(node, title, placement, trigger, container) {
+define(function () {
+	return function (node, title, placement, trigger, container) {
 		var $node = $(node).tooltip({
-			'title'		: title,
-			'placement'	: placement || 'top',
-			'trigger'	: trigger || 'hover',
-			'container'	: container || 'body'
+			'title': title,
+			'placement': placement || 'top',
+			'trigger': trigger || 'hover',
+			'container': container || 'body'
 		});
 
 		return {
-			'teardown': function() {
+			'teardown': function () {
 				$node.tooltip('destroy');
 			}
 		}

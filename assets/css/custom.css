@@ -97,7 +97,7 @@ iframe {
 }
 .featured img {
   width: 100px;
-  height: auto;
+  height: 100px;
 }
 .label {
   margin-right: 5px;
@@ -200,7 +200,8 @@ footer a:focus {
 }
 .about section,
 .faq section,
-.sponsors section {
+.sponsors section,
+.debug section {
   padding-top: 20px;
 }
 .faq li {
@@ -218,6 +219,10 @@ footer a:focus {
 }
 .sponsors .sponsor img {
   width: 100px;
+  height: 50px;
+}
+.debug li {
+  margin-bottom: 5px;
 }
 .email-updates {
   margin-top: 20px;
