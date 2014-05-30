@@ -87,7 +87,7 @@ define([
 		$.ajax(ractive.get('tests.server'), {
 			cache: false,
 			success: function (response, textStatus, jqXHR) {
-				ractive.set('results.server', jqXHR.getResponseHeader('Server') || jqXHR.getResponseHeader('POP') || 'Failed to identify the server.');
+				ractive.set('results.server', jqXHR.getResponseHeader('POP') || jqXHR.getResponseHeader('Server') || 'Failed to identify the server.');
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				ractive.set('results.server', errorThrown || textStatus);
