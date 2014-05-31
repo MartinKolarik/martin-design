@@ -124,6 +124,12 @@
 		</footer>
 
 		<script type="text/html" id="template">
+			{{#saved}}
+				<div class="alert alert-info">
+					Showing results for IP address {{results.ipInfo.ip}} from {{results.now}}.
+				</div>
+			{{/saved}}
+
 			{{#progress !== 100}}
 				Running tests...
 				<div class="progress">
@@ -146,15 +152,31 @@
 				</div>
 
 				<pre style="white-space: normal">
-					{{#results.cedexis}}
-						<strong>{{tests.cedexis}}</strong><br>
+					{{results.now}}<br>
+
+					{{#results.ipInfo}}
+						<br><strong>{{tests.ipInfo}}</strong><br>
 
 						{{#error}}
 							{{error}}<br>
 						{{/error}}
 
 						{{^error}}
-							<br><strong>Network</strong><br>
+							{{#this:key}}
+								{{key}}: {{this}}<br>
+							{{/network}}
+						{{/error}}
+					{{/results.ipInfo}}
+
+					{{#results.cedexis}}
+						<br><strong>{{tests.cedexis}}</strong><br>
+
+						{{#error}}
+							{{error}}<br>
+						{{/error}}
+
+						{{^error}}
+							<strong>Network</strong><br>
 							{{#network:key}}
 								{{key}}: {{this}}<br>
 							{{/network}}

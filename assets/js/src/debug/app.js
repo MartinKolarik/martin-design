@@ -17,10 +17,12 @@ define([
 		},
 		computed: {
 			progress: function () {
-				return (!!this.get('results.server') + this.get('results.list').filter(function (i) { return i; }).length + !!this.get('results.cedexis')) / this.get('total') * 100;
+				var results = this.get('results');
+
+				return (!!results.ipInfo + !!results.server + results.list.filter(function (i) { return i; }).length + !!results.cedexis) / this.get('total') * 100;
 			},
 			total: function () {
-				return this.get('tests.list').length + 2;
+				return this.get('tests.list').length + 3;
 			}
 		},
 		data: {
@@ -30,11 +32,14 @@ define([
 			flash: true,
 			location: location.pathname,
 			results: {
+				now: new Date().toUTCString(),
+				ipInfo: null,
 				cedexis: null,
 				server: null,
 				list: []
 			},
 			tests: {
+				ipInfo: 'http://ipinfo.io/json',
 				cedexis: 'http://jsdelivr-data.wildlemur.com',
 				server: 'http://cdn.jsdelivr.net/information.txt',
 				list: [
@@ -71,7 +76,19 @@ define([
 
 	if (results) {
 		ractive.set('results', results);
+		ractive.set('saved', true);
 	} else {
+		// ip info
+		$.ajax(ractive.get('tests.ipInfo'), {
+			cache: false,
+			success: function (response) {
+				ractive.set('results.ipInfo', response);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				ractive.set('results.ipInfo', { error: errorThrown || textStatus });
+			}
+		});
+
 		// Cedexis
 		$.ajax(ractive.get('tests.cedexis'), {
 			cache: false,

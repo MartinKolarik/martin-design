@@ -1,3 +1,10 @@
+.alert {
+  border-radius: 0;
+}
+.alert-bordered {
+  border: none;
+  border-left: 3px solid;
+}
 .btn {
   border-radius: 0;
   outline: none !important;
