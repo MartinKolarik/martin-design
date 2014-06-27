@@ -62,6 +62,18 @@ define([
 		if (value === 100) {
 			location.hash = '!' + encodeURIComponent(JSON.stringify(ractive.get('results')));
 			ractive.set('link', location.href);
+
+			$.ajax({
+				type: 'POST',
+				contentType: 'application/json; charset=UTF-8',
+				url: 'https://www.googleapis.com/urlshortener/v1/url',
+				data: JSON.stringify({ key: 127467818075, longUrl: location.href }),
+				success: function (response) {
+					if (response.id) {
+						ractive.set('link', response.id);
+					}
+				}
+			});
 		}
 	});
 
