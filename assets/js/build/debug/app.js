@@ -100,9 +100,9 @@
 			computed: {
 				progress: function() {
 					var results = this.get('results');
-					return ( !! results.ipInfo + !! results.server + results.list.filter(function(i) {
+					return (!!results.ipInfo + !!results.server + results.list.filter(function(i) {
 						return i;
-					}).length + !! results.cedexis) / this.get('total') * 100;
+					}).length + !!results.cedexis) / this.get('total') * 100;
 				},
 				total: function() {
 					return this.get('tests.list').length + 3;
@@ -142,7 +142,7 @@
 		var results;
 		ractive.observe('progress', function(value) {
 			if (value === 100) {
-				location.hash = '!' + JSON.stringify(ractive.get('results'));
+				location.hash = '!' + encodeURIComponent(JSON.stringify(ractive.get('results')));
 				ractive.set('link', location.href);
 			}
 		});

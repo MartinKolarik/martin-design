@@ -60,7 +60,7 @@ define([
 
 	ractive.observe('progress', function (value) {
 		if (value === 100) {
-			location.hash = '!' + JSON.stringify(ractive.get('results'));
+			location.hash = '!' + encodeURIComponent(JSON.stringify(ractive.get('results')));
 			ractive.set('link', location.href);
 		}
 	});
